@@ -8,6 +8,31 @@ const stage = new Konva.Stage({
 });
 
 const layer = new Konva.Layer();
+
+const trasformar = new Konva.Transformer({
+    nodes: [],
+    keepRatio: false,
+    rotateEnabled: false,
+    boundBoxFunc: (oldBox, newBox) => {
+        if (newBox.width < GRID_SIZE * 2 || newBox.height < GRID_SIZE * 2) {
+            return oldBox;
+        }
+        return newBox;
+    },
+    enabledAnchors: [
+        'top-left',
+        'top-right',
+        'bottom-left',
+        'bottom-right',
+        'top-center',
+        'bottom-center',
+        'middle-left',
+        'middle-right',
+    ],
+});
+
+layer.add(trasformar);
+
 stage.add(layer);
 
 const trashZone = document.getElementById('trash-container');
@@ -44,6 +69,32 @@ function crearCuadrado(x, y, texto) {
 
     grupo.add(rect);
     grupo.add(label);
+
+    grupo.on('click', (e) => {
+        trasformar.nodes([grupo]);
+        layer.draw();
+        e.cancelBubble = true;
+    });
+
+    grupo.on('transformend', () => {
+        // Ajustar el tamaño del rectángulo al tamaño del grupo
+        const scaleX = grupo.scaleX();
+        const scaleY = grupo.scaleY();
+
+        grupo.scaleX(1);
+        grupo.scaleY(1);
+
+        const nuevoAlto = Math.round((rect.height() * scaleY) / GRID_SIZE) * GRID_SIZE;
+        const nuevoAncho = Math.round((rect.width() * scaleX) / GRID_SIZE) * GRID_SIZE;
+
+        rect.height(nuevoAlto);
+        rect.width(nuevoAncho);
+        label.width(rect.width());
+
+        label.y((rect.height() - label.height()) / 2);
+        trasformar.nodes([grupo]);
+        layer.draw();
+    });
 
     grupo.on('dblclick', () => {
         label.hide();
@@ -160,4 +211,11 @@ document.getElementById('add-rect-btn').addEventListener('click', () => {
 window.addEventListener('resize', () => {
     stage.width(window.innerWidth - 160);
     stage.height(window.innerHeight);
+});
+
+stage.on('click', (e) => {
+    if(e.target === stage){
+        trasformar.nodes([]);
+        layer.draw();
+    }
 });
