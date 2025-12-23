@@ -92,6 +92,12 @@ function crearCuadrado(x, y, texto) {
         label.width(rect.width());
 
         label.y((rect.height() - label.height()) / 2);
+
+        grupo.position({
+            x: Math.round(grupo.x() / GRID_SIZE) * GRID_SIZE,
+            y: Math.round(grupo.y() / GRID_SIZE) * GRID_SIZE,
+        });
+
         trasformar.nodes([grupo]);
         layer.draw();
     });
@@ -138,6 +144,7 @@ function crearCuadrado(x, y, texto) {
 
             label.show();
             document.body.removeChild(textarea);
+            trasformar.nodes([grupo]);
             layer.draw();
         }
 
