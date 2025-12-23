@@ -6,8 +6,61 @@ body, html {
 }
 
 #canvas-container {
-    width: 100vw;
-    height: 100vh;
+    flex-grow: 1;
     background-image: radial-gradient(#2d3136 1px, transparent 1px);
     background-size: 20px 20px;
+}
+
+.app-container{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.sidebar{
+    width: 160px;
+    background-color: #202225;
+    border-right: 1px solid #2f3136;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 10;
+}
+
+.sidebar-title{
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.sidebar p{
+    color: #b9bbbe;
+    margin-bottom: 10px;
+}
+
+.tool-btn{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #2f3136;
+    color: #ffffff;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.tool-btn:hover{
+    background-color: #40444b;
+    border-color: #5865f2;
+}
+
+.rect-icon{
+    width: 16px;
+    height: 16px;
+    background-color: #5865f2;
+    border-radius: 3px;
+    border: 2px solid #ffffff;
 }

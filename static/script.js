@@ -24,7 +24,8 @@ function crearCuadrado(x, y, texto) {
         fill: 'white',
         stroke: '#333',
         strokeWidth: 2,
-        cornerRadius: 8,       // Bordes redondeados
+        cornerRadius: 8,
+        name: 'fondo-rect'
     });
 
     const label = new Konva.Text({
@@ -33,11 +34,68 @@ function crearCuadrado(x, y, texto) {
         width: rect.width(),
         padding: 10,
         align: 'center',
-        verticalAlign: 'middle'
+        verticalAlign: 'middle',
+        name: 'texto-nodo'
     });
+
+    label.y((rect.height() - label.height()) / 2);
 
     grupo.add(rect);
     grupo.add(label);
+
+    grupo.on('dblclick', () => {
+        label.hide();
+        layer.draw();
+
+        const stageBox = stage.container().getBoundingClientRect();
+        const areaPos = {
+            x: stageBox.left + grupo.x(), // Ajuste por el margen lateral
+            y: stageBox.top + grupo.y()
+        }
+
+        const textarea = document.createElement('textarea');
+        document.body.appendChild(textarea);
+
+        textarea.value = label.text();
+        textarea.style.position = 'absolute';
+        textarea.style.top = areaPos.y + 'px';
+        textarea.style.left = areaPos.x + 'px';
+        textarea.style.width = rect.width() + 'px';
+        textarea.style.height = rect.height() + 'px';
+        textarea.style.fontSize = rect.fontSize + 'px';
+        textarea.style.padding = '10px';
+        textarea.style.border = 'none';
+        textarea.style.borderRadius = '8px';
+        textarea.style.resize = 'none';
+        textarea.style.overflow = 'hidden';
+        textarea.style.outline = 'none';
+        textarea.style.fontFamily = 'sans-serif';
+        textarea.style.margin = '0px';
+        textarea.style.background = 'rgb(255, 255, 255)';
+        textarea.style.textAlign = 'center';
+        textarea.focus();
+
+        function guardarCambios(){
+            label.text(textarea.value);
+
+            const nuevoAlto = Math.max(label.height() + 20, GRID_SIZE * 2);
+
+            rect.height(nuevoAlto);
+            label.y((rect.height() - label.height()) / 2);
+
+            label.show();
+            document.body.removeChild(textarea);
+            layer.draw();
+        }
+
+        textarea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                guardarCambios();
+            }
+        });
+
+        textarea.addEventListener('blur', guardarCambios);
+    });
 
     // --- LÓGICA DEL IMÁN (SNAPPING) ---
     grupo.on('dragend', () => {
@@ -55,3 +113,24 @@ function crearCuadrado(x, y, texto) {
 // 3. Probamos creando uno
 crearCuadrado(40, 40, "Mi primer Cuadro");
 layer.draw();
+
+function obtenerCentro(){
+    const stageWidth = stage.width();
+    const stageHeight = stage.height();
+
+    const x = Math.round((stageWidth / 2) / GRID_SIZE) * GRID_SIZE;
+    const y = Math.round((stageHeight / 2) / GRID_SIZE) * GRID_SIZE;
+
+    return {x, y};
+}
+
+document.getElementById('add-rect-btn').addEventListener('click', () => {
+    const centro = obtenerCentro();
+    crearCuadrado(centro.x, centro.y, "Nuevo Cuadro");
+    layer.draw();
+});
+
+window.addEventListener('resize', () => {
+    stage.width(window.innerWidth - 160);
+    stage.height(window.innerHeight);
+});
