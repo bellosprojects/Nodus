@@ -19,6 +19,7 @@ body, html {
 
 .sidebar{
     width: 160px;
+    height: 100vh;
     background-color: #202225;
     border-right: 1px solid #2f3136;
     display: flex;
@@ -63,4 +64,44 @@ body, html {
     background-color: #5865f2;
     border-radius: 3px;
     border: 2px solid #ffffff;
+}
+
+.trash-zone{
+    margin-top: auto;
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 2px dashed #ff5555;
+    border-radius: 8px;
+    text-align: center;
+    color: #ff5555;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.trash-zone.drag-over{
+    background-color: rgba(255, 85, 85, 0.1);
+    box-shadow: 0 0 10px #ff5555;
+    color: #ff7777;
+    transform: scale(1.05);
+} 
+
+.transh-icon{
+    font-size: 2rem;
+}
+
+.trash-text{
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+textarea {
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    text-align: center;
+    align-items: center;
 }

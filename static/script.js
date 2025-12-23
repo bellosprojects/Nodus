@@ -10,6 +10,8 @@ const stage = new Konva.Stage({
 const layer = new Konva.Layer();
 stage.add(layer);
 
+const trashZone = document.getElementById('trash-container');
+
 // 2. Función para crear un cuadrado con bordes redondeados
 function crearCuadrado(x, y, texto) {
     const grupo = new Konva.Group({
@@ -60,8 +62,8 @@ function crearCuadrado(x, y, texto) {
         textarea.style.position = 'absolute';
         textarea.style.top = areaPos.y + 'px';
         textarea.style.left = areaPos.x + 'px';
-        textarea.style.width = rect.width() + 'px';
-        textarea.style.height = rect.height() + 'px';
+        textarea.style.width = rect.width() -20 + 'px';
+        textarea.style.height = rect.height() - 20 + 'px';
         textarea.style.fontSize = rect.fontSize + 'px';
         textarea.style.padding = '10px';
         textarea.style.border = 'none';
@@ -97,14 +99,39 @@ function crearCuadrado(x, y, texto) {
         textarea.addEventListener('blur', guardarCambios);
     });
 
+    grupo.on('dragmove', () => {
+        const pos = stage.getPointerPosition();
+
+        if(
+            pos && pos.x < 80 && pos.y > window.innerHeight - 160
+        ){
+            trashZone.classList.add('drag-over');
+        }else{
+            trashZone.classList.remove('drag-over');
+        }
+    });
+
+
     // --- LÓGICA DEL IMÁN (SNAPPING) ---
     grupo.on('dragend', () => {
+
+        const pos = stage.getPointerPosition();
+
+        if(
+            pos && pos.x < 80 && pos.y > window.innerHeight - 160
+        ){
+            grupo.destroy();
+            layer.draw();
+            console.log("Eliminado");
+        }else{
         // Redondeamos la posición a la rejilla de 20px
         grupo.position({
             x: Math.round(grupo.x() / GRID_SIZE) * GRID_SIZE,
             y: Math.round(grupo.y() / GRID_SIZE) * GRID_SIZE,
         });
-        layer.batchDraw(); // Refrescar lienzo
+    }
+    trashZone.classList.remove('drag-over');
+    layer.batchDraw(); // Refrescar lienzo
     });
 
     layer.add(grupo);
