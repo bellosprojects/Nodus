@@ -8,6 +8,6 @@ body, html {
 #canvas-container {
     width: 100vw;
     height: 100vh;
-    background-image: radial-gradient(#ffffff31 1px, transparent 1px);
+    background-image: radial-gradient(#2d3136 1px, transparent 1px);
     background-size: 20px 20px;
 }
