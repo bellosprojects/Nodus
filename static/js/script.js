@@ -1,3 +1,28 @@
+let nombreUsuario = prompt("Ingresa tu nombre de usuario:") || "Anonimo";
+const socket = new WebSocket(`ws://${window.location.host}/ws/${nombreUsuario}`);
+
+socket.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+
+    if(data.type === "users"){
+        actualizarPresencia(data.usuarios);    
+    }
+}
+
+function actualizarPresencia(usuarios){
+    const container = document.getElementById('user-presence');
+    container.innerHTML = '';
+
+    usuarios.forEach(user => {
+        const iniciales = user.substring(0,2);
+        const div = document.createElement('div');
+        div.className = 'user-avatar';
+        div.innerHTML = iniciales;
+        div.title = user;
+        container.appendChild(div);
+    });
+}
+
 const GRID_SIZE = 20; // Nuestra unidad de medida
 
 let nodoOrigen = null;
