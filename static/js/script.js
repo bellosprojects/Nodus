@@ -1,9 +1,20 @@
 const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
 
 let nombreUsuario = prompt("Ingresa tu nombre de usuario:") || "Anonimo";
+const myColor = `rgb(${Math.random()*50 + 70},${Math.random()*80 + 30},${Math.random()*120})`;
+let myNode = null;
+
 const socket = new WebSocket(`${protocol}//${window.location.host}/ws/${nombreUsuario}`);
 
-const GRID_SIZE = 20; // Nuestra unidad de medida
+socket.addEventListener('open', () => {
+    socket.send(JSON.stringify({
+        tipo: "color",
+        color: myColor
+    }));
+});
+
+
+const GRID_SIZE = 20; // Unidad de medida
 
 let nodoOrigen = null;
 const flechas = [];
@@ -139,26 +150,66 @@ socket.onmessage = (event) => {
             layer.batchDraw();
         }
     }
+
+    if(data.tipo === "nodo_bloqueado"){
+        trasformar.nodes([]);
+        layer.draw();
+        console.warn(`Este nodo ya esta siendo ocupado por ${data.por}`)
+    }
 };
 
 function imprimir(text){
     console.log(text);
 }
 
+let jugadoresActuales = [];
+
+function estaOcupado(nodo){
+    return jugadoresActuales.some(user => user.objetc === nodo && nombreUsuario != user.nombre);
+}
+
 function actualizarPresencia(usuarios){
+
+    jugadoresActuales = usuarios;
+
     const container = document.getElementById('user-presence');
     container.innerHTML = '';
 
+    stage.find('.fondo-rect').forEach(rect => {
+        rect.stroke('#333');
+        rect.strokeWidth(2);
+    });
+
     usuarios.forEach(user => {
-        const iniciales = user.substring(0,2);
+        const iniciales = user.nombre.substring(0,2);
         const div = document.createElement('div');
         div.className = 'user-avatar';
         div.innerHTML = iniciales;
-        div.title = user;
+        div.title = user.nombre;
+        div.style.background = user.color;
+
+        if(user.objetc){
+            const nodo = stage.findOne('#' + user.objetc);
+
+            if(nodo){
+                const rect = nodo.findOne('.fondo-rect');
+
+                if(rect){
+                    rect.stroke(user.color);
+                    rect.strokeWidth(6);
+                }
+            }
+
+            if(user.nombre == nombreUsuario){
+                myNode = user.objetc;
+            }
+        }
+
         container.appendChild(div);
     });
-}
 
+    layer.batchDraw();
+}
 
 layer.add(trasformar);
 
@@ -170,14 +221,14 @@ const trashZone = document.getElementById('trash-container');
 function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = null) {
 
     const newId = id || "nodo-" + Date.now();
-
+    
     const grupo = new Konva.Group({
         x: x,
         y: y,
         draggable: true,
         id: newId
     });
-
+    
     const rect = new Konva.Rect({
         width: w || (GRID_SIZE * 5),  // 100px
         height: h || (GRID_SIZE * 3), // 60px
@@ -187,7 +238,7 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
         cornerRadius: 8,
         name: 'fondo-rect'
     });
-
+    
     const label = new Konva.Text({
         text: texto,
         fontSize: 14,
@@ -197,11 +248,16 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
         verticalAlign: 'middle',
         name: 'texto-nodo'
     });
-
+    
     label.y((rect.height() - label.height()) / 2);
-
+    
     grupo.add(rect);
     grupo.add(label);
+    
+    grupo.on('dragstart', () => {
+        trasformar.nodes([grupo]);
+        layer.batchDraw();
+    });
 
     grupo.on('click', (e) => {
 
@@ -219,6 +275,11 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
         }else{
             trasformar.nodes([grupo]);
         }
+
+        socket.send(JSON.stringify({
+            tipo: "seleccionar",
+            objetc: grupo.id()
+        }));
 
         layer.draw();
         e.cancelBubble = true;
@@ -272,70 +333,88 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
     });
 
     grupo.on('dblclick', () => {
-        label.hide();
-        layer.draw();
 
-        const stageBox = stage.container().getBoundingClientRect();
-        const areaPos = {
-            x: stageBox.left + grupo.x(), 
-            y: stageBox.top + grupo.y()
-        }
+        if(myNode == grupo.id()){
 
-        const textarea = document.createElement('textarea');
-        document.body.appendChild(textarea);
-
-        textarea.value = label.text();
-        textarea.style.position = 'absolute';
-        textarea.style.top = areaPos.y + 'px';
-        textarea.style.left = areaPos.x + 'px';
-        textarea.style.width = rect.width() -20 + 'px';
-        textarea.style.height = rect.height() - 20 + 'px';
-        textarea.style.fontSize = rect.fontSize + 'px';
-        textarea.style.padding = '10px';
-        textarea.style.border = 'none';
-        textarea.style.borderRadius = '8px';
-        textarea.style.resize = 'none';
-        textarea.style.overflow = 'hidden';
-        textarea.style.outline = 'none';
-        textarea.style.fontFamily = 'sans-serif';
-        textarea.style.margin = '0px';
-        textarea.style.background = 'rgb(255, 255, 255)';
-        textarea.style.textAlign = 'center';
-        textarea.focus();
-
-        function guardarCambios(){
-            label.text(textarea.value);
-
-            const nuevoAlto = Math.max(label.height() + 20, GRID_SIZE * 2);
-
-            rect.height(nuevoAlto);
-            label.y((rect.height() - label.height()) / 2);
-
-            label.show();
-            document.body.removeChild(textarea);
-
-            const mensaje = {
-                tipo: "cambiar_texto",
-                id: grupo.id(),
-                text: label.text(),
-                h: rect.height()
-            };
-
-            if (socket.readyState === WebSocket.OPEN) {
-                socket.send(JSON.stringify(mensaje));
-            }
-
-            trasformar.nodes([grupo]);
+            label.hide();
             layer.draw();
-        }
 
-        textarea.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                guardarCambios();
+            const stageBox = stage.container().getBoundingClientRect();
+            const areaPos = {
+                x: stageBox.left + grupo.x(), 
+                y: stageBox.top + grupo.y()
             }
-        });
 
-        textarea.addEventListener('blur', guardarCambios);
+            const textarea = document.createElement('textarea');
+            document.body.appendChild(textarea);
+
+            textarea.value = label.text();
+            textarea.style.position = 'absolute';
+            textarea.style.top = areaPos.y + 'px';
+            textarea.style.left = areaPos.x + 'px';
+            textarea.style.width = rect.width() -20 + 'px';
+            textarea.style.height = rect.height() - 20 + 'px';
+            textarea.style.fontSize = rect.fontSize + 'px';
+            textarea.style.padding = '10px';
+            textarea.style.border = 'none';
+            textarea.style.borderRadius = '8px';
+            textarea.style.resize = 'none';
+            textarea.style.overflow = 'hidden';
+            textarea.style.outline = 'none';
+            textarea.style.fontFamily = 'sans-serif';
+            textarea.style.margin = '0px';
+            textarea.style.background = 'rgb(255, 255, 255)';
+            textarea.style.textAlign = 'center';
+            textarea.focus();
+
+            function guardarCambios(){
+                label.text(textarea.value);
+
+                const nuevoAlto = Math.max(label.height() + 20, GRID_SIZE * 2);
+
+                rect.height(nuevoAlto);
+                label.y((rect.height() - label.height()) / 2);
+
+                label.show();
+                document.body.removeChild(textarea);
+
+                const mensaje = {
+                    tipo: "cambiar_texto",
+                    id: grupo.id(),
+                    text: label.text(),
+                    h: rect.height()
+                };
+
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify(mensaje));
+                }
+
+                trasformar.nodes([grupo]);
+                layer.draw();
+            }
+
+            textarea.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    guardarCambios();
+                }
+            });
+
+            textarea.addEventListener('blur', guardarCambios);
+        }
+    });
+
+
+    grupo.on('mousedown', () => {
+        if(estaOcupado(grupo.id())){
+            grupo.draggable(false);
+        }else{
+            grupo.draggable(true);
+
+            socket.send(JSON.stringify({
+            tipo: "seleccionar",
+            objetc: grupo.id()
+        }));
+        }
     });
 
     grupo.on('dragmove', () => {
@@ -574,6 +653,14 @@ window.addEventListener('resize', () => {
 stage.on('click', (e) => {
     if(e.target === stage){
         trasformar.nodes([]);
+
+        socket.send(JSON.stringify({
+            tipo: "seleccionar",
+            objetc: null
+        }));
+
         layer.draw();
+
+        myNode = null;
     }
 });

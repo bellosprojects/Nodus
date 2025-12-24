@@ -22,9 +22,13 @@ class ConnectionManager:
     def __init__(self):
         self.active_connections = {}
 
-    async def connect(self, websocket: WebSocket, nombre: str):
+    async def connect(self, websocket: WebSocket, nombre: str, color: str):
         await websocket.accept()
-        self.active_connections[websocket] = nombre
+        self.active_connections[websocket] = {
+            "nombre": nombre,
+            "color": color,
+            "objetc": None
+        }
 
         estado_inicial = {
             "tipo": "estado_inicial",
@@ -42,8 +46,15 @@ class ConnectionManager:
         if websocket in self.active_connections:
             del self.active_connections[websocket]
 
-    async def broadcast_users(self, message: dict, sender: Optional[WebSocket] = None):
+    async def broadcast_users(self, message: dict = None, sender: Optional[WebSocket] = None):
         import json
+
+        if not message:
+            message = {
+            "tipo": "users",
+            "usuarios": list(self.active_connections.values())
+        }
+
         for connection in self.active_connections.keys():
             if connection != sender:
                 await connection.send_text(json.dumps(message))
@@ -52,7 +63,9 @@ manager = ConnectionManager()
 
 @app.websocket("/ws/{nombre}")
 async def websocket_endpoint(websocket: WebSocket, nombre: str):
-    await manager.connect(websocket, nombre)
+
+
+    await manager.connect(websocket, nombre, 'black')
     try:
         while True:
             data = await websocket.receive_json()
@@ -92,6 +105,37 @@ async def websocket_endpoint(websocket: WebSocket, nombre: str):
                     digram_state[nodo_id]["h"] = data["h"]
 
                 await manager.broadcast_users(data, websocket)
+
+            elif data['tipo'] == "color":
+                if websocket in manager.active_connections:
+                    manager.active_connections[websocket]["color"] = data['color']
+                await manager.broadcast_users()
+
+            elif data['tipo'] == "seleccionar":
+
+                nodo = data["objetc"]
+
+                if not nodo:
+                    manager.active_connections[websocket]["objetc"] = None
+                    await manager.broadcast_users()
+
+                ocupado_por = None
+
+                for ws in manager.active_connections.keys():
+                    if manager.active_connections[ws]['objetc'] == nodo and ws != websocket:
+                        ocupado_por = manager.active_connections[ws]["nombre"]
+                        break
+
+                if ocupado_por and object is not None:
+                    await websocket.send_json({
+                        "tipo": "nodo_bloqueado",
+                        "id": nodo,
+                        "por": ocupado_por
+                    })
+
+                else:
+                    manager.active_connections[websocket]["objetc"] = nodo
+                    await manager.broadcast_users()
 
     except WebSocketDisconnect:
         manager.disconnect(websocket)
