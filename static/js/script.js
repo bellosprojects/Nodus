@@ -171,6 +171,14 @@ socket.onmessage = (event) => {
             layer.batchDraw();
         }
     }
+
+    if(data.tipo === "traer_al_frente"){
+        const nodo = stage.findOne('#' + data.id);
+        if(nodo){
+            nodo.moveToTop();
+            layer.batchDraw();
+        }
+    }
 };
 
 let jugadoresActuales = [];
@@ -252,13 +260,15 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
     
     const label = new Konva.Text({
         text: texto,
-        fontSize: 14,
+        fontSize: 18,
         width: rect.width(),
         padding: 10,
         align: 'center',
         verticalAlign: 'middle',
         name: 'texto-nodo',
         fill: obtenerColorTexto(rect.fill()),
+        wrap: 'word',
+        listening: false,
     });
     
     label.y((rect.height() - label.height()) / 2);
@@ -396,6 +406,7 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
                 label.y((rect.height() - label.height()) / 2);
 
                 label.show();
+
                 document.body.removeChild(textarea);
 
                 const mensaje = {
@@ -425,6 +436,16 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
 
 
     grupo.on('mousedown', () => {
+
+        grupo.moveToTop();
+        trasformar.moveToTop();
+        layer.batchDraw();
+
+        socket.send(JSON.stringify({
+            tipo: "traer_al_frente",
+            id: grupo.id()
+        }));
+
         if(estaOcupado(grupo.id())){
             grupo.draggable(false);
         }else{
@@ -473,7 +494,7 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
         if(
             pos && pos.x < 10 && pos.y > window.innerHeight - 160
         ){
-
+            colorPicker.style.display = 'none';
             eliminarNodoLocalYRemoto(grupo);
         }else{
 
@@ -689,6 +710,7 @@ window.addEventListener('keydown', (e) => {
             return;
         }
 
+        colorPicker.style.display = 'none';
         const nodosSelected = trasformar.nodes();
 
         nodosSelected.forEach(nodo => {

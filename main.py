@@ -144,6 +144,9 @@ async def websocket_endpoint(websocket: WebSocket, nombre: str):
                     digram_state[nodo_id]["color"] = data["color"]
                 await manager.broadcast_users(data, websocket)
 
+            elif data['tipo'] == "traer_al_frente":
+                await manager.broadcast_users(data, websocket)
+
     except WebSocketDisconnect:
         manager.disconnect(websocket)
         await manager.broadcast_users()
