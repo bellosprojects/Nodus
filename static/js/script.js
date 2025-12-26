@@ -330,8 +330,8 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
         const nuevoAlto = Math.round((rect.height() * scaleY) / GRID_SIZE) * GRID_SIZE;
         const nuevoAncho = Math.round((rect.width() * scaleX) / GRID_SIZE) * GRID_SIZE;
 
-        rect.height(nuevoAlto);
-        rect.width(nuevoAncho);
+        rect.height(Math.max(nuevoAlto, GRID_SIZE * 2));
+        rect.width(Math.max(nuevoAncho, GRID_SIZE * 2));
         label.width(rect.width());
 
         label.y((rect.height() - label.height()) / 2);
