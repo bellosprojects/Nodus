@@ -16,3 +16,28 @@ function obtenerColorTexto(colorHex){
 
     return brightness > 0.5 ? 'black' : 'white';
 }
+
+function calcularPuntos(inicio, fin){
+    const dx = fin.x - inicio.x;
+    const dy = fin.y - inicio.y;
+
+    const offsetX = dx / 2;
+    const offsetY = dy / 2;
+
+    if(Math.abs(dx) > Math.abs(dy)){
+
+        return [
+            inicio.x, inicio.y,
+            inicio.x, inicio.y + offsetY,
+            fin.x, fin.y - offsetY,
+            fin.x, fin.y
+        ]
+    }
+
+    return [
+        inicio.x, inicio.y,
+        inicio.x + offsetX, inicio.y,
+        fin.x - offsetX, fin.y,
+        fin.x, fin.y
+    ]
+}
