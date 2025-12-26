@@ -1,4 +1,14 @@
-function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = null, color = null) {
+import { stage, layer, socket, trasformar, GRID_SIZE, trashZone, colorPicker, myNode } from '../main.js';
+import { obtenerColorTexto } from '../utils.js';
+import { crearPuntosConexion } from './flecha.js';
+import { estaOcupado } from '../main.js';
+import { actualizarPosicionFlecha } from './flecha.js';
+
+let flechas = [];
+
+export { flechas };
+
+export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = null, color = null) {
 
     const newId = id || "nodo-" + Date.now();
     
@@ -67,7 +77,7 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
     grupo.on('transform', () => {
 
         flechas.forEach(flecha => {
-            if(flecha.nodoInicio === grupo || flecha.nodoFin === grupo){
+            if(flecha.origenId === grupo.id() || flecha.destinoId === grupo.id()){
                 actualizarPosicionFlecha(flecha);
             }
         });
@@ -84,8 +94,8 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
         const nuevoAlto = Math.round((rect.height() * scaleY) / GRID_SIZE) * GRID_SIZE;
         const nuevoAncho = Math.round((rect.width() * scaleX) / GRID_SIZE) * GRID_SIZE;
 
-        rect.height(Math.max(nuevoAlto, GRID_SIZE * 2));
-        rect.width(Math.max(nuevoAncho, GRID_SIZE * 2));
+        rect.height(Math.max(nuevoAlto, GRID_SIZE * 3));
+        rect.width(Math.max(nuevoAncho, GRID_SIZE * 3));
         label.width(rect.width());
 
         label.y((rect.height() - label.height()) / 2);
@@ -113,7 +123,26 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
             socket.send(JSON.stringify(mensaje));
         }
 
-        layer.draw();
+        const puntos = grupo.find('.grupo-punto-conexion');
+        puntos.forEach(pContenedor => {
+            const area = pContenedor.findOne('.punto-conexion');
+            const puntoId = area.id(); // 'top', 'right', etc.
+            
+            // Recalculamos posición relativa según el nuevo ancho/alto
+            if(puntoId === 'top') pContenedor.position({ x: rect.width() * 0.5, y: 0 });
+            if(puntoId === 'right') pContenedor.position({ x: rect.width(), y: rect.height() * 0.5 });
+            if(puntoId === 'bottom') pContenedor.position({ x: rect.width() * 0.5, y: rect.height() });
+            if(puntoId === 'left') pContenedor.position({ x: 0, y: rect.height() * 0.5 });
+        });
+
+        flechas.forEach(flecha => {
+        if(flecha.origenId === grupo.id() || flecha.destinoId === grupo.id()){
+            actualizarPosicionFlecha(flecha);
+            }
+        });
+
+        trasformar.forceUpdate();
+        layer.batchDraw();
     });
 
     grupo.on('dblclick', () => {
@@ -151,7 +180,13 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
             textarea.style.textAlign = 'center';
             textarea.focus();
 
+            let isSaving = false;
+
             function guardarCambios(){
+
+                if(isSaving) return;
+                isSaving = true;
+
                 label.text(textarea.value);
 
                 const nuevoAlto = Math.max(label.height() + 20, GRID_SIZE * 2);
@@ -161,7 +196,7 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
 
                 label.show();
 
-                document.body.removeChild(textarea);
+                textarea.remove();
 
                 const mensaje = {
                     tipo: "cambiar_texto",
@@ -175,11 +210,31 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
                 }
 
                 trasformar.nodes([grupo]);
-                layer.draw();
+
+                const puntos = grupo.find('.grupo-punto-conexion');
+                puntos.forEach(pContenedor => {
+                    const area = pContenedor.findOne('.punto-conexion');
+                    const puntoId = area.id(); // 'top', 'right', etc.
+                    
+                    // Recalculamos posición relativa según el nuevo ancho/alto
+                    if(puntoId === 'top') pContenedor.position({ x: rect.width() * 0.5, y: 0 });
+                    if(puntoId === 'right') pContenedor.position({ x: rect.width(), y: rect.height() * 0.5 });
+                    if(puntoId === 'bottom') pContenedor.position({ x: rect.width() * 0.5, y: rect.height() });
+                    if(puntoId === 'left') pContenedor.position({ x: 0, y: rect.height() * 0.5 });
+                });
+                flechas.forEach(f => {
+                    if(f.origenId === grupo.id() || f.destinoId === grupo.id()) {
+                        actualizarPosicionFlecha(f);
+                    }
+                });
+                trasformar.forceUpdate();
+                layer.batchDraw();
             }
 
             textarea.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     guardarCambios();
                 }
             });
@@ -302,7 +357,7 @@ function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = 
     }
 }
 
-function eliminarNodoLocalYRemoto(nodo){
+export function eliminarNodoLocalYRemoto(nodo){
     const idDelete = nodo.id();
 
     eliminarConexionesdelNodo(idDelete);
@@ -333,7 +388,7 @@ function eliminarConexionesdelNodo(nodoID){
     layer.batchDraw();
 }
 
-function mostrarPaleta(nodo) {
+export function mostrarPaleta(nodo) {
 
     if (estaOcupado(nodo.id())) return;
 

@@ -1,19 +1,31 @@
-const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+import { socket, init_socket, myColor, nombreUsuario } from './socket.js';
+import { flechas } from './componentes/nodo.js';
 
-let nombreUsuario = prompt("Ingresa tu nombre de usuario:") || "Anonimo";
-const myColor = `rgb(${Math.random()*50 + 70},${Math.random()*80 + 30},${Math.random()*120})`;
+init_socket();
+
 let myNode = null;
 
-let dibujandoConexion = false;
-let flechaTemporal = null;
 let origenDatos = {
     nodoId: null,
     puntoId: null
 }
 
-const socket = new WebSocket(`${protocol}//${window.location.host}/ws/${nombreUsuario}`);
+const GRID_SIZE = 20; // Unidad de medida
 
 const colorPicker = document.getElementById('color-picker');
+
+export {stage, layer, socket, myColor, myNode, origenDatos, GRID_SIZE, colorPicker, trasformar, trashZone};
+
+export {estaOcupado, actualizarPresencia};
+
+import { crearCuadrado } from './componentes/nodo.js';
+import { obtenerCentro } from './utils.js';
+import { actualizarPosicionFlecha } from './componentes/flecha.js';
+import { dibujandoConexion, flechaTemporal } from './componentes/flecha.js';
+import { eliminarNodoLocalYRemoto } from './componentes/nodo.js';
+import { mostrarPaleta } from './componentes/nodo.js';
+import { cancelarDibujoConexion, buscarPuntoCercano } from './componentes/flecha.js';
+import { obtenerColorTexto } from './utils.js';
 
 socket.addEventListener('open', () => {
     socket.send(JSON.stringify({
@@ -22,10 +34,7 @@ socket.addEventListener('open', () => {
     }));
 });
 
-const GRID_SIZE = 20; // Unidad de medida
 
-let nodoOrigen = null;
-let flechas = [];
 
 // 1. Crear el escenario
 const stage = new Konva.Stage({
@@ -117,16 +126,6 @@ const trashZone = document.getElementById('trash-container');
 
 // 2. Función para crear un cuadrado con bordes redondeados
 
-
-function obtenerCentro(){
-    const stageWidth = stage.width() + Math.random() * 400 -200;
-    const stageHeight = stage.height() + Math.random() * 400 -200;
-
-    const x = Math.round((stageWidth / 2) / GRID_SIZE) * GRID_SIZE;
-    const y = Math.round((stageHeight / 2) / GRID_SIZE) * GRID_SIZE;
-
-    return {x, y};
-}
 
 document.getElementById('add-rect-btn').addEventListener('click', () => {
     const centro = obtenerCentro();
@@ -244,11 +243,27 @@ stage.on('mousemove', () => {
 
     const posMouse = stage.getPointerPosition();
 
+    const puntoMagnetico = buscarPuntoCercano(posMouse);
+
+    let destinoX, destinoY;
+
+    if(puntoMagnetico){
+        const posPunto = puntoMagnetico.getAbsolutePosition();
+        destinoX = posPunto.x;
+        destinoY = posPunto.y;
+        document.body.style.cursor = 'copy';
+
+    }else{
+        destinoX = posMouse.x;
+        destinoY = posMouse.y;
+        document.body.style.cursor = 'crosshair';
+    }
+
     const puntos = flechaTemporal.points();
 
     flechaTemporal.points([
         puntos[0], puntos[1],
-        posMouse.x, posMouse.y
+        destinoX, destinoY
     ]);
 
     layer.batchDraw();
@@ -256,18 +271,22 @@ stage.on('mousemove', () => {
 });
 
 stage.on('mouseup', (e) => {
-    if(dibujandoConexion && e.target === stage){
+    if(!dibujandoConexion) return;
+
+    const posMouse = stage.getPointerPosition();
+    const puntoMagnetico = buscarPuntoCercano(posMouse);
+
+    if(puntoMagnetico){
+        const nodoDestino = puntoMagnetico.getParent();
+        const destinoPuntoId = puntoMagnetico.id();
+
+        if(nodoDestino.id() !== origenDatos.nodoId){
+            finalizarConexion(nodoDestino.id(), destinoPuntoId);
+            return;
+        }
+    }
+
+    if(e.target === stage){
         cancelarDibujoConexion();
     }
 });
-
-function cancelarDibujoConexion(){
-    dibujandoConexion = false;
-    origenDatos.nodoId = null;
-    origenDatos.puntoId = null;
-    if(flechaTemporal){
-        flechaTemporal.destroy();
-        flechaTemporal = null;
-        layer.batchDraw();
-    }
-}

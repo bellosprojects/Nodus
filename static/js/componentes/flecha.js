@@ -1,4 +1,14 @@
-function crearPuntosConexion(grupo){
+import { stage, layer } from '../main.js';
+import { calcularPuntos } from '../utils.js';
+import { origenDatos } from '../main.js';
+import { flechas } from './nodo.js';
+
+let dibujandoConexion = false;
+let flechaTemporal = null;
+
+export { dibujandoConexion , flechaTemporal };
+
+export function crearPuntosConexion(grupo){
     const rect = grupo.findOne('.fondo-rect');
 
     const posiciones = [
@@ -18,7 +28,7 @@ function crearPuntosConexion(grupo){
 
         const puntoVisual = new Konva.Circle({
             name: 'punto-visual',
-            radius: 5,
+            radius: 7,
             fill: 'white',
             stroke: '#4a90e2',
             strokeWidth: 2,
@@ -28,7 +38,7 @@ function crearPuntosConexion(grupo){
         });
 
         const areaClick = new Konva.Circle({
-            radius: 15,
+            radius: 20,
             fill: 'transparent',
             id: pos.id,
             name: 'punto-conexion',
@@ -69,14 +79,22 @@ function crearPuntosConexion(grupo){
                     return;
                 }
 
-                finalizarConexion(destinoId, destinoPuntoId);
+                if(destinoId !== origenDatos.nodoId || destinoPuntoId !== origenDatos.puntoId){
+                    finalizarConexion(destinoId, destinoPuntoId);
+                }
             }
 
         });
 
-        grupo.on('transform', () => {
+        grupo.on('transform transformend', () => {
             grupoPunto.x(rect.width() * pos.x);
             grupoPunto.y(rect.height() * pos.y);
+
+            flechas.forEach(flecha => {
+                if(flecha.origenId === grupo.id() || flecha.destinoId === grupo.id()){
+                    actualizarPosicionFlecha(flecha);
+                }
+            });
         });
 
         grupo.add(grupoPunto);
@@ -131,8 +149,38 @@ function finalizarConexion(destinoNodoId, destinoPuntoId){
         pointerWidth: 10,
         lineCap: 'round',
         lineJoin: 'round',
-        tension: 0.05,
+        tension: 0.1,
+        hitStrokeWidth: 15,
     });
+
+    flechaReal.on('mouseenter', () => {
+        document.body.style.cursor = 'pointer';
+        flechaReal.stroke('#ff4d4d');
+        flechaReal.fill('#ff4d4d');
+        layer.batchDraw();
+    });
+
+    flechaReal.on('mouseleave', () => {
+        document.body.style.cursor = 'default';
+        flechaReal.stroke('#4a90e2');
+        flechaReal.fill('#4a90e2');
+        layer.batchDraw();
+    });
+
+    flechaReal.on('click', (e) => {
+        e.cancelBubble = true;
+
+        flechaReal.destroy();
+        for(let i = flechas.length -1; i>=0 ; i--){
+            if(flechas[i].id === nuevaConexion.id){
+                flechas.splice(i, 1);
+                break;
+            }
+        }
+        layer.batchDraw();
+        
+    });
+
 
     nuevaConexion.linea = flechaReal;
     layer.add(flechaReal);
@@ -143,7 +191,7 @@ function finalizarConexion(destinoNodoId, destinoPuntoId){
     actualizarPosicionFlecha(nuevaConexion);
 }
 
-function actualizarPosicionFlecha(conexion){
+export function actualizarPosicionFlecha(conexion){
 
     const nodoOrigen = stage.findOne('#' + conexion.origenId);
     const nodoDestino = stage.findOne('#' + conexion.destinoId);
@@ -155,38 +203,63 @@ function actualizarPosicionFlecha(conexion){
         return areaPunto.getAbsolutePosition();
     };
 
-    const inicio = obtenerPosPunto(nodoOrigen, conexion.origenPuntoId);
-    const fin = obtenerPosPunto(nodoDestino, conexion.destinoPuntoId);
+    let inicio = obtenerPosPunto(nodoOrigen, conexion.origenPuntoId);
+    let fin = obtenerPosPunto(nodoDestino, conexion.destinoPuntoId);
+
+    let puntoInicioId = conexion.origenPuntoId;
+    let puntoFinId = conexion.destinoPuntoId;
+
+    // Ajustar puntos para evitar cruces innecesarios
+    if(inicio.y < fin.y - 30 && puntoInicioId === 'top'){
+        puntoInicioId = 'bottom';
+        puntoFinId = 'top';
+    }
+    if(inicio.y > fin.y + 30 && puntoInicioId === 'bottom'){
+        puntoInicioId = 'top';
+        puntoFinId = 'bottom';
+    }
+    if(inicio.x < fin.x - 30 && puntoInicioId === 'left'){
+        puntoInicioId = 'right';
+        puntoFinId = 'left';
+    }
+    if(inicio.x > fin.x + 30 && puntoInicioId === 'right'){
+        puntoInicioId = 'left';
+        puntoFinId = 'right';
+    }        
+
+    inicio = obtenerPosPunto(nodoOrigen, puntoInicioId);
+    fin = obtenerPosPunto(nodoDestino, puntoFinId);
 
     if(!inicio || !fin) return;
 
     let primeraParte = null;
-
-    const puntoInicioId = conexion.origenPuntoId;
     if(puntoInicioId === 'top'){
-        primeraParte = [inicio.x, inicio.y, inicio.x, inicio.y - 20];
+        primeraParte = [inicio.x, inicio.y - 10, inicio.x, inicio.y - 40];
     } else if(puntoInicioId === 'bottom'){
-        primeraParte = [inicio.x, inicio.y, inicio.x, inicio.y + 20];
+        primeraParte = [inicio.x, inicio.y + 10, inicio.x, inicio.y + 40];
     } else if(puntoInicioId === 'left'){
-        primeraParte = [inicio.x, inicio.y, inicio.x - 20, inicio.y];
+        primeraParte = [inicio.x - 10, inicio.y, inicio.x - 40, inicio.y];
     } else if(puntoInicioId === 'right'){
-        primeraParte = [inicio.x, inicio.y, inicio.x + 20, inicio.y];
+        primeraParte = [inicio.x + 10, inicio.y, inicio.x + 40, inicio.y];
     }
-    const puntoFinId = conexion.destinoPuntoId;
+    
     let ultimaParte = null;
     if(puntoFinId === 'top'){
-        ultimaParte = [fin.x, fin.y - 30, fin.x, fin.y - 10];
+        ultimaParte = [fin.x, fin.y - 40, fin.x, fin.y - 10];
     } else if(puntoFinId === 'bottom'){
-        ultimaParte = [fin.x, fin.y + 30, fin.x, fin.y + 10];
+        ultimaParte = [fin.x, fin.y + 40, fin.x, fin.y + 10];
     } else if(puntoFinId === 'left'){
-        ultimaParte = [fin.x - 30, fin.y, fin.x - 10, fin.y];
+        ultimaParte = [fin.x - 40, fin.y, fin.x - 10, fin.y];
     } else if(puntoFinId === 'right'){
-        ultimaParte = [fin.x + 30, fin.y, fin.x + 10, fin.y];
+        ultimaParte = [fin.x + 40, fin.y, fin.x + 10, fin.y];
     }
+
+    const orientacion = (puntoInicioId === 'top' || puntoInicioId === 'bottom') ? 'vertical' : 'horizontal';
 
     const puntosIntermedios = calcularPuntos(
         {x: primeraParte[2], y: primeraParte[3]},
-        {x: ultimaParte[0], y: ultimaParte[1]}
+        {x: ultimaParte[0], y: ultimaParte[1]},
+        orientacion
     );
 
     const puntosFinales = primeraParte.concat(puntosIntermedios).concat(ultimaParte);
@@ -194,4 +267,36 @@ function actualizarPosicionFlecha(conexion){
     conexion.linea.points(puntosFinales);
     layer.batchDraw();
 
+}
+
+export function cancelarDibujoConexion(){
+    dibujandoConexion = false;
+    origenDatos.nodoId = null;
+    origenDatos.puntoId = null;
+    if(flechaTemporal){
+        flechaTemporal.destroy();
+        flechaTemporal = null;
+        layer.batchDraw();
+    }
+}
+
+export function buscarPuntoCercano(posMouse){
+    const RADIO_MAGNETICO = 20;
+    let puntoMasCercano = null;
+    let distanciaMinima = RADIO_MAGNETICO;
+
+    stage.find('.punto-conexion').forEach(punto => {
+        const posPunto = punto.getAbsolutePosition();
+        const distancia = Math.sqrt(
+            Math.pow(posMouse.x - posPunto.x, 2) +
+            Math.pow(posMouse.y - posPunto.y, 2)
+        );
+
+        if(distancia < distanciaMinima){
+            distanciaMinima = distancia;
+            puntoMasCercano = punto;
+        }
+    });
+
+    return puntoMasCercano;
 }

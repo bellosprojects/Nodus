@@ -1,124 +1,139 @@
-socket.onmessage = (event) => {
-    const data = JSON.parse(event.data);
+import { actualizarPresencia } from './main.js';
+import { crearCuadrado, flechas } from './componentes/nodo.js';
+import { stage, layer } from './main.js';
+import { obtenerColorTexto } from './utils.js';
+import { trasformar } from './main.js';
 
-    if(data.tipo === "users"){
-        actualizarPresencia(data.usuarios);    
-    }
+const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+export const nombreUsuario = prompt("Ingresa tu nombre de usuario:") || "Anonimo";
+export const socket = new WebSocket(`${protocol}//${window.location.host}/ws/${nombreUsuario}`);
+export const myColor = `rgb(${Math.random()*50 + 70},${Math.random()*80 + 30},${Math.random()*120})`;
 
-    if(data.tipo === "estado_inicial"){
-        data.objetos.forEach(obj => {
-            if(obj.type === "square"){
-                crearCuadrado(obj.x, obj.y, obj.text, obj.id, false, obj.w, obj.h, obj.color);
-            }
-        });
-    }
+export function init_socket(){
 
-    if(data.tipo === "crear_cuadrado"){
-        crearCuadrado(data.x,data.y,data.text,data.id,false,data.w,data.h,data.color);
-    }
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
 
-    if(data.tipo === "mover_nodo"){
-        const nodoAjeno = stage.findOne('#' + data.id);
-
-        if(nodoAjeno){
-            nodoAjeno.position({
-                x: data.x,
-                y: data.y
-            });
-            
-            layer.batchDraw();
+        if(data.tipo === "users"){
+            actualizarPresencia(data.usuarios);    
         }
-    }
 
-    if(data.tipo === "eliminar_nodo"){
-        const nodoDelete = stage.findOne('#' + data.id);
-        if(nodoDelete){
-            for(let i = flechas.length -1; i>=0 ; i--){
-                if(flechas[i].nodoInicio === nodoDelete || flechas[i].nodoFin === nodoDelete){
-                    flechas[i].destroy();
-                    flechas.splice(i, 1);
+        if(data.tipo === "estado_inicial"){
+            data.objetos.forEach(obj => {
+                if(obj.type === "square"){
+                    crearCuadrado(obj.x, obj.y, obj.text, obj.id, false, obj.w, obj.h, obj.color);
                 }
-            }
-
-            nodoDelete.destroy();
-
-            if(trasformar.nodes().includes(nodoDelete)){
-                trasformar.nodes([]);
-            }
-
-            layer.batchDraw();
-        }
-    }
-
-    if(data.tipo === "resize_nodo"){
-        const nodo = stage.findOne('#' + data.id);
-        if(nodo){
-            const rect = nodo.findOne('.fondo-rect');
-            const label = nodo.findOne('.texto-nodo');
-
-            nodo.position({
-                x: data.x,
-                y: data.y
             });
-
-            if(rect){
-                rect.width(data.w);
-                rect.height(data.h);
-            }
-
-            if(label){
-                label.width(data.w);
-                label.y((data.h - label.height()) / 2);
-            }
-
-            layer.batchDraw();
         }
-    }
 
-    if(data.tipo === "cambiar_texto"){
-        const nodo = stage.findOne('#' + data.id);
-        if(nodo){
-            const rect = nodo.findOne('.fondo-rect');
-            const label = nodo.findOne('.texto-nodo');
+        if(data.tipo === "crear_cuadrado"){
+            crearCuadrado(data.x,data.y,data.text,data.id,false,data.w,data.h,data.color);
+        }
 
-            if(label){
-                label.text(data.text);
+        if(data.tipo === "mover_nodo"){
+            const nodoAjeno = stage.findOne('#' + data.id);
+
+            if(nodoAjeno){
+                nodoAjeno.position({
+                    x: data.x,
+                    y: data.y
+                });
+                
+                layer.batchDraw();
+            }
+        }
+
+        if(data.tipo === "eliminar_nodo"){
+            const nodoDelete = stage.findOne('#' + data.id);
+            if(nodoDelete){
+                for(let i = flechas.length -1; i>=0 ; i--){
+                    if(flechas[i].nodoInicio === nodoDelete || flechas[i].nodoFin === nodoDelete){
+                        flechas[i].destroy();
+                        flechas.splice(i, 1);
+                    }
+                }
+
+                nodoDelete.destroy();
+
+                if(trasformar.nodes().includes(nodoDelete)){
+                    trasformar.nodes([]);
+                }
+
+                layer.batchDraw();
+            }
+        }
+
+        if(data.tipo === "resize_nodo"){
+            const nodo = stage.findOne('#' + data.id);
+            if(nodo){
+                const rect = nodo.findOne('.fondo-rect');
+                const label = nodo.findOne('.texto-nodo');
+
+                nodo.position({
+                    x: data.x,
+                    y: data.y
+                });
 
                 if(rect){
+                    rect.width(data.w);
                     rect.height(data.h);
-                    label.y((rect.height() - label.height()) / 2);
                 }
+
+                if(label){
+                    label.width(data.w);
+                    label.y((data.h - label.height()) / 2);
+                }
+
+                layer.batchDraw();
             }
-
-            layer.batchDraw();
         }
-    }
 
-    if(data.tipo === "nodo_bloqueado"){
-        trasformar.nodes([]);
-        layer.draw();
-        console.warn(`Este nodo ya esta siendo ocupado por ${data.por}`)
-    }
+        if(data.tipo === "cambiar_texto"){
+            const nodo = stage.findOne('#' + data.id);
+            if(nodo){
+                const rect = nodo.findOne('.fondo-rect');
+                const label = nodo.findOne('.texto-nodo');
 
-    if(data.tipo === "cambiar_color"){
-        const nodo = stage.findOne('#' + data.id);
-        if(nodo){
-            const rect = nodo.findOne('.fondo-rect');
-            if(rect) rect.fill(data.color);
-            
-            const label = nodo.findOne('.texto-nodo');
-            if(label){
-                label.fill(obtenerColorTexto(data.color));
+                if(label){
+                    label.text(data.text);
+
+                    if(rect){
+                        rect.height(data.h);
+                        label.y((rect.height() - label.height()) / 2);
+                    }
+                }
+
+                layer.batchDraw();
             }
-            layer.batchDraw();
         }
-    }
 
-    if(data.tipo === "traer_al_frente"){
-        const nodo = stage.findOne('#' + data.id);
-        if(nodo){
-            nodo.moveToTop();
-            layer.batchDraw();
+        if(data.tipo === "nodo_bloqueado"){
+            trasformar.nodes([]);
+            layer.draw();
+            console.warn(`Este nodo ya esta siendo ocupado por ${data.por}`)
         }
-    }
-};
+
+        if(data.tipo === "cambiar_color"){
+            const nodo = stage.findOne('#' + data.id);
+            if(nodo){
+                const rect = nodo.findOne('.fondo-rect');
+                if(rect) rect.fill(data.color);
+                
+                const label = nodo.findOne('.texto-nodo');
+                if(label){
+                    label.fill(obtenerColorTexto(data.color));
+                }
+                layer.batchDraw();
+            }
+        }
+
+        if(data.tipo === "traer_al_frente"){
+            const nodo = stage.findOne('#' + data.id);
+            if(nodo){
+                nodo.moveToTop();
+                layer.batchDraw();
+            }
+        }
+    };
+
+}
