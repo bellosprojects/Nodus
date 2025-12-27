@@ -19,12 +19,12 @@ export {stage, layer, socket, myColor, myNode, origenDatos, GRID_SIZE, colorPick
 export {estaOcupado, actualizarPresencia};
 
 import { crearCuadrado } from './componentes/nodo.js';
-import { obtenerCentro } from './utils.js';
+import { obtenerCentro, cursoresAjenos, eliminarCursorAjeno } from './utils.js';
 import { actualizarPosicionFlecha } from './componentes/flecha.js';
 import { dibujandoConexion, flechaTemporal } from './componentes/flecha.js';
 import { eliminarNodoLocalYRemoto } from './componentes/nodo.js';
 import { mostrarPaleta } from './componentes/nodo.js';
-import { cancelarDibujoConexion, buscarPuntoCercano } from './componentes/flecha.js';
+import { cancelarDibujoConexion, buscarPuntoCercano, finalizarConexion } from './componentes/flecha.js';
 import { obtenerColorTexto } from './utils.js';
 
 socket.addEventListener('open', () => {
@@ -44,6 +44,7 @@ const stage = new Konva.Stage({
 });
 
 const layer = new Konva.Layer();
+export const layerPresencia = new Konva.Layer();
 
 const trasformar = new Konva.Transformer({
     nodes: [],
@@ -69,13 +70,19 @@ const trasformar = new Konva.Transformer({
     anchorSize: 8,
 });
 
-let jugadoresActuales = [];
+export let jugadoresActuales = [];
 
 function estaOcupado(nodo){
     return jugadoresActuales.some(user => user.objetc === nodo && nombreUsuario != user.nombre);
 }
 
 function actualizarPresencia(usuarios){
+
+    jugadoresActuales.forEach(user => {
+        if(!usuarios.some(old => old.nombre === user.nombre)){
+            eliminarCursorAjeno(user.nombre)
+        }
+    });
 
     jugadoresActuales = usuarios;
 
@@ -88,6 +95,7 @@ function actualizarPresencia(usuarios){
     });
 
     usuarios.forEach(user => {
+
         const iniciales = user.nombre.substring(0,2);
         const div = document.createElement('div');
         div.className = 'user-avatar';
@@ -121,11 +129,9 @@ function actualizarPresencia(usuarios){
 layer.add(trasformar);
 
 stage.add(layer);
+stage.add(layerPresencia);
 
 const trashZone = document.getElementById('trash-container');
-
-// 2. Función para crear un cuadrado con bordes redondeados
-
 
 document.getElementById('add-rect-btn').addEventListener('click', () => {
     const centro = obtenerCentro();
@@ -232,12 +238,33 @@ stage.on('click', (e) => {
         }));
 
         layer.draw();
+        layerPresencia.draw();
 
         myNode = null;
     }
 });
 
+let ultimoEnvio = 0;
+const FRECUENCIA_MS = 50;
+
 stage.on('mousemove', () => {
+
+    const ahora = Date.now();
+
+    if(socket.readyState === WebSocket.OPEN){
+
+        if(ahora - ultimoEnvio > FRECUENCIA_MS){
+            const pos = stage.getPointerPosition();
+
+            socket.send(JSON.stringify({
+                tipo: "mover_cursor",
+                x: pos.x,
+                y: pos.y,
+                nombre: nombreUsuario,
+            }));
+            ultimoEnvio = ahora;
+        }
+    }
 
     if(!dibujandoConexion || !flechaTemporal) return;
 

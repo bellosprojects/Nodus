@@ -17,6 +17,7 @@ class NodusObject(BaseModel):
     color: str
 
 digram_state: Dict[str, dict] = {}
+flechas = {}
 
 class ConnectionManager:
     def __init__(self):
@@ -32,7 +33,8 @@ class ConnectionManager:
 
         estado_inicial = {
             "tipo": "estado_inicial",
-            "objetos": list(digram_state.values())
+            "objetos": list(digram_state.values()),
+            "flechas": list(flechas.values())
         }
 
         await websocket.send_json(estado_inicial)
@@ -145,6 +147,21 @@ async def websocket_endpoint(websocket: WebSocket, nombre: str):
                 await manager.broadcast_users(data, websocket)
 
             elif data['tipo'] == "traer_al_frente":
+                await manager.broadcast_users(data, websocket)
+
+            elif data['tipo'] == 'crear_conexion':
+                flechas[data['id']] = data
+                await manager.broadcast_users(data, websocket)
+
+            elif data['tipo'] == 'eliminar_conexion':
+                fleja_id = data['id']
+                if fleja_id in flechas:
+                    del flechas[fleja_id]
+                await manager.broadcast_users(data, websocket)
+
+            elif data['tipo'] == 'mover_cursor':
+                manager.active_connections[websocket]['x'] = data['x']
+                manager.active_connections[websocket]['y'] = data['y']
                 await manager.broadcast_users(data, websocket)
 
     except WebSocketDisconnect:

@@ -3,6 +3,7 @@ import { obtenerColorTexto } from '../utils.js';
 import { crearPuntosConexion } from './flecha.js';
 import { estaOcupado } from '../main.js';
 import { actualizarPosicionFlecha } from './flecha.js';
+import { nombreUsuario } from '../socket.js';
 
 let flechas = [];
 
@@ -268,7 +269,17 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
     });
 
     grupo.on('dragmove', () => {
+
         const pos = stage.getPointerPosition();
+
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify({
+                tipo: "mover_cursor",
+                x: pos.x,
+                y: pos.y,
+                nombre: nombreUsuario,
+            }));
+        }
 
         if(
             pos && pos.x < 10 && pos.y > window.innerHeight - 160
@@ -374,7 +385,7 @@ export function eliminarNodoLocalYRemoto(nodo){
     }
 }
 
-function eliminarConexionesdelNodo(nodoID){
+export function eliminarConexionesdelNodo(nodoID){
     const conexionesAEliminar = flechas.filter(flecha => flecha.origenId === nodoID || flecha.destinoId === nodoID);
 
     conexionesAEliminar.forEach(flecha => {
@@ -399,4 +410,32 @@ export function mostrarPaleta(nodo) {
     
     // Guardar referencia al nodo actual en la paleta
     colorPicker.dataset.nodoTarget = nodo.id();
+}
+
+export function actualizarPuntosyFlechasDelNodo(nodoID){
+
+    const nodo = stage.findOne('#' + nodoID);
+    if(!nodo) return;
+
+    const puntos = nodo.find('.grupo-punto-conexion');
+    puntos.forEach(pContenedor => {
+        const area = pContenedor.findOne('.punto-conexion');
+        const puntoId = area.id(); // 'top', 'right', etc.
+
+        const rect = nodo.findOne('.fondo-rect');
+        // Recalculamos posición relativa según el nuevo ancho/alto
+        if(puntoId === 'top') pContenedor.position({ x: rect.width() * 0.5, y: 0 });
+        if(puntoId === 'right') pContenedor.position({ x: rect.width(), y: rect.height() * 0.5 });
+        if(puntoId === 'bottom') pContenedor.position({ x: rect.width() * 0.5, y: rect.height() });
+        if(puntoId === 'left') pContenedor.position({ x: 0, y: rect.height() * 0.5 });
+    }
+    );
+    flechas.forEach(flecha => {
+        if(flecha.origenId === nodo.id() || flecha.destinoId === nodo.id()){
+            actualizarPosicionFlecha(flecha);
+        }
+    }
+    );
+    trasformar.forceUpdate();
+    layer.batchDraw();
 }

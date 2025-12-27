@@ -2,6 +2,7 @@ import { stage, layer } from '../main.js';
 import { calcularPuntos } from '../utils.js';
 import { origenDatos } from '../main.js';
 import { flechas } from './nodo.js';
+import { socket } from '../socket.js';
 
 let dibujandoConexion = false;
 let flechaTemporal = null;
@@ -129,16 +130,36 @@ function iniciarDibujoConexion(nodoGrupo, puntoId){
     layer.batchDraw();
 }
 
-function finalizarConexion(destinoNodoId, destinoPuntoId){
+export function finalizarConexion(destinoNodoId, destinoPuntoId){
+    crearConexion(
+        origenDatos.nodoId,
+        origenDatos.puntoId,
+        destinoNodoId,
+        destinoPuntoId
+    );
+}
+
+export function crearConexion(origenId, origenPuntoId, destinoId, destinoPuntoId, id = null, debeEmitir = true){
 
     const nuevaConexion = {
-        id: "flecha-" + Date.now(),
-        origenId: origenDatos.nodoId,
-        origenPuntoId: origenDatos.puntoId,
-        destinoId: destinoNodoId,
+        id: id || "flecha-" + Date.now(),
+        origenId: origenId,
+        origenPuntoId: origenPuntoId,
+        destinoId: destinoId,
         destinoPuntoId: destinoPuntoId,
         linea: null,
     };
+
+    if(debeEmitir){
+        socket.send(JSON.stringify({
+            tipo: "crear_conexion",
+            origenId: origenId,
+            origenPuntoId: origenPuntoId,
+            destinoId: destinoId,
+            destinoPuntoId: destinoPuntoId,
+            id: nuevaConexion.id,
+        }));
+    }
 
     const flechaReal = new Konva.Arrow({
         id: nuevaConexion.id,
@@ -170,14 +191,7 @@ function finalizarConexion(destinoNodoId, destinoPuntoId){
     flechaReal.on('click', (e) => {
         e.cancelBubble = true;
 
-        flechaReal.destroy();
-        for(let i = flechas.length -1; i>=0 ; i--){
-            if(flechas[i].id === nuevaConexion.id){
-                flechas.splice(i, 1);
-                break;
-            }
-        }
-        layer.batchDraw();
+        eliminarConexionPorId(nuevaConexion.id);
         
     });
 
@@ -299,4 +313,23 @@ export function buscarPuntoCercano(posMouse){
     });
 
     return puntoMasCercano;
+}
+
+export function eliminarConexionPorId(flechaId){
+    const flechaAEliminar = stage.findOne('#' + flechaId);
+    if(flechaAEliminar){
+        flechaAEliminar.destroy();
+        for(let i = flechas.length -1; i>=0 ; i--){
+            if(flechas[i].id === flechaId){
+                flechas.splice(i, 1);
+                break;
+            }
+        }
+        layer.batchDraw();
+    }
+
+    socket.send(JSON.stringify({
+        tipo: "eliminar_conexion",
+        id: flechaId,
+    }));
 }

@@ -1,8 +1,10 @@
 import { actualizarPresencia } from './main.js';
-import { crearCuadrado, flechas } from './componentes/nodo.js';
+import { crearCuadrado } from './componentes/nodo.js';
 import { stage, layer } from './main.js';
-import { obtenerColorTexto } from './utils.js';
+import { obtenerColorTexto, actualizarCursorAjeno } from './utils.js';
 import { trasformar } from './main.js';
+import { eliminarConexionesdelNodo, actualizarPuntosyFlechasDelNodo } from './componentes/nodo.js';
+import { crearConexion, eliminarConexionPorId } from './componentes/flecha.js';
 
 const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
 export const nombreUsuario = prompt("Ingresa tu nombre de usuario:") || "Anonimo";
@@ -24,6 +26,17 @@ export function init_socket(){
                     crearCuadrado(obj.x, obj.y, obj.text, obj.id, false, obj.w, obj.h, obj.color);
                 }
             });
+
+            data.flechas.forEach(flecha => {
+                crearConexion(
+                    flecha.origenId,
+                    flecha.origenPuntoId,
+                    flecha.destinoId,
+                    flecha.destinoPuntoId,
+                    flecha.id,
+                    false
+                );
+            });
         }
 
         if(data.tipo === "crear_cuadrado"){
@@ -34,6 +47,9 @@ export function init_socket(){
             const nodoAjeno = stage.findOne('#' + data.id);
 
             if(nodoAjeno){
+
+                actualizarPuntosyFlechasDelNodo(data.id);
+
                 nodoAjeno.position({
                     x: data.x,
                     y: data.y
@@ -46,12 +62,7 @@ export function init_socket(){
         if(data.tipo === "eliminar_nodo"){
             const nodoDelete = stage.findOne('#' + data.id);
             if(nodoDelete){
-                for(let i = flechas.length -1; i>=0 ; i--){
-                    if(flechas[i].nodoInicio === nodoDelete || flechas[i].nodoFin === nodoDelete){
-                        flechas[i].destroy();
-                        flechas.splice(i, 1);
-                    }
-                }
+                eliminarConexionesdelNodo(data.id);
 
                 nodoDelete.destroy();
 
@@ -84,6 +95,8 @@ export function init_socket(){
                     label.y((data.h - label.height()) / 2);
                 }
 
+                actualizarPuntosyFlechasDelNodo(data.id);
+
                 layer.batchDraw();
             }
         }
@@ -102,6 +115,8 @@ export function init_socket(){
                         label.y((rect.height() - label.height()) / 2);
                     }
                 }
+
+                actualizarPuntosyFlechasDelNodo(data.id);
 
                 layer.batchDraw();
             }
@@ -134,6 +149,26 @@ export function init_socket(){
                 layer.batchDraw();
             }
         }
+
+        if(data.tipo === "crear_conexion"){
+            crearConexion(
+                data.origenId,
+                data.origenPuntoId,
+                data.destinoId,
+                data.destinoPuntoId,
+                data.id,
+                false
+            );
+        }
+
+        if(data.tipo === "eliminar_conexion"){
+            eliminarConexionPorId(data.id);
+        }
+
+        if(data.tipo === "mover_cursor"){
+            actualizarCursorAjeno(data);
+        }
+
     };
 
 }
