@@ -153,11 +153,13 @@ export function crearConexion(origenId, origenPuntoId, destinoId, destinoPuntoId
     if(debeEmitir){
         socket.send(JSON.stringify({
             tipo: "crear_conexion",
-            origenId: origenId,
-            origenPuntoId: origenPuntoId,
-            destinoId: destinoId,
-            destinoPuntoId: destinoPuntoId,
-            id: nuevaConexion.id,
+            conexion: {
+                origenId: origenId,
+                origenPuntoId: origenPuntoId,
+                destinoId: destinoId,
+                destinoPuntoId: destinoPuntoId,
+                id: nuevaConexion.id,
+            }
         }));
     }
 
@@ -170,7 +172,7 @@ export function crearConexion(origenId, origenPuntoId, destinoId, destinoPuntoId
         pointerWidth: 10,
         lineCap: 'round',
         lineJoin: 'round',
-        tension: 0.1,
+        tension: 0.05,
         hitStrokeWidth: 15,
     });
 
@@ -205,6 +207,9 @@ export function crearConexion(origenId, origenPuntoId, destinoId, destinoPuntoId
     actualizarPosicionFlecha(nuevaConexion);
 }
 
+const space = 5;
+const sep = space + 20;
+
 export function actualizarPosicionFlecha(conexion){
 
     const nodoOrigen = stage.findOne('#' + conexion.origenId);
@@ -223,23 +228,78 @@ export function actualizarPosicionFlecha(conexion){
     let puntoInicioId = conexion.origenPuntoId;
     let puntoFinId = conexion.destinoPuntoId;
 
-    // Ajustar puntos para evitar cruces innecesarios
-    if(inicio.y < fin.y - 30 && puntoInicioId === 'top'){
-        puntoInicioId = 'bottom';
-        puntoFinId = 'top';
-    }
-    if(inicio.y > fin.y + 30 && puntoInicioId === 'bottom'){
-        puntoInicioId = 'top';
-        puntoFinId = 'bottom';
-    }
-    if(inicio.x < fin.x - 30 && puntoInicioId === 'left'){
-        puntoInicioId = 'right';
-        puntoFinId = 'left';
-    }
-    if(inicio.x > fin.x + 30 && puntoInicioId === 'right'){
-        puntoInicioId = 'left';
-        puntoFinId = 'right';
-    }        
+    let orientacion = 'auto';
+    let action = 'none';
+
+    if(puntoInicioId){
+        let state = false;
+
+        //Correccion horizontal (del destino)
+        if(obtenerPosPunto(nodoOrigen, 'right').x < obtenerPosPunto(nodoDestino, 'left').x - sep){
+            puntoFinId = 'left';
+            orientacion = 'horizontal';
+            action = 'bajar';
+        }
+        else if(obtenerPosPunto(nodoOrigen, 'left').x > obtenerPosPunto(nodoDestino, 'right').x + sep){
+            puntoFinId = 'right';
+            orientacion = 'horizontal';
+            action = 'bajar';
+        }else{
+            orientacion = 'horizontal';
+            action = 'none';
+            if(obtenerPosPunto(nodoOrigen, 'bottom').y < obtenerPosPunto(nodoDestino, 'top').y - 2*sep){
+                puntoFinId = 'top';
+            }else if(obtenerPosPunto(nodoOrigen, 'top').y > obtenerPosPunto(nodoDestino, 'bottom').y + 2*sep){
+                puntoFinId = 'bottom';
+            }else{
+                state = true;
+
+                if(obtenerPosPunto(nodoDestino, 'right').x < obtenerPosPunto(nodoOrigen, 'bottom').x || obtenerPosPunto(nodoDestino, 'left').x > obtenerPosPunto(nodoOrigen, 'bottom').x){
+                    puntoFinId = puntoInicioId = 'bottom';
+                    if(obtenerPosPunto(nodoOrigen, 'bottom').y < obtenerPosPunto(nodoDestino, 'bottom').y){
+                        action = 'bajar';
+                    }else{
+                        action = 'subir';
+                    }
+                }
+                else{
+                    puntoInicioId = puntoFinId = 'left';
+                    if(obtenerPosPunto(nodoOrigen, 'left').x < obtenerPosPunto(nodoDestino, 'left').x){
+                        action = 'bajar';
+                    }else{
+                        action = 'subir';
+                    }
+                }
+            }
+        }
+
+        //Correcion vertical (del origen)
+        if(!state){
+            if(obtenerPosPunto(nodoOrigen, 'bottom').y + sep < obtenerPosPunto(nodoDestino, 'top').y){
+                puntoInicioId = 'bottom';
+            }else if(obtenerPosPunto(nodoOrigen, 'top').y - sep > obtenerPosPunto(nodoDestino, 'bottom').y){
+                puntoInicioId = 'top';
+            }else{
+                if(obtenerPosPunto(nodoOrigen, 'right').x < obtenerPosPunto(nodoDestino, 'left').x - 2*sep){
+                    puntoInicioId = 'right';
+                    action = 'none';
+                    orientacion = 'vertical';
+                }else if(obtenerPosPunto(nodoOrigen, 'left').x > obtenerPosPunto(nodoDestino, 'right').x + 2*sep){
+                    puntoInicioId = 'left';
+                    action = 'none';
+                    orientacion = 'vertical';
+                }else{
+                    puntoFinId = puntoInicioId = 'bottom';
+
+                    if(obtenerPosPunto(nodoOrigen, 'bottom').y > obtenerPosPunto(nodoDestino, 'bottom').y){
+                        action = 'subir';
+                    }else{
+                        action = 'bajar';
+                    }
+                }
+            }
+        }
+    }   
 
     inicio = obtenerPosPunto(nodoOrigen, puntoInicioId);
     fin = obtenerPosPunto(nodoDestino, puntoFinId);
@@ -248,32 +308,31 @@ export function actualizarPosicionFlecha(conexion){
 
     let primeraParte = null;
     if(puntoInicioId === 'top'){
-        primeraParte = [inicio.x, inicio.y - 10, inicio.x, inicio.y - 40];
+        primeraParte = [inicio.x, inicio.y - space, inicio.x, inicio.y - sep];
     } else if(puntoInicioId === 'bottom'){
-        primeraParte = [inicio.x, inicio.y + 10, inicio.x, inicio.y + 40];
+        primeraParte = [inicio.x, inicio.y + space, inicio.x, inicio.y + sep];
     } else if(puntoInicioId === 'left'){
-        primeraParte = [inicio.x - 10, inicio.y, inicio.x - 40, inicio.y];
+        primeraParte = [inicio.x - space, inicio.y, inicio.x - sep, inicio.y];
     } else if(puntoInicioId === 'right'){
-        primeraParte = [inicio.x + 10, inicio.y, inicio.x + 40, inicio.y];
+        primeraParte = [inicio.x + space, inicio.y, inicio.x + sep, inicio.y];
     }
     
     let ultimaParte = null;
     if(puntoFinId === 'top'){
-        ultimaParte = [fin.x, fin.y - 40, fin.x, fin.y - 10];
+        ultimaParte = [fin.x, fin.y - sep, fin.x, fin.y - space];
     } else if(puntoFinId === 'bottom'){
-        ultimaParte = [fin.x, fin.y + 40, fin.x, fin.y + 10];
+        ultimaParte = [fin.x, fin.y + sep, fin.x, fin.y + space];
     } else if(puntoFinId === 'left'){
-        ultimaParte = [fin.x - 40, fin.y, fin.x - 10, fin.y];
+        ultimaParte = [fin.x - sep, fin.y, fin.x - space, fin.y];
     } else if(puntoFinId === 'right'){
-        ultimaParte = [fin.x + 40, fin.y, fin.x + 10, fin.y];
+        ultimaParte = [fin.x + sep, fin.y, fin.x + space, fin.y];
     }
-
-    const orientacion = (puntoInicioId === 'top' || puntoInicioId === 'bottom') ? 'vertical' : 'horizontal';
 
     const puntosIntermedios = calcularPuntos(
         {x: primeraParte[2], y: primeraParte[3]},
         {x: ultimaParte[0], y: ultimaParte[1]},
-        orientacion
+        orientacion,
+        action
     );
 
     const puntosFinales = primeraParte.concat(puntosIntermedios).concat(ultimaParte);

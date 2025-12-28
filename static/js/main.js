@@ -1,7 +1,8 @@
-import { socket, init_socket, myColor, nombreUsuario } from './socket.js';
-import { flechas } from './componentes/nodo.js';
 
 init_socket();
+
+import { socket, init_socket, myColor, nombreUsuario } from './socket.js';
+import { actualizarPuntosyFlechasDelNodo } from './componentes/nodo.js';
 
 let myNode = null;
 
@@ -18,9 +19,8 @@ export {stage, layer, socket, myColor, myNode, origenDatos, GRID_SIZE, colorPick
 
 export {estaOcupado, actualizarPresencia};
 
-import { crearCuadrado } from './componentes/nodo.js';
-import { obtenerCentro, cursoresAjenos, eliminarCursorAjeno } from './utils.js';
-import { actualizarPosicionFlecha } from './componentes/flecha.js';
+import { crearCuadrado, editandoTexto } from './componentes/nodo.js';
+import { obtenerCentro, eliminarCursorAjeno } from './utils.js';
 import { dibujandoConexion, flechaTemporal } from './componentes/flecha.js';
 import { eliminarNodoLocalYRemoto } from './componentes/nodo.js';
 import { mostrarPaleta } from './componentes/nodo.js';
@@ -29,7 +29,7 @@ import { obtenerColorTexto } from './utils.js';
 
 socket.addEventListener('open', () => {
     socket.send(JSON.stringify({
-        tipo: "color",
+        tipo: "asignar_color_user",
         color: myColor
     }));
 });
@@ -41,6 +41,7 @@ const stage = new Konva.Stage({
     container: 'canvas-container',
     width: window.innerWidth,
     height: window.innerHeight,
+    draggable: false,
 });
 
 const layer = new Konva.Layer();
@@ -73,7 +74,7 @@ const trasformar = new Konva.Transformer({
 export let jugadoresActuales = [];
 
 function estaOcupado(nodo){
-    return jugadoresActuales.some(user => user.objetc === nodo && nombreUsuario != user.nombre);
+    return jugadoresActuales.some(user => user.objeto === nodo && nombreUsuario != user.nombre);
 }
 
 function actualizarPresencia(usuarios){
@@ -92,6 +93,7 @@ function actualizarPresencia(usuarios){
     stage.find('.fondo-rect').forEach(rect => {
         rect.stroke('#333');
         rect.strokeWidth(2);
+        rect.getParent().draggable(true);
     });
 
     usuarios.forEach(user => {
@@ -103,8 +105,8 @@ function actualizarPresencia(usuarios){
         div.title = user.nombre;
         div.style.background = user.color;
 
-        if(user.objetc){
-            const nodo = stage.findOne('#' + user.objetc);
+        if(user.objeto){
+            const nodo = stage.findOne('#' + user.objeto);
 
             if(nodo){
                 const rect = nodo.findOne('.fondo-rect');
@@ -116,7 +118,8 @@ function actualizarPresencia(usuarios){
             }
 
             if(user.nombre == nombreUsuario){
-                myNode = user.objetc;
+                myNode = user.objeto;
+                nodo.draggable(true);
             }
         }
 
@@ -161,6 +164,9 @@ window.addEventListener('keydown', (e) => {
 
     //Mover cuadro con las flechas del teclado
     if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)){
+
+        if(editandoTexto) return;
+
         const nodosSelected = trasformar.nodes();
         nodosSelected.forEach(nodo => {
             if(!estaOcupado(nodo.id())){
@@ -178,13 +184,8 @@ window.addEventListener('keydown', (e) => {
                 });
                 mostrarPaleta(nodo);
 
-                flechas.forEach(flecha => {
-                    if(flecha.origenId === nodo.id() || flecha.destinoId === nodo.id()){
-                        actualizarPosicionFlecha(flecha);
-                    }
-                });
+                actualizarPuntosyFlechasDelNodo(nodo.id());
 
-                layer.batchDraw();
                 socket.send(JSON.stringify({
                     tipo: "mover_nodo",
                     id: nodo.id(),
@@ -212,7 +213,7 @@ document.querySelectorAll('.color-dot').forEach(dot => {
 
             layer.batchDraw();
             socket.send(JSON.stringify({
-                tipo: "cambiar_color",
+                tipo: "cambiar_color_nodo",
                 id: nodoID,
                 color: dot.dataset.color
             }));
@@ -233,8 +234,8 @@ stage.on('click', (e) => {
         trasformar.nodes([]);
 
         socket.send(JSON.stringify({
-            tipo: "seleccionar",
-            objetc: null
+            tipo: "seleccionar_nodo",
+            id: null
         }));
 
         layer.draw();
@@ -245,7 +246,7 @@ stage.on('click', (e) => {
 });
 
 let ultimoEnvio = 0;
-const FRECUENCIA_MS = 50;
+const FRECUENCIA_MS = 30;
 
 stage.on('mousemove', () => {
 
@@ -297,7 +298,16 @@ stage.on('mousemove', () => {
 
 });
 
+stage.on('mousedown', (e) => {
+    if(e.target === stage){
+        stage.container().style.cursor = 'grabbing';
+    }
+});
+
 stage.on('mouseup', (e) => {
+
+    stage.container().style.cursor = 'default';
+
     if(!dibujandoConexion) return;
 
     const posMouse = stage.getPointerPosition();

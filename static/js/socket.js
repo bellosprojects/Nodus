@@ -6,10 +6,25 @@ import { trasformar } from './main.js';
 import { eliminarConexionesdelNodo, actualizarPuntosyFlechasDelNodo } from './componentes/nodo.js';
 import { crearConexion, eliminarConexionPorId } from './componentes/flecha.js';
 
+function gestionarIDDiagrama(){
+    const urlParams = new URLSearchParams(window.location.search);
+    let diagramaId = urlParams.get('d');
+    
+    if(!diagramaId || diagramaId.length !== 10){
+        diagramaId = Math.random().toString(36).substring(2,12);
+        
+        const newUrl = `${window.location.origin}${window.location.pathname}?d=${diagramaId}`;
+        window.history.replaceState({path: newUrl}, '', newUrl);
+    }
+    
+    return diagramaId;
+}
+
 const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
 export const nombreUsuario = prompt("Ingresa tu nombre de usuario:") || "Anonimo";
-export const socket = new WebSocket(`${protocol}//${window.location.host}/ws/${nombreUsuario}`);
+export const socket = new WebSocket(`${protocol}//${window.location.host}/ws/${gestionarIDDiagrama()}/${nombreUsuario}`);
 export const myColor = `rgb(${Math.random()*50 + 70},${Math.random()*80 + 30},${Math.random()*120})`;
+
 
 export function init_socket(){
 
@@ -21,13 +36,11 @@ export function init_socket(){
         }
 
         if(data.tipo === "estado_inicial"){
-            data.objetos.forEach(obj => {
-                if(obj.type === "square"){
-                    crearCuadrado(obj.x, obj.y, obj.text, obj.id, false, obj.w, obj.h, obj.color);
-                }
+            data.nodos.forEach(obj => {
+                    crearCuadrado(obj.x, obj.y, obj.texto, obj.id, false, obj.w, obj.h, obj.color);
             });
 
-            data.flechas.forEach(flecha => {
+            data.conexiones.forEach(flecha => {
                 crearConexion(
                     flecha.origenId,
                     flecha.origenPuntoId,
@@ -39,8 +52,17 @@ export function init_socket(){
             });
         }
 
-        if(data.tipo === "crear_cuadrado"){
-            crearCuadrado(data.x,data.y,data.text,data.id,false,data.w,data.h,data.color);
+        if(data.tipo === "nuevo_nodo"){
+            const nodo = data.nodo;
+            crearCuadrado(nodo.x,
+                nodo.y,
+                nodo.texto,
+                nodo.id,
+                false,
+                nodo.w,
+                nodo.h,
+                nodo.color
+            );
         }
 
         if(data.tipo === "mover_nodo"){
@@ -48,13 +70,12 @@ export function init_socket(){
 
             if(nodoAjeno){
 
-                actualizarPuntosyFlechasDelNodo(data.id);
-
                 nodoAjeno.position({
                     x: data.x,
                     y: data.y
                 });
                 
+                actualizarPuntosyFlechasDelNodo(data.id);
                 layer.batchDraw();
             }
         }
@@ -74,7 +95,7 @@ export function init_socket(){
             }
         }
 
-        if(data.tipo === "resize_nodo"){
+        if(data.tipo === "redimensionar_nodo"){
             const nodo = stage.findOne('#' + data.id);
             if(nodo){
                 const rect = nodo.findOne('.fondo-rect');
@@ -101,14 +122,14 @@ export function init_socket(){
             }
         }
 
-        if(data.tipo === "cambiar_texto"){
+        if(data.tipo === "cambiar_texto_nodo"){
             const nodo = stage.findOne('#' + data.id);
             if(nodo){
                 const rect = nodo.findOne('.fondo-rect');
                 const label = nodo.findOne('.texto-nodo');
 
                 if(label){
-                    label.text(data.text);
+                    label.text(data.texto);
 
                     if(rect){
                         rect.height(data.h);
@@ -128,7 +149,7 @@ export function init_socket(){
             console.warn(`Este nodo ya esta siendo ocupado por ${data.por}`)
         }
 
-        if(data.tipo === "cambiar_color"){
+        if(data.tipo === "cambiar_color_nodo"){
             const nodo = stage.findOne('#' + data.id);
             if(nodo){
                 const rect = nodo.findOne('.fondo-rect');
@@ -151,12 +172,13 @@ export function init_socket(){
         }
 
         if(data.tipo === "crear_conexion"){
+            const conexion = data.conexion;
             crearConexion(
-                data.origenId,
-                data.origenPuntoId,
-                data.destinoId,
-                data.destinoPuntoId,
-                data.id,
+                conexion.origenId,
+                conexion.origenPuntoId,
+                conexion.destinoId,
+                conexion.destinoPuntoId,
+                conexion.id,
                 false
             );
         }

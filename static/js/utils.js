@@ -20,38 +20,66 @@ export function obtenerColorTexto(colorHex){
     return brightness > 0.5 ? 'black' : 'white';
 }
 
-export function calcularPuntos(inicio, fin, orientacion = 'auto'){
+export function calcularPuntos(inicio, fin, orientacion = 'auto', action = 'none'){
 
-    const dx = fin.x - inicio.x;
-    const dy = fin.y - inicio.y;
+    const dy = inicio.y - fin.y;
+    const dx = inicio.x - fin.x;
 
     const offsetX = dx / 2;
     const offsetY = dy / 2;
 
-    if(orientacion === 'auto'){
-        if(Math.abs(dx) < Math.abs(dy)){
-            orientacion = 'vertical';
-        } else {
-            orientacion = 'horizontal';
+    if(orientacion === 'horizontal'){
+        if(action === 'bajar'){
+            return [
+                inicio.x, inicio.y,
+                inicio.x, fin.y,
+                fin.x, fin.y
+            ];
         }
+        if(action == 'none'){
+            return [
+                inicio.x, inicio.y,
+                inicio.x, fin.y + offsetY,
+                fin.x, fin.y + offsetY,
+                fin.x, fin.y
+            ];
+        }
+        return [
+            inicio.x, inicio.y,
+            fin.x, inicio.y,
+            fin.x, fin.y
+        ];
     }
 
     if(orientacion === 'vertical'){
-
+        if(action === 'bajar'){
+            return [
+                inicio.x, inicio.y,
+                fin.x, inicio.y,
+                fin.x, fin.y,
+            ];
+        }
+        if(action === 'none'){
+            return [
+                inicio.x, inicio.y,
+                inicio.x - offsetX, inicio.y,
+                inicio.x - offsetX , fin.y,
+                fin.x, fin.y,
+            ]
+        }
         return [
             inicio.x, inicio.y,
-            inicio.x, inicio.y + offsetY,
-            fin.x, fin.y - offsetY,
-            fin.x, fin.y
-        ]
+            inicio.x, fin.y,
+            fin.x, fin.y,
+        ];
     }
 
     return [
         inicio.x, inicio.y,
-        inicio.x + offsetX, inicio.y,
-        fin.x - offsetX, fin.y,
-        fin.x, fin.y
-    ]
+        inicio.x - offsetX, inicio.y,
+        inicio.x - offsetX , fin.y,
+        fin.x, fin.y,
+    ];
 }
 
 export function obtenerCentro(){
@@ -121,7 +149,7 @@ export function actualizarCursorAjeno(data){
 
     tweensCursores[nombre] = new Konva.Tween({
         node: cursor,
-        duration: 0.05,
+        duration: 0.01,
         x: x,
         y: y,
         easing: Konva.Easings.Linear,

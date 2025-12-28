@@ -9,6 +9,8 @@ let flechas = [];
 
 export { flechas };
 
+export let editandoTexto = false;
+
 export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = null, color = null) {
 
     const newId = id || "nodo-" + Date.now();
@@ -41,6 +43,7 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
         fill: obtenerColorTexto(rect.fill()),
         wrap: 'word',
         listening: false,
+        fontFamily: 'Calibri'
     });
     
     label.y((rect.height() - label.height()) / 2);
@@ -51,14 +54,13 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
     crearPuntosConexion(grupo);
     
     grupo.on('dragstart', () => {
-
         colorPicker.style.display = 'none';
 
         trasformar.nodes([grupo]);
         layer.batchDraw();
     });
 
-    grupo.on('click', (e) => {
+    grupo.on('click mousedown', (e) => {
 
         if(!estaOcupado(grupo.id())){
             trasformar.nodes([grupo]);
@@ -66,8 +68,8 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
             mostrarPaleta(grupo);
 
             socket.send(JSON.stringify({
-                tipo: "seleccionar",
-                objetc: grupo.id()
+                tipo: "seleccionar_nodo",
+                id: grupo.id()
             }));
         }
 
@@ -112,13 +114,15 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
         trasformar.nodes([grupo]);
 
         const mensaje = {
-            tipo: "resize_nodo",
+            tipo: "redimensionar_nodo",
             id: grupo.id(),
             x: grupo.x(),
             y: grupo.y(),
             w: rect.width(),
             h: rect.height()
         };
+
+        mostrarPaleta(grupo);
 
         if(socket.readyState === WebSocket.OPEN){
             socket.send(JSON.stringify(mensaje));
@@ -168,22 +172,28 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
             textarea.style.left = areaPos.x + 'px';
             textarea.style.width = rect.width() -20 + 'px';
             textarea.style.height = rect.height() - 20 + 'px';
-            textarea.style.fontSize = rect.fontSize + 'px';
+            textarea.style.fontSize = '18px';
             textarea.style.padding = '10px';
             textarea.style.border = 'none';
             textarea.style.borderRadius = '8px';
             textarea.style.resize = 'none';
             textarea.style.overflow = 'hidden';
             textarea.style.outline = 'none';
-            textarea.style.fontFamily = 'sans-serif';
+            textarea.style.fontFamily = 'Calibri';
             textarea.style.margin = '0px';
             textarea.style.background = 'rgb(255, 255, 255)';
             textarea.style.textAlign = 'center';
+            textarea.addEventListener('focus', () => {
+                editandoTexto = true;
+            });
             textarea.focus();
+
 
             let isSaving = false;
 
             function guardarCambios(){
+
+                editandoTexto = false;
 
                 if(isSaving) return;
                 isSaving = true;
@@ -200,9 +210,9 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
                 textarea.remove();
 
                 const mensaje = {
-                    tipo: "cambiar_texto",
+                    tipo: "cambiar_texto_nodo",
                     id: grupo.id(),
-                    text: label.text(),
+                    texto: label.text(),
                     h: rect.height()
                 };
 
@@ -244,6 +254,16 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
         }
     });
 
+    grupo.on('mouseover', () => {
+        if(estaOcupado(grupo.id())){
+            document.body.style.cursor = 'not-allowed';
+        }
+    });
+
+    grupo.on('mouseout', () => {
+        document.body.style.cursor = 'default';
+    });
+
 
     grupo.on('mousedown', () => {
 
@@ -258,13 +278,9 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
 
         if(estaOcupado(grupo.id())){
             grupo.draggable(false);
-        }else{
+        }
+        else{
             grupo.draggable(true);
-
-            socket.send(JSON.stringify({
-            tipo: "seleccionar",
-            objetc: grupo.id()
-        }));
         }
     });
 
@@ -355,14 +371,16 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
 
     if(debeEmitir){
          const mensaje = {
-            tipo: "crear_cuadrado",
-            id: newId,
-            type: "square",
-            x: x,
-            y: y,
-            w: GRID_SIZE * 5,
-            h: GRID_SIZE * 3,
-            text: texto
+            tipo: "nuevo_nodo",
+            nodo: {
+                id: newId,
+                x: x,
+                y: y,
+                w: GRID_SIZE * 5,
+                h: GRID_SIZE * 3,
+                texto: texto,
+                color: rect.fill()
+            }
          };
          socket.send(JSON.stringify(mensaje));
     }
