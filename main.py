@@ -3,8 +3,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi import WebSocket, WebSocketDisconnect
 from pydantic import BaseModel
 from typing import Dict
+from database import get_conection, init_db
+from logger_config import setup_logger
 
 app = FastAPI()
+log = setup_logger("SERVER")
+#init_db()
 
 class Nodo(BaseModel):
     id: str
@@ -173,7 +177,7 @@ class ConnectionManager:
 
             if not room.usuarios and not room.conexiones and not room.nodos:
                 del self.rooms[room_id]
-                print(f"Sala {room_id} eliminada por estar vacia y sin contenido.")
+                log.info(f"sala {room_id} eliminada por estar vacia y sin contenido.")
             
             else:
                 await self.send_user_list(room_id)

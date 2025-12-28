@@ -23,7 +23,16 @@ function gestionarIDDiagrama(){
 const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
 export const nombreUsuario = prompt("Ingresa tu nombre de usuario:") || "Anonimo";
 export const socket = new WebSocket(`${protocol}//${window.location.host}/ws/${gestionarIDDiagrama()}/${nombreUsuario}`);
-export const myColor = `rgb(${Math.random()*50 + 70},${Math.random()*80 + 30},${Math.random()*120})`;
+
+function generarColor(){
+    const rojo = Math.random()*50 + 70;
+    const verde = rojo * Math.random() + 40 + Math.random()*120;
+    const azul = Math.max(20, verde * Math.random() - 30);
+
+    return `rgb(${rojo},${verde},${azul}})`;
+}
+
+export const myColor = generarColor();
 
 
 export function init_socket(){
