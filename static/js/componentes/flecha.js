@@ -220,7 +220,7 @@ export function crearConexion(origenId, origenPuntoId, destinoId, destinoPuntoId
 
     nuevaConexion.linea = flechaReal;
     layer.add(flechaReal);
-    flechaReal.moveToBottom();
+    //flechaReal.moveToBottom();
     flechas.push(nuevaConexion);
 
     cancelarDibujoConexion();
@@ -230,6 +230,80 @@ export function crearConexion(origenId, origenPuntoId, destinoId, destinoPuntoId
 
 const space = 5;
 const sep = space + 20;
+const top = 'top';
+const bottom = 'bottom';
+const left = 'left';
+const right = 'right';
+const vertical = 'vertical';
+const horizontal = 'horizontal';
+const subir = 'subir';
+const bajar = 'bajar';
+
+const T = 1, B = 2, L = 4, R = 8;
+
+function actualizarPosicionFlechaDinamica(conexion){
+    const oN = stage.findOne('#' + conexion.origenId);
+    const dN = stage.findOne('#' + conexion.destinoId);
+
+    const o = { x: oN.x(), y: oN.y(), w: oN.width(), h: oN.height() };
+    const d = { x: dN.x(), y: dN.y(), w: dN.width(), h: dN.height() };
+
+    const oCx = o.x + o.w /2;
+    const oCy = o.y + o.h /2;
+    const dCx = d.x + d.w / 2;
+    const dCy = d.y + d.h / 2;
+
+    const dx = dCx - oCx;
+    const dy = dCy - oCy;
+
+    let pI, pF;
+
+    if(Math.abs(dx) > Math.abs(dy)){
+        if (dx > 0) { pI = R; pF = L; }
+        else { pI = L; pF = R; }
+    } else {
+        if (dy > 0) { pI = B; pF = T; }
+        else { pI = T; pF = B; }
+    }
+
+    const inicio = getCoord(o, pI);
+    const fin = getCoord(d, pF);
+
+    const p1 = getOffset(inicio, pI, 5);
+    const p2 = getOffset(inicio, pI, sep);
+    const p4 = getOffset(fin, pF, sep);
+    const p5 = getOffset(fin, pF, 5);
+
+    let codo;
+    if (pI & (L | R)){
+        codo = [p2.x, p2.y, p2.x, p4.y];
+    } else {
+        codo = [p2.x, p2.y, dCy, p2.y];
+    }
+
+    const puntosFinales = [
+        inicio.x, inicio.y,
+        ...codo,
+        fin.x, fin.y
+    ];
+
+    conexion.linea.points(puntosFinales);
+    layer.batchDraw();
+}
+
+function getCoord(n, dir){
+    if (dir === T) return { x: n.x + n.w/2, y: n.y};
+    if (dir === B) return { x: n.x + n.w/2, y: n.y + n.h};
+    if (dir === L) return { x: n.x, y: n.y + n.h/2};
+    return { x: n.x + n.w, y: n.y + n.h/2};
+}
+
+function getOffset(p, dir, dist){
+    if (dir === T) return { x: p.x, y: p.y - dist };
+    if (dir === B) return { x: p.x, y: p.y + dist };
+    if (dir === L) return { x: p.x - dist, y: p.y };
+    return { x: p.x + dist, y: p.y };
+}
 
 export function actualizarPosicionFlecha(conexion){
 
@@ -253,34 +327,43 @@ export function actualizarPosicionFlecha(conexion){
     let action = 'none';
     
     let puntoExtra = [];
+    const OrigenRight = obtenerPosPunto(nodoOrigen, right);
+    const OrigenLeft = obtenerPosPunto(nodoOrigen, left);
+    const OrigenTop = obtenerPosPunto(nodoOrigen, top);
+    const OrigenBottom = obtenerPosPunto(nodoOrigen, bottom);
+    const DestinoRight = obtenerPosPunto(nodoDestino, right);
+    const DestinoLeft = obtenerPosPunto(nodoDestino, left);
+    const DestinoTop = obtenerPosPunto(nodoDestino, top);
+    const DestinoBottom = obtenerPosPunto(nodoDestino, bottom);
+
     //Auto-flechas (dinamicas)
     //Aqui se seleccionan automaticamente los puntoId
     if(conexion.tipo == 'dinamica'){
         let state = false;
 
         //Correccion horizontal (del destino)
-        if(obtenerPosPunto(nodoOrigen, 'right').x < obtenerPosPunto(nodoDestino, 'left').x - sep){
+        if(OrigenRight.x < DestinoLeft.x - sep){
             puntoFinId = 'left';
             orientacion = 'horizontal';
             action = 'bajar';
         }
-        else if(obtenerPosPunto(nodoOrigen, 'left').x > obtenerPosPunto(nodoDestino, 'right').x + sep){
+        else if(OrigenLeft.x > DestinoRight.x + sep){
             puntoFinId = 'right';
             orientacion = 'horizontal';
             action = 'bajar';
         }else{
             orientacion = 'horizontal';
             action = 'none';
-            if(obtenerPosPunto(nodoOrigen, 'bottom').y < obtenerPosPunto(nodoDestino, 'top').y - 2*sep){
+            if(OrigenBottom.y < DestinoTop.y - 2*sep){
                 puntoFinId = 'top';
-            }else if(obtenerPosPunto(nodoOrigen, 'top').y > obtenerPosPunto(nodoDestino, 'bottom').y + 2*sep){
+            }else if(OrigenTop.y > DestinoBottom.y + 2*sep){
                 puntoFinId = 'bottom';
             }else{
                 state = true;
 
-                if(obtenerPosPunto(nodoDestino, 'right').x < obtenerPosPunto(nodoOrigen, 'bottom').x || obtenerPosPunto(nodoDestino, 'left').x > obtenerPosPunto(nodoOrigen, 'bottom').x){
+                if(DestinoRight.x < OrigenBottom.x || DestinoLeft.x > OrigenBottom.x){
                     puntoFinId = puntoInicioId = 'bottom';
-                    if(obtenerPosPunto(nodoOrigen, 'bottom').y < obtenerPosPunto(nodoDestino, 'bottom').y){
+                    if(OrigenBottom.y < DestinoBottom.y){
                         action = 'bajar';
                     }else{
                         action = 'subir';
@@ -288,7 +371,7 @@ export function actualizarPosicionFlecha(conexion){
                 }
                 else{
                     puntoInicioId = puntoFinId = 'left';
-                    if(obtenerPosPunto(nodoOrigen, 'left').x < obtenerPosPunto(nodoDestino, 'left').x){
+                    if(OrigenLeft.x < DestinoLeft.x){
                         action = 'bajar';
                     }else{
                         action = 'subir';
@@ -299,23 +382,23 @@ export function actualizarPosicionFlecha(conexion){
 
         //Correcion vertical (del origen)
         if(!state){
-            if(obtenerPosPunto(nodoOrigen, 'bottom').y + sep < obtenerPosPunto(nodoDestino, 'top').y){
+            if(OrigenBottom.y + sep < DestinoTop.y){
                 puntoInicioId = 'bottom';
-            }else if(obtenerPosPunto(nodoOrigen, 'top').y - sep > obtenerPosPunto(nodoDestino, 'bottom').y){
+            }else if(OrigenTop.y - sep > DestinoBottom.y){
                 puntoInicioId = 'top';
             }else{
-                if(obtenerPosPunto(nodoOrigen, 'right').x < obtenerPosPunto(nodoDestino, 'left').x - 2*sep){
+                if(OrigenRight.x < DestinoLeft.x - 2*sep){
                     puntoInicioId = 'right';
                     action = 'none';
                     orientacion = 'vertical';
-                }else if(obtenerPosPunto(nodoOrigen, 'left').x > obtenerPosPunto(nodoDestino, 'right').x + 2*sep){
+                }else if(OrigenLeft.x > DestinoRight.x + 2*sep){
                     puntoInicioId = 'left';
                     action = 'none';
                     orientacion = 'vertical';
                 }else{
                     puntoFinId = puntoInicioId = 'bottom';
 
-                    if(obtenerPosPunto(nodoOrigen, 'bottom').y > obtenerPosPunto(nodoDestino, 'bottom').y){
+                    if(OrigenBottom.y > DestinoBottom.y){
                         action = 'subir';
                     }else{
                         action = 'bajar';
@@ -333,17 +416,19 @@ export function actualizarPosicionFlecha(conexion){
 
         //Primero verificamos conexiones reflexivas
         if(nodoOrigen == nodoDestino){
+
+            orientacion = 'vertical';
+            action = ((puntoInicioId == bottom && puntoFinId == top) ||
+            (puntoInicioId == top && puntoFinId == bottom) ||
+            (puntoInicioId == left && puntoFinId != right) ||
+            (puntoInicioId == right && puntoFinId != left))? subir : bajar;
+
             if(puntoInicioId == 'bottom'){
                 if(puntoFinId == 'top'){
                     puntoExtra = [
                         obtenerPosPunto(nodoOrigen, 'left').x - sep,
                         inicio.y + sep
                     ];
-                    orientacion = 'vertical';
-                    action = 'subir';
-                }else{
-                    orientacion = 'vertical';
-                    action = 'bajar'; 
                 }
             }else if(puntoInicioId == 'top'){
                 if(puntoFinId == 'bottom'){
@@ -351,11 +436,6 @@ export function actualizarPosicionFlecha(conexion){
                         obtenerPosPunto(nodoOrigen, 'right').x + sep,
                         inicio.y - sep
                     ];
-                    orientacion = 'vertical';
-                    action = 'subir';
-                }else{
-                    orientacion = 'vertical';
-                    action = 'bajar'; 
                 }
             }else if(puntoInicioId == 'left'){
                 if(puntoFinId == 'right'){
@@ -363,11 +443,6 @@ export function actualizarPosicionFlecha(conexion){
                         inicio.x - sep,
                         obtenerPosPunto(nodoOrigen, 'top').y - sep,
                     ];
-                    orientacion = 'vertical';
-                    action = 'bajar';
-                }else{
-                    orientacion = 'vertical';
-                    action = 'subir'; 
                 }
             }else{
                 if(puntoFinId == 'left'){
@@ -375,11 +450,6 @@ export function actualizarPosicionFlecha(conexion){
                         inicio.x + sep,
                         obtenerPosPunto(nodoOrigen, 'bottom').y + sep,
                     ];
-                    orientacion = 'vertical';
-                    action = 'bajar';
-                }else{
-                    orientacion = 'vertical';
-                    action = 'subir'; 
                 }
             }
         }

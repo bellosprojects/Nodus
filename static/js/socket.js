@@ -16,6 +16,12 @@ function gestionarIDDiagrama(){
         const newUrl = `${window.location.origin}${window.location.pathname}?d=${diagramaId}`;
         window.history.replaceState({path: newUrl}, '', newUrl);
     }
+
+    document.getElementById("share").addEventListener("click", ()=>{
+        navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}?d=${diagramaId}`);
+        alert("Enlace copiado");
+    });
+    document.getElementById("status").href = `${window.location.origin}/views/info.html?d=${diagramaId}`;
     
     return diagramaId;
 }

@@ -115,11 +115,11 @@ function actualizarPresencia(usuarios){
                     rect.stroke(user.color);
                     rect.strokeWidth(6);
                 }
-            }
 
-            if(user.nombre == nombreUsuario){
-                myNode = user.objeto;
-                nodo.draggable(true);
+                if(user.nombre == nombreUsuario){
+                    myNode = user.objeto;
+                    nodo.draggable(true);
+                }
             }
         }
 

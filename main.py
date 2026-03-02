@@ -35,6 +35,47 @@ class User(BaseModel):
     objeto: str = None
 
 class Diagram:
+    """
+    Represents a collaborative diagram containing nodes, connections, and users.
+    Attributes:
+        id (str): Unique identifier for the diagram.
+        nodos (Dict[str, Nodo]): Dictionary of nodes in the diagram, keyed by node ID.
+        conexiones (Dict[str, Conexion]): Dictionary of connections between nodes, keyed by connection ID.
+        usuarios (Dict[WebSocket, User]): Dictionary of users connected to the diagram, keyed by WebSocket.
+    Methods:
+        add_nodo(nodo: Nodo, id_: str):
+            Adds a node to the diagram.
+        add_conexion(conexion: Conexion, id_: str):
+            Adds a connection to the diagram.
+        add_user(user: User, id_: WebSocket):
+            Adds a user to the diagram.
+        del_nodo(id_: str):
+            Removes a node and its related connections from the diagram.
+        del_conexion(id_: str):
+            Removes a connection from the diagram.
+        del_user(user: WebSocket):
+            Removes a user from the diagram.
+        asignar_color_user(user: WebSocket, color: str):
+            Assigns a color to a user.
+        mover_nodo(id_: str, x: int, y: int):
+            Moves a node to a new position.
+        redimensionar_nodo(id_: str, x: int, y: int, w: int, h: int):
+            Resizes and moves a node.
+        cambiar_color_nodo(id_: str, color: str):
+            Changes the color of a node.
+        cambiar_texto_nodo(id_: str, texto: str, h: int):
+            Changes the text and height of a node.
+        seleccionar_nodo(nodoId: str, user: WebSocket):
+            Selects or deselects a node for a user.
+        esta_ocupado(nodoId: str, userOrder: WebSocket) -> bool:
+            Checks if a node is occupied by another user.
+        propietario(nodoId: str) -> Optional[str]:
+            Returns the name of the user who owns the node, if any.
+        mover_cursor(user: WebSocket, x: float, y: float):
+            Moves the cursor position for a user.
+        obtener_estado_inicial() -> dict:
+            Returns the initial state of the diagram, including nodes and connections.
+    """
     def __init__(self, id_):
         self.id = id_
         self.nodos: Dict[str, Nodo] = {}
@@ -53,6 +94,15 @@ class Diagram:
     def del_nodo(self, id_: str):
         if id_ in self.nodos:
             del self.nodos[id_]
+
+        conx_to_del = []
+
+        for conx in self.conexiones.values():
+            if conx.destinoId == id_ or conx.origenId == id_:
+                conx_to_del.append(conx)
+
+        for conx in conx_to_del:
+            self.del_conexion(conx.id)
 
     def del_conexion(self, id_: str):
         if id_ in self.conexiones:

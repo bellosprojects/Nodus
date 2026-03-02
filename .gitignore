@@ -3,4 +3,5 @@ __pycache__/
 *.pyc
 .vscode/
 instance/
-/server.log
+diagramas.db
+server.log
