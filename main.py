@@ -36,45 +36,45 @@ class User(BaseModel):
 
 class Diagram:
     """
-    Represents a collaborative diagram containing nodes, connections, and users.
-    Attributes:
-        id (str): Unique identifier for the diagram.
-        nodos (Dict[str, Nodo]): Dictionary of nodes in the diagram, keyed by node ID.
-        conexiones (Dict[str, Conexion]): Dictionary of connections between nodes, keyed by connection ID.
-        usuarios (Dict[WebSocket, User]): Dictionary of users connected to the diagram, keyed by WebSocket.
-    Methods:
+    Representa un diagrama colaborativo que contiene nodos, conexiones y usuarios.
+    Atributos:
+        id (str): identificador único del diagrama.
+        nodos (Dict[str, Nodo]): Diccionario de nodos en el diagrama, codificado por ID de nodo.
+        conexiones (Dict[str, Conexion]): Diccionario de conexiones entre nodos, codificado por ID de conexión.
+        usuarios (Dict[WebSocket, User]): Diccionario de usuarios conectados al diagrama, codificados por WebSocket.
+    Métodos:
         add_nodo(nodo: Nodo, id_: str):
-            Adds a node to the diagram.
+            Agrega un nodo al diagrama.
         add_conexion(conexion: Conexion, id_: str):
-            Adds a connection to the diagram.
-        add_user(user: User, id_: WebSocket):
-            Adds a user to the diagram.
-        del_nodo(id_: str):
-            Removes a node and its related connections from the diagram.
+            Agrega una conexión al diagrama.
+        add_user(usuario: Usuario, id_: WebSocket):
+            Agrega un usuario al diagrama.
+        del_nodo(id_: cadena):
+            Elimina un nodo y sus conexiones relacionadas del diagrama.
         del_conexion(id_: str):
-            Removes a connection from the diagram.
-        del_user(user: WebSocket):
-            Removes a user from the diagram.
-        asignar_color_user(user: WebSocket, color: str):
-            Assigns a color to a user.
+            Elimina una conexión del diagrama.
+        del_user(usuario: WebSocket):
+            Elimina un usuario del diagrama.
+        asignar_color_user(usuario: WebSocket, color: str):
+            Asigna un color a un usuario.
         mover_nodo(id_: str, x: int, y: int):
-            Moves a node to a new position.
+            Mueve un nodo a una nueva posición.
         redimensionar_nodo(id_: str, x: int, y: int, w: int, h: int):
-            Resizes and moves a node.
+            Cambia el tamaño y mueve un nodo.
         cambiar_color_nodo(id_: str, color: str):
-            Changes the color of a node.
+            Cambia el color de un nodo.
         cambiar_texto_nodo(id_: str, texto: str, h: int):
-            Changes the text and height of a node.
-        seleccionar_nodo(nodoId: str, user: WebSocket):
-            Selects or deselects a node for a user.
+            Cambia el texto y la altura de un nodo.
+        seleccionar_nodo(nodoId: str, usuario: WebSocket):
+            Selecciona o anula la selección de un nodo para un usuario.
         esta_ocupado(nodoId: str, userOrder: WebSocket) -> bool:
-            Checks if a node is occupied by another user.
-        propietario(nodoId: str) -> Optional[str]:
-            Returns the name of the user who owns the node, if any.
-        mover_cursor(user: WebSocket, x: float, y: float):
-            Moves the cursor position for a user.
+            Comprueba si un nodo está ocupado por otro usuario.
+        propietario(nodoId: str) -> Opcional[str]:
+            Devuelve el nombre del usuario propietario del nodo, si corresponde.
+        mover_cursor(usuario: WebSocket, x: flotante, y: flotante):
+            Mueve la posición del cursor para un usuario.
         obtener_estado_inicial() -> dict:
-            Returns the initial state of the diagram, including nodes and connections.
+            Devuelve el estado inicial del diagrama, incluidos los nodos y las conexiones.
     """
     def __init__(self, id_):
         self.id = id_
