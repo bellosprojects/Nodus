@@ -36,7 +36,6 @@ socket.addEventListener('open', () => {
 
 
 
-// 1. Crear el escenario
 const stage = new Konva.Stage({
     container: 'canvas-container',
     width: window.innerWidth,
@@ -229,19 +228,22 @@ window.addEventListener('resize', () => {
 stage.on('click', (e) => {
     if(e.target === stage){
 
-        colorPicker.style.display = 'none';
+        if(myNode != null){
 
-        trasformar.nodes([]);
+            colorPicker.style.display = 'none';
 
-        socket.send(JSON.stringify({
-            tipo: "seleccionar_nodo",
-            id: null
-        }));
+            trasformar.nodes([]);
 
-        layer.draw();
-        layerPresencia.draw();
+            socket.send(JSON.stringify({
+                tipo: "seleccionar_nodo",
+                id: null
+            }));
 
-        myNode = null;
+            layer.draw();
+            layerPresencia.draw();
+
+            myNode = null;
+        }
     }
 });
 

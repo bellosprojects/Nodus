@@ -21,7 +21,6 @@ function gestionarIDDiagrama(){
         navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}?d=${diagramaId}`);
         alert("Enlace copiado");
     });
-    document.getElementById("status").href = `${window.location.origin}/views/info.html?d=${diagramaId}`;
     
     return diagramaId;
 }
@@ -31,9 +30,9 @@ export const nombreUsuario = prompt("Ingresa tu nombre de usuario:") || "Anonimo
 export const socket = new WebSocket(`${protocol}//${window.location.host}/ws/${gestionarIDDiagrama()}/${nombreUsuario}`);
 
 function generarColor(){
-    const rojo = Math.random()*50 + 70;
-    const verde = rojo * Math.random() + 40 + Math.random()*120;
-    const azul = Math.max(20, verde * Math.random() - 30);
+    const rojo = Math.random()*50 + 20;
+    const verde = rojo * Math.random() + 10 + Math.random()*40;
+    const azul = Math.max(10, verde * Math.random() - 10 + Math.random() * 20);
 
     return `rgb(${rojo},${verde},${azul})`;
 }

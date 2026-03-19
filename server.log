@@ -720,3 +720,729 @@
 15:18:10 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1772473946033'}
 15:18:10 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1772473946033'}
 15:18:17 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:07:25 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(99.40570232846517,129.6632224552707,48.615196234744914)'}
+22:15:26 | INFO | SERVER | sala f0bv0gmez0 eliminada por estar vacia y sin contenido.
+22:16:47 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(104.81278374126825,209.4721827406466,170.22285091761114)'}
+22:17:55 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(90.53762703287501,201.95648034837177,20)'}
+22:20:55 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:20:56 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(110.63646270075779,213.3678111017029,168.98159985333075)'}
+22:23:07 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:23:07 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:27:14 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(118.10264844969083,130.628577562367,20)'}
+22:27:15 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:30:25 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:30:25 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:30:26 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(112.5881986644977,226.18204606059564,144.96958999322152)'}
+22:30:34 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:30:34 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:30:35 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(97.50348604611294,91.16546496504095,25.349648317944656)'}
+22:30:40 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:30:40 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:30:41 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(90.31971247745275,193.45409609935874,114.52560806404477)'}
+22:31:07 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:31:07 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:31:07 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(112.46496370625161,229.37787793394983,65.82907202836391)'}
+22:31:15 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:31:15 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:31:15 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(76.4027928979909,121.33489019856967,20)'}
+22:31:21 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:31:21 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:31:21 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(83.61949557351672,125.95690694067167,82.27238025928165)'}
+22:31:27 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:31:27 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:31:28 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(117.14484965202148,135.58326309244035,73.04469960648552)'}
+22:31:34 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:31:34 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:31:35 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(110.48559061143513,138.332789198989,37.13023267217304)'}
+22:31:41 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:31:42 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:31:42 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(102.8675164786066,121.70299040691171,20)'}
+22:31:54 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:31:54 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:31:55 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(87.84722591975522,131.4235266095609,20)'}
+22:31:55 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:31:56 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(110.91810651880016,76.97878006662899,21.377663250262913)'}
+22:32:05 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:32:05 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:32:06 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(109.23310084362328,160.1191586007106,114.78692059392583)'}
+22:32:19 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:32:19 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:32:20 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(84.62249740564602,206.82791232932036,110.4788288324458)'}
+22:32:23 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:32:23 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:32:24 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(119.91886786596994,57.62069293818613,20)'}
+22:32:28 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:32:28 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:32:29 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(101.24988163283777,126.45685669288358,68.84035877638654)'}
+22:32:35 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:32:35 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:32:35 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(97.14792909963326,144.96842723621748,93.82885230089563)'}
+22:32:41 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:32:41 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:32:42 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(112.3516196746024,164.67884788812788,44.90741612596973)'}
+22:32:44 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:32:45 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:32:45 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(90.81797633549583,172.89811754234148,104.2218953417792)'}
+22:32:47 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:32:48 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:32:48 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(70.64880756791722,186.04258201340105,68.86574348210435)'}
+22:32:51 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:32:51 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:32:51 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(111.81805588172008,87.84223093787358,36.86726706766616)'}
+22:32:55 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:32:55 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:32:55 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(119.9522798659159,154.33707967932992,21.068641852688565)'}
+22:32:59 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:32:59 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:33:00 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(81.68197610033167,78.30241980998647,20)'}
+22:33:07 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:33:07 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:33:08 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(91.75099737983975,70.69780751945251,20)'}
+22:33:09 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:33:10 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(71.80227018128312,180.1476330492674,43.4462271803868)'}
+22:33:27 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:33:27 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:33:28 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(78.44895134296006,158.6240507223665,90.41745066497873)'}
+22:33:34 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:33:34 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:33:35 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(79.79238661475202,191.05301192163304,101.78189220807306)'}
+22:34:09 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:34:09 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:34:10 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(105.62299522898311,96.16980000318372,20)'}
+22:37:30 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:37:31 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:37:32 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(111.81355792388455,177.38580013391015,20)'}
+22:37:34 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:37:34 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(73.28527580891628,215.56767737636198,20)'}
+22:38:15 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:38:15 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:38:16 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(116.95971400337977,198.11323560750608,88.80505033392075)'}
+22:38:39 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:38:39 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:38:40 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(117.65041304958433,100.24764004890687,21.74520351449067)'}
+22:39:20 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:39:20 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:39:21 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(100.20629323405136,200.3045410632913,90.25221748966838)'}
+22:39:29 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:39:30 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:39:30 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(75.56148172752593,157.7154486317717,20)'}
+22:39:47 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:39:47 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:39:48 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(70.05943103240487,82.5505885517633,20)'}
+22:39:52 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:40:02 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:40:02 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:40:03 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(100.03405379911193,246.89040178704442,140.27078790739301)'}
+22:40:48 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:40:49 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(114.63374686730579,77.56565206020846,23.64635273594552)'}
+22:40:55 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:40:56 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:40:56 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(111.17550427433466,137.31551193392457,20)'}
+22:40:58 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:40:58 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(116.2390063343843,201.46390301484087,63.20207383736252)'}
+22:41:13 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:41:13 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:41:14 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(92.39456923626676,119.33533699699062,22.57373032679098)'}
+22:41:26 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:41:27 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:41:27 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(84.0859272030629,137.03083284321625,40.96490971556558)'}
+22:41:43 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:41:43 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:41:44 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(109.76841755558752,194.40672941641125,20)'}
+22:42:15 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:42:16 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:42:17 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(95.54908174401517,148.7106093322056,20)'}
+22:42:32 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:42:33 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:42:33 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(71.66813080411211,148.5941148512029,69.61640986973399)'}
+22:42:51 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:42:51 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:42:51 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(104.5522530082076,175.9801758286699,20)'}
+22:43:19 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:43:19 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:43:20 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(77.07243975443147,129.80812199285253,20)'}
+22:43:29 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:43:29 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:43:29 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(96.93671603637299,211.66767257506154,20)'}
+22:43:37 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:43:37 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:43:37 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(112.18077857350696,106.70146515125666,20)'}
+22:44:05 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:44:05 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:44:06 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(99.33987845111054,139.79386743193908,29.62818014718932)'}
+22:44:17 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:44:17 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:44:18 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(73.82474802636925,162.4843182998871,20)'}
+22:44:37 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:44:37 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:44:38 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(83.53596126404054,152.75818840468204,90.22186972522039)'}
+22:44:44 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:44:44 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:44:45 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(112.55420853183736,150.08476596731762,20)'}
+22:44:51 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:44:51 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:44:52 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(103.39635272046311,162.15416650754912,85.5357384400762)'}
+22:44:59 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:44:59 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:44:59 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(115.5841905473637,128.03314472770205,20)'}
+22:45:06 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:45:06 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:45:07 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(104.81465777700679,159.8047242009862,29.276559448920274)'}
+22:45:17 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:45:18 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:45:18 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(119.03957211746021,200.28336079052224,58.45030582699496)'}
+22:45:42 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:45:43 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:45:44 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(86.52604471680492,181.67141349724264,131.19509470136043)'}
+22:46:17 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:46:18 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:46:19 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(112.20403700923009,133.89038702835097,20)'}
+22:46:34 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:46:35 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(109.40114773212905,110.73942040412757,20)'}
+22:46:44 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:46:44 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:46:45 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(87.71926887522037,127.24542677970322,65.8195428684919)'}
+22:46:52 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:46:52 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:46:53 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(81.48195371888508,66.85014597046732,20)'}
+22:47:04 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:47:04 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:47:04 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(118.30943595721864,202.3590876493791,55.360355983520904)'}
+22:47:35 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:47:36 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:47:37 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(106.21277313911972,114.96198188599236,43.81865785752025)'}
+22:48:11 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:48:11 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:48:11 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(70.77625704705997,186.88542024607003,35.279060447595924)'}
+22:48:24 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:48:24 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:48:25 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(115.54858884548429,60.08480937444648,21.779691230083472)'}
+22:49:06 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:49:06 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:49:07 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(89.41108471963915,129.39251862089176,20)'}
+22:49:40 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:49:40 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:49:41 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(97.07978904611032,157.05588679410494,27.109097909460374)'}
+22:49:51 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:49:51 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:49:52 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(96.14454483190312,117.5348565303861,20)'}
+22:49:59 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:50:00 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:50:01 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(106.39529343045459,149.3832143378257,88.9904392466987)'}
+22:50:12 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:50:12 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:50:13 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(94.64416663532751,201.36490777828874,135.07011920852892)'}
+22:50:33 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:50:33 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:50:34 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(114.9672681132198,143.8989130843234,20)'}
+22:50:40 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:50:40 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:50:41 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(91.36261024418562,51.36572654501657,20)'}
+22:50:48 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:50:48 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:50:48 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(94.44296968366741,110.35585940078334,45.69610482345401)'}
+22:50:54 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:50:54 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:50:55 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(108.99913252649128,78.37131510092901,20)'}
+22:51:04 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:51:04 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:51:04 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(108.26973435784195,143.57212326194457,20)'}
+22:51:09 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:51:09 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:51:10 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(82.36771770520961,174.2481229608609,61.44926404749498)'}
+22:51:14 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:51:14 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:51:14 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(110.57972913233219,164.90527860409708,57.041234219511736)'}
+22:51:18 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:51:18 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:51:19 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(116.3151531748589,90.2006594024364,54.172379870044026)'}
+22:52:05 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:52:05 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:52:07 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(76.27031036193151,214.81625793882895,33.1801567930121)'}
+22:52:37 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:52:37 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:52:38 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(113.7785098670688,151.50297676720328,20)'}
+22:52:46 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:52:46 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:52:47 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(90.03513409147077,111.58613606050099,57.65266721661436)'}
+22:53:06 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:53:06 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:53:07 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(95.51174626148091,163.29499620124014,109.69426889013337)'}
+22:53:20 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:53:21 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(107.71287160520203,137.6395386575506,74.04304375004168)'}
+22:53:48 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:53:48 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:53:49 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(108.79658288898008,137.95180698618228,59.48109131702125)'}
+22:54:08 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:54:09 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:54:09 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(101.81342871175968,190.02403392801997,20)'}
+22:54:15 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:54:15 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:54:16 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(114.6454559619072,196.8818544607544,20)'}
+22:54:22 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:54:22 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:54:23 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(106.63398846224771,127.99949403862047,25.422358399224684)'}
+22:54:31 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:54:31 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:54:32 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(86.04762144807859,187.77925086891074,150.95132717361446)'}
+22:54:50 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:54:50 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:54:51 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(72.90906208470395,167.16371209459857,76.49842590334893)'}
+22:54:58 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:54:58 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:54:59 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(79.51624100220666,83.2108679233639,20)'}
+22:55:12 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:55:13 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:55:13 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(101.4085673197985,130.0108640151687,98.89887122178797)'}
+22:55:14 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:55:14 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(77.85243195327313,177.01992130070118,53.88412025634831)'}
+22:55:28 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:55:28 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:55:29 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(119.78513191012301,170.83504951662096,20)'}
+22:55:36 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:55:37 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:55:37 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(95.29768994613329,121.5481164019804,25.826065678713114)'}
+22:55:50 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:55:51 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:55:51 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(97.82032812982904,160.86160549945274,20)'}
+22:56:00 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:56:01 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:56:01 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(115.27930895783092,92.23631823616219,20)'}
+22:56:19 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:56:19 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:56:20 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(72.41873399420793,133.00795946336996,63.759636296459504)'}
+22:56:23 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:56:23 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:56:24 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(116.59209713845468,177.20499902978628,89.07963633802163)'}
+22:56:42 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:56:42 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:56:42 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(94.87760006388402,144.30752682816492,30.34698520824719)'}
+22:57:03 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:57:03 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:57:03 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(93.28696681719414,107.28084735479743,54.359843979575516)'}
+22:57:13 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:57:14 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(89.09076718509593,124.78038127166283,20)'}
+22:57:24 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:57:24 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:57:25 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(78.35970023661459,125.13405131956682,68.9233094550432)'}
+22:57:34 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:57:35 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(115.67667319228791,179.58952791308997,118.16184975751338)'}
+22:57:46 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:57:47 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(71.76911383553193,123.23425172350164,20)'}
+22:58:00 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:58:00 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(94.98188044779697,162.53157069632223,37.690830394609605)'}
+22:58:08 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:58:08 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:58:09 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(95.08607749414236,114.82057272116639,20)'}
+22:58:22 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:58:23 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:58:23 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(89.31317727582412,162.05316473395948,31.586497397501688)'}
+22:58:25 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:58:26 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(112.40333913294822,219.3640008114578,97.07238510729815)'}
+22:58:39 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:58:40 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(110.71471320189497,146.55997753058205,90.84619624505513)'}
+22:58:54 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:58:54 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:58:54 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(94.52232155113781,97.57851196635492,20)'}
+22:59:02 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:59:02 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(91.81451327178544,212.3588842490708,140.51114980052537)'}
+22:59:12 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:59:12 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:59:13 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(81.46910199529435,209.37463207247663,74.22478958421765)'}
+22:59:33 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:59:34 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:59:35 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(114.56556744214038,150.43053241891667,60.121549451072084)'}
+22:59:38 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:59:38 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(109.08232041918251,171.55113124835447,29.96259938124762)'}
+22:59:48 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:59:48 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:59:48 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(86.76788852617273,215.03506142579266,133.58768225306815)'}
+22:59:58 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+22:59:58 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+22:59:59 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(118.21570920816205,227.7693864493312,179.97115976392328)'}
+23:00:10 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:00:10 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:00:11 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(85.77519046403818,131.8658524838248,40.26598897281278)'}
+23:00:36 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:00:36 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:00:37 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(119.12620057216307,106.10238254934711,69.85981376326114)'}
+23:00:54 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:00:54 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:00:54 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(102.73525930581741,129.16620751062732,77.73383449480306)'}
+23:01:04 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:01:05 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:01:05 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(100.53311412499095,146.73578523799435,24.70026910748402)'}
+23:01:12 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:01:12 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:01:12 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(73.75287712150767,154.4779000219196,20)'}
+23:02:01 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:02:01 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:02:02 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(119.24984435720359,157.9466939853932,20)'}
+23:02:11 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:02:11 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:02:12 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(85.34854815644864,152.52779836594823,109.99500565025832)'}
+23:02:16 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:02:16 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:02:17 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(86.0038139219318,233.36342057027252,193.0897774181998)'}
+23:02:19 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:02:20 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(102.29681658900805,238.82302030548937,104.06213947509542)'}
+23:03:48 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:03:48 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:03:49 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(93.00114056836703,77.69685570290008,20)'}
+23:04:06 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:04:06 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:04:06 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(94.12772613466029,119.19864931843799,20)'}
+23:04:34 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:04:34 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:04:35 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(92.54869387878416,85.61905333879393,20)'}
+23:04:45 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:04:45 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:04:46 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(83.74812731916268,170.21918132164612,137.22581256180797)'}
+23:04:53 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:04:54 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:04:54 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(99.77057409988632,133.65896122800316,20)'}
+23:05:03 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:05:03 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:05:03 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(79.09482452493907,119.97623141225216,29.74628936824176)'}
+23:05:14 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:05:15 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:05:15 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(111.6293246135202,176.91917054206232,118.85935704138663)'}
+23:05:37 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:05:37 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:05:38 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(87.40204715021098,150.5766375024103,20)'}
+23:05:51 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:05:51 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:05:52 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(80.49694560475946,132.00230903273854,26.433138141085983)'}
+23:06:02 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:06:02 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:06:03 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(112.38238533715216,197.65048885496887,99.02107308451522)'}
+23:06:16 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:06:16 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:06:17 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(78.48646249624919,179.11518876783805,20)'}
+23:06:25 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:06:26 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:06:26 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(107.6061707770664,132.3541408142617,20)'}
+23:06:36 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:06:36 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:06:36 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(82.0926017104917,211.1900327318541,141.30377561181666)'}
+23:06:54 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:06:54 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:06:55 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(94.6168804090382,112.24664148965152,59.81316082676369)'}
+23:06:57 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:06:58 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(84.65144335482664,77.83197968147584,20)'}
+23:07:03 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:07:03 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(101.65510704867651,241.64283096130572,143.9849287578615)'}
+23:07:15 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:07:15 | INFO | SERVER | sala nzr5s5mu8e eliminada por estar vacia y sin contenido.
+23:07:15 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(92.01020328390426,97.13297917407297,20)'}
+23:07:37 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:07:38 | DEBUG | SERVER | {'tipo': 'nuevo_nodo', 'nodo': {'id': 'nodo-1773889658690', 'x': 420, 'y': 440, 'w': 100, 'h': 60, 'texto': 'Nuevo Cuadro', 'color': 'white'}}
+23:07:39 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773889658690'}
+23:07:39 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773889658690'}
+23:07:41 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:07:42 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:07:44 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:07:45 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773889658690'}
+23:07:45 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773889658690'}
+23:07:46 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:08:52 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:08:53 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(84.28233188843825,184.5258093582239,20.985528670651377)'}
+23:08:54 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:08:55 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:08:56 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:08:57 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:08:57 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:09:13 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(119.09529295495174,140.9787934862047,47.85788022706343)'}
+23:09:15 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:09:15 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:09:16 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:16 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:18 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(98.64053021148224,146.7282355669513,110.11407187748836)'}
+23:10:19 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:20 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:20 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:34 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:36 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(84.69316927910575,183.59358040815272,56.33249844679493)'}
+23:10:37 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:37 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:38 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773889658690'}
+23:10:38 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773889658690'}
+23:10:40 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:41 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:41 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:50 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(78.147659877084,79.1278060628056,20)'}
+23:10:52 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:52 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:53 | DEBUG | SERVER | {'tipo': 'nuevo_nodo', 'nodo': {'id': 'nodo-1773889853817', 'x': 520, 'y': 420, 'w': 100, 'h': 60, 'texto': 'Nuevo Cuadro', 'color': 'white'}}
+23:10:57 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773889853817'}
+23:10:57 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773889853817'}
+23:10:58 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:10:58 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:12:12 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:12:37 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:12:38 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:12:39 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(107.03109610801042,169.41678901846987,49.98234395476186)'}
+23:12:40 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:12:43 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:12:44 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:12:44 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:13:29 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:13:43 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:13:45 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(116.16238144517894,107.56246472426261,74.04977501994226)'}
+23:13:46 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773889853817'}
+23:13:46 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773889853817'}
+23:13:47 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:13:48 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773889853817'}
+23:13:48 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773889853817'}
+23:13:48 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:13:50 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773889853817'}
+23:13:50 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773889853817'}
+23:13:51 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:14:13 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(106.5137520360397,104.64834343478046,57.91974205483359)'}
+23:14:14 | DEBUG | SERVER | {'tipo': 'nuevo_nodo', 'nodo': {'id': 'nodo-1773890054649', 'x': 500, 'y': 440, 'w': 100, 'h': 60, 'texto': 'Nuevo Cuadro', 'color': 'white'}}
+23:14:15 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890054649'}
+23:14:15 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890054649'}
+23:14:16 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:14:16 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:14:44 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:14:47 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:14:55 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(93.64490205780959,64.89390466175507,20)'}
+23:14:56 | DEBUG | SERVER | {'tipo': 'nuevo_nodo', 'nodo': {'id': 'nodo-1773890096945', 'x': 420, 'y': 460, 'w': 100, 'h': 60, 'texto': 'Nuevo Cuadro', 'color': 'white'}}
+23:14:57 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:14:57 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:14:59 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890054649'}
+23:14:59 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890054649'}
+23:15:08 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(118.57464307798027,166.4753539005387,30.746209701697317)'}
+23:15:10 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:15:10 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:15:11 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:15:13 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:15:13 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:15:18 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:15:20 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:15:20 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:15:23 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890054649'}
+23:15:23 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890054649'}
+23:15:24 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:15:24 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:15:25 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:16:33 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(91.12691932460436,138.3278329397085,68.87800940332218)'}
+23:17:44 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(116.21739126011668,126.86960288513467,20)'}
+23:18:16 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(98.99429937828694,125.20965611915511,20)'}
+23:18:44 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(108.3934988643629,159.59064653030052,93.29160315244394)'}
+23:19:06 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(98.41094072805681,115.28246217049659,44.47509393584825)'}
+23:19:22 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(119.83882695977394,167.33863112658668,84.39789010864557)'}
+23:19:45 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(114.14150979621039,156.68830486628946,36.02641286682798)'}
+23:19:52 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(119.88052016783394,172.407336117123,25.04049668972244)'}
+23:20:12 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(96.73988023861554,185.08051114873388,35.01127705453439)'}
+23:20:29 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(73.45810336928663,192.8973129793393,155.96098780120764)'}
+23:20:51 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(83.06965732950293,150.36231396484303,30.12634891074118)'}
+23:21:19 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(110.97985616119891,253.06075164967757,20)'}
+23:21:28 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(107.19479450002564,199.70556545070107,20)'}
+23:22:02 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(113.97473746462222,143.02082868788594,41.54895626605517)'}
+23:22:20 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(107.50118797114608,131.91687177997812,20)'}
+23:22:30 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(106.3711424893055,235.03500533206588,102.18711461061261)'}
+23:22:32 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(73.24482404617292,110.25690767742948,20)'}
+23:22:41 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(84.36071256385011,94.47029509261041,20)'}
+23:22:51 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(80.44978195070657,129.23996322263096,20)'}
+23:23:12 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:23:12 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:23:56 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:23:57 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(105.69428362850103,178.56827000656926,42.249899202005395)'}
+23:24:05 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(106.69562056918728,148.49017167180557,106.64442623884895)'}
+23:24:10 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(81.56968953931876,130.44448771178756,20)'}
+23:24:15 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(117.11855313996182,256.8149584365336,44.61884747068062)'}
+23:24:20 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(70.75365113155365,204.9707559929195,20)'}
+23:24:24 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(100.32429443805674,126.06246892473959,54.51840072519363)'}
+23:24:29 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(109.9864079018032,214.0022896336796,27.503591748769814)'}
+23:24:55 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(98.82531432103832,154.96146425048244,20)'}
+23:24:56 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:24:56 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:25:01 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:25:14 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(116.06215877321475,116.24706364212244,20)'}
+23:25:15 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:25:15 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:25:26 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:25:27 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(99.76693919656296,76.8677012041585,20)'}
+23:25:28 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:25:28 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:25:37 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:25:38 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(76.51395604444318,135.10168270616444,20)'}
+23:25:39 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:25:39 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:25:44 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(89.43463392374184,186.49639607580113,111.10496496582317)'}
+23:25:45 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:25:45 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:25:50 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:25:51 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(99.26867809399863,83.27757658840935,20)'}
+23:25:52 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:25:52 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:26:01 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:26:01 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(112.4558156143351,129.7116449300989,20)'}
+23:26:03 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:26:03 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:26:38 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:26:38 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(70.01445640949568,116.67776757699275,29.86311662210573)'}
+23:26:40 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:26:40 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:27:12 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:27:13 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(111.0227754938433,190.30644310220137,103.56039581904008)'}
+23:27:13 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:27:13 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:27:26 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:27:26 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(93.26966305057337,132.8018381902704,20)'}
+23:27:28 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:27:28 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:27:37 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:27:38 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(84.84571671444438,191.1676331058336,20)'}
+23:27:39 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:27:39 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:28:07 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(83.0296974972732,215.36341646303606,52.414380679412346)'}
+23:28:08 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:28:08 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:28:37 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(98.38541804042396,221.30815499125092,85.73052066025329)'}
+23:28:38 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:28:38 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:28:54 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:28:54 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(73.8505525685203,88.29011171009762,20)'}
+23:28:55 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:28:55 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:29:03 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(80.87327296323878,89.96968079042723,20)'}
+23:29:05 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:29:05 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:29:11 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:29:12 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(80.15750542896804,193.09815160246885,132.98890061275372)'}
+23:29:13 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:29:13 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:29:20 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:29:22 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(109.77768436406433,172.48909257260956,88.89361440175371)'}
+23:29:23 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:29:23 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:29:40 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:29:45 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(107.30285424610665,140.8393411536204,49.20893825394502)'}
+23:29:46 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:29:46 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:29:49 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:29:54 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(78.30680129542424,161.69735605799332,96.1160845956827)'}
+23:29:56 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:29:56 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:30:10 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:30:11 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(114.81432877828293,166.49769864743863,55.76755344371297)'}
+23:30:12 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:30:12 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:30:44 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:30:45 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(100.35298762072927,76.87548977710813,34.84175504024766)'}
+23:30:57 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(72.2621333593174,69.37604608458702,20)'}
+23:30:58 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(113.32082249315289,125.68939231762089,75.66260335859384)'}
+23:31:12 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(100.73771237736487,209.19655869002293,42.76687399648321)'}
+23:31:18 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(112.78138567136894,87.10905009410956,32.18879288121533)'}
+23:31:24 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(71.84488685180588,116.37054110418549,36.335601469457956)'}
+23:31:57 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(97.59597057466013,177.37634967472087,109.12867602626514)'}
+23:32:54 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(106.26208378160403,107.37350571400944,20)'}
+23:33:03 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(118.3899632017217,208.6018075937717,22.682520295683887)'}
+23:33:09 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(91.79764378737467,174.8767315264308,69.99668145018563)'}
+23:33:18 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(103.20910159073048,133.3906548312813,71.85643363194293)'}
+23:34:03 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(110.20737779300728,242.97977943553593,20)'}
+23:34:11 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(103.74878566792984,124.55743111376862,20)'}
+23:34:45 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(70.9194140297607,46.4326612413214,20)'}
+23:34:58 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(75.37630126885759,79.88234663419261,20)'}
+23:35:12 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(81.1053540822292,212.76016538660227,20)'}
+23:35:42 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(101.28607599367889,65.60595488282519,31.68589412312437)'}
+23:35:47 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(81.9023932206276,147.37427810652582,77.39647804197469)'}
+23:36:07 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(106.18875301980094,152.6918084485225,113.47189497076593)'}
+23:36:21 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(97.2531963870401,223.38711208022193,20)'}
+23:36:35 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(91.80453747441766,204.01792838449887,171.6329517234344)'}
+23:37:29 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(95.02338488653308,192.3332956956813,136.8593214176422)'}
+23:37:49 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:37:49 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:37:52 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:38:15 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(91.05759799853162,156.31471593429586,24.126297837124312)'}
+23:38:24 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(75.2391897248503,177.85012108347632,72.52511582126016)'}
+23:38:46 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(110.39083728148523,98.14706548014138,35.663447179876044)'}
+23:39:07 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(119.08050418121454,100.7952779320715,27.465642389012288)'}
+23:39:12 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(90.16921070251537,149.67312100131738,20)'}
+23:39:24 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(104.85282135881158,152.75128130958103,20)'}
+23:39:27 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(110.95453364418351,236.89901184606916,20)'}
+23:39:48 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(118.17377212735632,164.39908189839977,105.17226350283906)'}
+23:39:58 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(73.11958926111274,107.01684480995574,20)'}
+23:40:48 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(113.91504008083064,148.75195896178,60.779277178723135)'}
+23:40:56 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(86.03911460080033,90.25560476601314,20)'}
+23:41:07 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(99.66337566477677,153.382736515493,20)'}
+23:41:26 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(108.00182815747415,223.2096664023096,31.586478498991056)'}
+23:41:45 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(113.42298820075166,175.57260780581777,110.90086861577677)'}
+23:42:01 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(111.9649155315773,223.31609019114126,20)'}
+23:42:19 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(94.77253206115182,171.45948494054727,20)'}
+23:42:43 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(101.77884259993553,44.73910794793379,20)'}
+23:42:54 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(93.89892719094046,130.34181913450138,20)'}
+23:42:55 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(87.74495143939716,137.3237118870255,20)'}
+23:43:07 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(82.86348279421927,163.20932909876922,20)'}
+23:43:09 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(80.80859322976032,142.5653060122939,20)'}
+23:43:12 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(89.3125795947295,66.47554205625602,20)'}
+23:44:30 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(113.17033091161596,119.54804826953026,59.63243049701984)'}
+23:44:45 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(104.13959157108204,120.36227828141907,20)'}
+23:45:20 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(104.56471185212155,102.09745415211994,31.931049021464105)'}
+23:45:32 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(81.30888798840459,198.96911089343587,123.12797306122181)'}
+23:45:48 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:45:48 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:45:49 | DEBUG | SERVER | {'tipo': 'cambiar_color_nodo', 'id': 'nodo-1773890096945', 'color': '#222222'}
+23:45:50 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': None}
+23:47:10 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(107.31984238449569,169.3441629766565,42.70415231319279)'}
+23:47:12 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(75.78225802313716,137.05213804605881,24.32341406550264)'}
+23:47:14 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(60.84160214373658,45.64405662605471,10)'}
+23:47:17 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(27.01708488854827,26.196488191136027,10)'}
+23:47:46 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(43.03533176115724,44.394276887161695,10)'}
+23:47:48 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(26.902526756281635,46.187474129794595,10)'}
+23:47:50 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(56.90096897557182,63.74836305109734,10)'}
+23:47:52 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(54.08230275558323,19.35608207721752,10)'}
+23:48:27 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(49.31430479703596,37.86113783423107,29.184018648850493)'}
+23:48:30 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(54.88024871417354,61.381469061727394,15.984468669104368)'}
+23:48:52 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(45.701351962673286,18.5320101288506,28.237884066370924)'}
+23:48:54 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(61.885848322955596,57.158992007098334,69.59015533855336)'}
+23:48:57 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(67.65038047260738,65.91754492545515,66.89960179591975)'}
+23:48:59 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(68.9574304087127,55.53028785838001,65.48771383509128)'}
+23:49:01 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(58.61185362273139,57.71060808474246,71.76914631855706)'}
+23:49:03 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(23.63660721324921,48.20244462690023,44.115339238201)'}
+23:49:05 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(69.65211131160115,68.47671514343638,66.74791662960288)'}
+23:49:07 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(57.92896405223182,51.037804334477514,31.099540662029156)'}
+23:49:09 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(46.91994104384288,41.18460069829078,10)'}
+23:49:11 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(41.16107716773482,43.00979465069581,24.84664192936566)'}
+23:49:22 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(54.17460804508931,47.47773033520855,10.49679941651765)'}
+23:49:24 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(41.54258910646385,52.34453341541419,20.992351919655626)'}
+23:49:25 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(42.646798197185085,43.761996691795574,38.305805326111354)'}
+23:49:28 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(21.396731357572094,52.315287151786855,46.68032407048048)'}
+23:49:56 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(49.985228311408,30.530721663532994,10)'}
+23:49:57 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(64.93998247600713,48.23386498664519,10)'}
+23:51:03 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(21.731067876269204,30.158613809561317,17.733741683825336)'}
+23:51:10 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(55.539658361582624,60.387656990576495,18.615347621597124)'}
+23:51:23 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(45.31374296102442,41.78456050928042,10)'}
+23:51:24 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(39.25133136362704,77.63751826080099,38.44983463204845)'}
+23:51:39 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(20.58003801160782,30.703453484518057,10)'}
+23:51:43 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(38.37256003701118,34.61685415451406,10)'}
+23:51:45 | DEBUG | SERVER | {'tipo': 'seleccionar_nodo', 'id': 'nodo-1773890096945'}
+23:51:45 | DEBUG | SERVER | {'tipo': 'traer_al_frente', 'id': 'nodo-1773890096945'}
+23:56:19 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(37.92240746996183,61.56548709654535,39.31980676653569)'}
+23:56:39 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(33.86183142246432,38.920993007702066,10)'}
+23:56:41 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(43.767696131995265,54.11351043999892,24.084604683169818)'}
+23:56:43 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(58.41011520005307,64.61923635163718,10)'}
+23:57:02 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(37.800122624036135,65.79882673615592,68.00336092756909)'}
+23:57:45 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(21.97935455838096,36.0035997250876,22.03279026448149)'}
+23:57:48 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(21.05542526963238,23.927879135356484,10)'}
+23:57:50 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(34.4677214939883,50.53959915492749,10.701494275501538)'}
+23:58:00 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(37.74379552402035,79.08727487922043,60.988340096632335)'}
+23:58:02 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(38.290120883000796,50.40962128540576,37.46255932033422)'}
+23:58:10 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(41.249123362710954,49.70687187537096,39.35971015930025)'}
+23:58:12 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(36.90167859965043,66.80681207760234,59.535724706550766)'}
+23:58:39 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(68.20986969205288,102.72668023294435,76.84822999082532)'}
+00:01:44 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(20.275057678805986,33.29170576167515,39.63647509677983)'}
+00:01:57 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(58.660388376049625,88.5144908193152,18.434799854070928)'}
+00:01:59 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(32.549571827251384,50.855930795236006,15.150003426529729)'}
+00:02:11 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(37.52917255169871,39.173864551396775,10)'}
+00:02:13 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(36.94443097560017,36.06699646768223,45.72128958363836)'}
+00:02:30 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(35.70438037230442,58.82110986390322,37.26104463401517)'}
+00:03:06 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(44.1487727205008,44.671729141703324,47.59813702471034)'}
+00:03:14 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(25.63769261636508,49.4869937187606,24.531071745776206)'}
+00:03:16 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(36.45630879734785,60.60427483789388,27.732744018540835)'}
+00:04:24 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(54.309812587703384,81.30036959087572,44.73981931167652)'}
+00:04:34 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(69.72877328600197,57.47586134915322,16.37870235476651)'}
+00:05:29 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(66.49674154941648,54.77815600291281,41.25743734156517)'}
+00:05:35 | DEBUG | SERVER | {'tipo': 'asignar_color_user', 'color': 'rgb(48.23135520614327,40.29997129307638,33.89609858229421)'}

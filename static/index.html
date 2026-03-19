@@ -10,13 +10,16 @@
 </head>
 <body>
 
-    <div class="links">
-        <a id="share">Compatir</a>
-        <a id="status" target="_blank">Status</a>
-    </div>
+    <header>
+        <p class="app_name">Nodus</p>
 
-    <div class="user-presence-container" id="user-presence">
-    </div>
+        <div class="links">
+            <div class="user-presence-container" id="user-presence"></div>
+            <div class="divider"></div>
+            <button id="export">Export</button>
+            <button id="share">Share</button>
+        </div>
+    </header>
 
     <div id="color-picker" class="floating-toolbar">
         <div class="color-dot" style="background: #222222;" data-color="#222222"></div>
@@ -30,10 +33,6 @@
 
     <div class="app-container">
         <aside class="sidebar">
-            <div class="sidebar-title">
-                <img src="assets/NodusLogo.png" alt="Nodus Logo" class="logo">
-                <h1>Nodus</h1>
-            </div>
             <p>Herramientas</p>
             <button class="tool-btn" id="add-rect-btn">
                 <div class="rect-icon"></div>
@@ -41,8 +40,7 @@
             </button>
 
             <div class="trash-zone" id="trash-container">
-                <span class="trash-icon">🗑️</span>
-                <span class="trash-text">Arrasta aquí para eliminar</span>
+                🗑️ TRASH
             </div>
         </aside>
 
