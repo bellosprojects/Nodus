@@ -1,6 +1,5 @@
 import { stage, GRID_SIZE, layerPresencia, jugadoresActuales } from './main.js';
 
-
 export function obtenerColorTexto(colorHex){
 
 
@@ -20,66 +19,8 @@ export function obtenerColorTexto(colorHex){
     return brightness > 0.5 ? 'black' : 'white';
 }
 
-export function calcularPuntos(inicio, fin, orientacion = 'auto', action = 'none'){
-
-    const dy = inicio.y - fin.y;
-    const dx = inicio.x - fin.x;
-
-    const offsetX = dx / 2;
-    const offsetY = dy / 2;
-
-    if(orientacion === 'horizontal'){
-        if(action === 'bajar'){
-            return [
-                inicio.x, inicio.y,
-                inicio.x, fin.y,
-                fin.x, fin.y
-            ];
-        }
-        if(action == 'none'){
-            return [
-                inicio.x, inicio.y,
-                inicio.x, fin.y + offsetY,
-                fin.x, fin.y + offsetY,
-                fin.x, fin.y
-            ];
-        }
-        return [
-            inicio.x, inicio.y,
-            fin.x, inicio.y,
-            fin.x, fin.y
-        ];
-    }
-
-    if(orientacion === 'vertical'){
-        if(action === 'bajar'){
-            return [
-                inicio.x, inicio.y,
-                fin.x, inicio.y,
-                fin.x, fin.y,
-            ];
-        }
-        if(action === 'none'){
-            return [
-                inicio.x, inicio.y,
-                inicio.x - offsetX, inicio.y,
-                inicio.x - offsetX , fin.y,
-                fin.x, fin.y,
-            ]
-        }
-        return [
-            inicio.x, inicio.y,
-            inicio.x, fin.y,
-            fin.x, fin.y,
-        ];
-    }
-
-    return [
-        inicio.x, inicio.y,
-        inicio.x - offsetX, inicio.y,
-        inicio.x - offsetX , fin.y,
-        fin.x, fin.y,
-    ];
+export function ajustar(pos){
+    return Math.round(pos / GRID_SIZE) * GRID_SIZE;
 }
 
 export function obtenerCentro(){

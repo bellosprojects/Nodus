@@ -1,9 +1,10 @@
-import { stage, layer, socket, trasformar, GRID_SIZE, trashZone, colorPicker, myNode } from '../main.js';
+import { stage, layer, socket, trasformar, GRID_SIZE, trashZone, myNode } from '../main.js';
 import { obtenerColorTexto } from '../utils.js';
 import { crearPuntosConexion } from './flecha.js';
-import { estaOcupado } from '../main.js';
+import { estaOcupado, updateHUD } from '../main.js';
 import { actualizarPosicionFlecha } from './flecha.js';
 import { nombreUsuario } from '../socket.js';
+import { mover_nodo, redimensionar_nodo } from './nodo-edit.js';
 
 let flechas = [];
 
@@ -11,9 +12,41 @@ export { flechas };
 
 export let editandoTexto = false;
 
+const chars = [
+    'A',
+    'B',
+    'V',
+    'R',
+    'E',
+    'Z',
+    'G',
+    'H',
+    'I',
+    'Y',
+    'K',
+    'L',
+    'F',
+    '1',
+    '0',
+    '7',
+    '8',
+    '4',
+    'Q',
+    'W',
+    '3'
+];
+
+function cifrar(initial){
+    let final = "";
+    for(let i=0; i<initial.length; i++){
+        final += chars[Number(initial[i]) * 2 + Number(Math.round(Math.random()))]
+    }
+    return final;
+}
+
 export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = null, h = null, color = null) {
 
-    const newId = id || "nodo-" + Date.now();
+    const newId = id || "nodo-" + cifrar(Date.now().toString().substring(6));
     
     const grupo = new Konva.Group({
         x: x,
@@ -25,11 +58,13 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
     const rect = new Konva.Rect({
         width: w || (GRID_SIZE * 5),  // 100px
         height: h || (GRID_SIZE * 3), // 60px
-        fill: color || 'white',
-        stroke:  '#333',
-        strokeWidth: 2,
+        fill: color || '#333538',
+        stroke:  '#23DAF6',
+        strokeWidth: 3,
         cornerRadius: 8,
-        name: 'fondo-rect'
+        name: 'fondo-rect',
+        shadowBlur: 30,
+        shadowColor: '#1A808C7A'
     });
     
     const label = new Konva.Text({
@@ -43,7 +78,7 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
         fill: obtenerColorTexto(rect.fill()),
         wrap: 'word',
         listening: false,
-        fontFamily: 'Calibri'
+        fontFamily: 'Verdana'
     });
     
     label.y((rect.height() - label.height()) / 2);
@@ -54,7 +89,6 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
     crearPuntosConexion(grupo);
     
     grupo.on('dragstart', () => {
-        colorPicker.style.display = 'none';
 
         trasformar.nodes([grupo]);
         layer.batchDraw();
@@ -66,13 +100,11 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
             if(!estaOcupado(grupo.id())){
                 trasformar.nodes([grupo]);
 
-                mostrarPaleta(grupo);
-
-
                 socket.send(JSON.stringify({
                     tipo: "seleccionar_nodo",
                     id: grupo.id()
                 }));
+
             }
 
             grupo.moveToTop();
@@ -97,12 +129,7 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
     });
 
     grupo.on('transform', () => {
-
-        flechas.forEach(flecha => {
-            if(flecha.origenId === grupo.id() || flecha.destinoId === grupo.id()){
-                actualizarPosicionFlecha(flecha);
-            }
-        });
+        redimensionar_nodo(grupo.id());
     });
 
     grupo.on('transformend', () => {
@@ -132,6 +159,8 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
 
         trasformar.nodes([grupo]);
 
+        updateHUD();
+
         const mensaje = {
             tipo: "redimensionar_nodo",
             id: grupo.id(),
@@ -140,8 +169,6 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
             w: rect.width(),
             h: rect.height()
         };
-
-        mostrarPaleta(grupo);
 
         if(socket.readyState === WebSocket.OPEN){
             socket.send(JSON.stringify(mensaje));
@@ -294,14 +321,6 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
             }));
         }
 
-        if(
-            pos && pos.x < 10 && pos.y > window.innerHeight - 160
-        ){
-            trashZone.classList.add('drag-over');
-        }else{
-            trashZone.classList.remove('drag-over');
-        }
-
         const mensaje = {
             tipo: "mover_nodo",
             id: grupo.id(),
@@ -309,65 +328,30 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
             y: grupo.y()
         };
 
+        mover_nodo(grupo.id(), grupo.x(), grupo.y());
+
+        updateHUD();
+
         if (socket.readyState === WebSocket.OPEN){
             socket.send(JSON.stringify(mensaje));
         }
-
-        flechas.forEach(flecha => {
-            if(flecha.origenId === grupo.id() || flecha.destinoId === grupo.id()){
-                actualizarPosicionFlecha(flecha);
-            }
-        });
     });
 
 
-    // --- LÓGICA DEL IMÁN (SNAPPING) ---
     grupo.on('dragend', () => { 
 
-        const pos = stage.getPointerPosition();
+        mover_nodo(grupo.id(), grupo.x(), grupo.y());
 
-        if(pos && pos.x < 10 && pos.y > window.innerHeight - 160){
-            colorPicker.style.display = 'none';
-            eliminarNodoLocalYRemoto(grupo);
-        } 
-        
-        else {
+        updateHUD();
 
-            const newX = Math.round(grupo.x() / GRID_SIZE) * GRID_SIZE, newY = Math.round(grupo.y() / GRID_SIZE) * GRID_SIZE;
-            // Redondeamos la posición a la rejilla de 20px
-            grupo.position({
-                x: newX,
-                y: newY,
-            });
 
-            flechas.forEach(flecha => {
-                if(flecha.origenId === grupo.id() || flecha.destinoId === grupo.id()){
-                    actualizarPosicionFlecha(flecha);
-                }
-            });
-
-            if(!estaOcupado(grupo.id()))
-                mostrarPaleta(grupo);
-
-            const mensaje = {
-                tipo: "mover_nodo",
-                id: grupo.id(),
-                x: newX,
-                y: newY
-            };
-
-            if (socket.readyState === WebSocket.OPEN){
-                socket.send(JSON.stringify(mensaje));
-            }
-        }
-        trashZone.classList.remove('drag-over');
-        layer.batchDraw(); // Refrescar lienzo
+        layer.batchDraw()
     });
 
     layer.add(grupo);
 
     if(debeEmitir){
-         const mensaje = {
+        const mensaje = {
             tipo: "nuevo_nodo",
             nodo: {
                 id: newId,
@@ -378,8 +362,8 @@ export function crearCuadrado(x, y, texto, id = null, debeEmitir = true, w = nul
                 texto: texto,
                 color: rect.fill()
             }
-         };
-         socket.send(JSON.stringify(mensaje));
+        };
+        socket.send(JSON.stringify(mensaje));
     }
 }
 
@@ -412,19 +396,6 @@ export function eliminarConexionesdelNodo(nodoID){
     flechas = flechas.filter(flecha => flecha.origenId !== nodoID && flecha.destinoId !== nodoID);
 
     layer.batchDraw();
-}
-
-export function mostrarPaleta(nodo) {
-
-    if (estaOcupado(nodo.id())) return;
-
-    const stageBox = stage.container().getBoundingClientRect();
-    colorPicker.style.display = 'flex';
-    colorPicker.style.top = (stageBox.top + nodo.y() - 100) + 'px';
-    colorPicker.style.left = (stageBox.left + nodo.x() + 30) + 'px';
-    
-    // Guardar referencia al nodo actual en la paleta
-    colorPicker.dataset.nodoTarget = nodo.id();
 }
 
 export function actualizarPuntosyFlechasDelNodo(nodoID){

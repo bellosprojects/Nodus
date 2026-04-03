@@ -2,6 +2,7 @@ init_socket();
 
 import { socket, init_socket, myColor, nombreUsuario } from './socket.js';
 import { actualizarPuntosyFlechasDelNodo } from './componentes/nodo.js';
+import { cambiar_color, mover_nodo } from './componentes/nodo-edit.js';
 
 let myNode = null;
 
@@ -13,9 +14,7 @@ let origenDatos = {
 
 const GRID_SIZE = 20; // Unidad de medida
 
-const colorPicker = document.getElementById('color-picker');
-
-export {stage, layer, socket, myNode, origenDatos, GRID_SIZE, colorPicker, trasformar, trashZone};
+export {stage, layer, socket, myNode, origenDatos, GRID_SIZE, trasformar, trashZone};
 
 export {estaOcupado, actualizarPresencia};
 
@@ -23,9 +22,8 @@ import { crearCuadrado, editandoTexto } from './componentes/nodo.js';
 import { obtenerCentro, eliminarCursorAjeno } from './utils.js';
 import { dibujandoConexion, flechaTemporal } from './componentes/flecha.js';
 import { eliminarNodoLocalYRemoto } from './componentes/nodo.js';
-import { mostrarPaleta } from './componentes/nodo.js';
 import { cancelarDibujoConexion, buscarPuntoCercano, finalizarConexion } from './componentes/flecha.js';
-import { obtenerColorTexto } from './utils.js';
+
 
 socket.addEventListener('open', () => {
     socket.send(JSON.stringify({
@@ -90,8 +88,9 @@ function actualizarPresencia(usuarios){
     container.innerHTML = '';
 
     stage.find('.fondo-rect').forEach(rect => {
-        rect.stroke('#333');
-        rect.strokeWidth(2);
+        rect.stroke('#23DAF6');
+        rect.strokeWidth(3);
+        rect.shadowBlur(30);
         rect.getParent().draggable(true);
     });
 
@@ -110,14 +109,14 @@ function actualizarPresencia(usuarios){
             if(nodo){
                 const rect = nodo.findOne('.fondo-rect');
 
-                if(rect){
-                    rect.stroke(user.color);
-                    rect.strokeWidth(6);
-                }
-
                 if(user.nombre == nombreUsuario){
                     myNode = user.objeto;
+                    updateHUD()
                     nodo.draggable(true);
+                } else if (rect){
+                    rect.stroke(user.color);
+                    rect.shadowBlur(0);
+                    rect.strokeWidth(3);
                 }
             }
         }
@@ -142,13 +141,13 @@ document.getElementById('add-rect-btn').addEventListener('click', () => {
 });
 
 window.addEventListener('keydown', (e) => {
+
     if(e.key === 'Delete' || e.key === 'Backspace'){
 
         if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA'){
             return;
         }
 
-        colorPicker.style.display = 'none';
         const nodosSelected = trasformar.nodes();
 
         nodosSelected.forEach(nodo => {
@@ -158,6 +157,9 @@ window.addEventListener('keydown', (e) => {
                 eliminarNodoLocalYRemoto(nodo);
             }
         }); 
+
+        myNode = null;
+        updateHUD();
 
     }
 
@@ -181,7 +183,6 @@ window.addEventListener('keydown', (e) => {
                     x: nodo.x() + deltaX,
                     y: nodo.y() + deltaY
                 });
-                mostrarPaleta(nodo);
 
                 actualizarPuntosyFlechasDelNodo(nodo.id());
 
@@ -191,33 +192,12 @@ window.addEventListener('keydown', (e) => {
                     x: nodo.x(),
                     y: nodo.y()
                 }));
+
+                updateHUD();
             }
         });
     }
 
-});
-
-document.querySelectorAll('.color-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-        const nodoID = colorPicker.dataset.nodoTarget;
-        const nodo = stage.findOne('#' + nodoID);
-        if(nodo){
-            const rect = nodo.findOne('.fondo-rect');
-            rect.fill(dot.dataset.color);
-
-            const label = nodo.findOne('.texto-nodo');
-            if(label){
-                label.fill(obtenerColorTexto(dot.dataset.color));
-            }
-
-            layer.batchDraw();
-            socket.send(JSON.stringify({
-                tipo: "cambiar_color_nodo",
-                id: nodoID,
-                color: dot.dataset.color
-            }));
-        }
-    });
 });
 
 window.addEventListener('resize', () => {
@@ -230,8 +210,6 @@ stage.on('click', (e) => {
 
         if(myNode != null){
 
-            colorPicker.style.display = 'none';
-
             trasformar.nodes([]);
 
             socket.send(JSON.stringify({
@@ -243,6 +221,7 @@ stage.on('click', (e) => {
             layerPresencia.draw();
 
             myNode = null;
+            updateHUD();
         }
     }
 });
@@ -328,4 +307,99 @@ stage.on('mouseup', (e) => {
     if(e.target === stage){
         cancelarDibujoConexion();
     }
+});
+
+const nodo_id = document.getElementById("node-id")
+const nodo_width = document.getElementById("node-width");
+const nodo_height = document.getElementById("node-height");
+const nodo_x = document.getElementById("node-x");
+const nodo_y = document.getElementById("node-y");
+const nodo_fill = document.getElementById("node-fill");
+
+export function updateHUD(){
+    const nodo = stage.findOne('#' + myNode);
+    if(nodo){
+        
+        const rect = nodo.findOne('.fondo-rect');
+        if(rect){
+
+            nodo_width.disabled = false;
+            nodo_height.disabled = false;
+            nodo_x.disabled = false;
+            nodo_y.disabled = false;
+            nodo_fill.disabled = false;
+
+            nodo_id.textContent = myNode;
+            nodo_width.value = +rect.width() / 20;
+            nodo_height.value = +rect.height() / 20;
+            nodo_x.value = +nodo.x() / 20;
+            nodo_y.value = +nodo.y() / 20;
+            nodo_fill.value = rect.fill();
+        }
+    } else {
+        nodo_width.value = null;
+        nodo_height.value = null;
+        nodo_x.value = null;
+        nodo_y.value = null;
+        nodo_id.textContent = 'NONE';
+        nodo_fill.value = '#000000'
+
+        nodo_width.disabled = true;
+        nodo_height.disabled = true;
+        nodo_x.disabled = true;
+        nodo_y.disabled = true;
+        nodo_fill.disabled = true;
+    }
+}
+
+nodo_width.addEventListener('keyup', (e) => {
+    if (myNode !== null){
+        const nodo = stage.findOne('#' + myNode);
+        if(nodo){
+
+            const rect = nodo.findOne('.fondo-rect');
+            if(rect){
+                rect.width(e.target.value * 20);
+
+                trasformar.nodes([nodo]);
+            }
+        }
+    }
+});
+
+nodo_height.addEventListener('keyup', (e) => {
+    if (myNode !== null){
+        const nodo = stage.findOne('#' + myNode);
+        if(nodo){
+
+            const rect = nodo.findOne('.fondo-rect');
+            if(rect){
+                rect.height(e.target.value * 20);
+            }
+        }
+    }
+});
+
+nodo_x.addEventListener('keyup', (e) => {
+    if (myNode !== null){
+        mover_nodo(myNode, e.target.value * 20, null);
+    }
+});
+
+nodo_y.addEventListener('keyup', (e) => {
+    if (myNode !== null){
+        if (myNode !== null){
+        mover_nodo(myNode, null, e.target.value * 20);
+    }
+    }
+});
+
+nodo_fill.addEventListener('input', (e) => {
+    if (myNode != null){
+        cambiar_color(myNode, e.target.value);
+    }
+});
+
+nodo_fill.addEventListener('change', (e) => {
+    console.log(e.target.value);
 });

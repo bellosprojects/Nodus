@@ -18,14 +18,13 @@ class Nodo(BaseModel):
     h: float
     texto: str
     color: str
+    opacidad: float
 
 class Conexion(BaseModel):
     id: str
     origenId: str
-    origenPuntoId: str
     destinoId: str
-    destinoPuntoId: str
-    tipo: str
+    tipo: int
 
 class User(BaseModel):
     nombre: str
@@ -161,6 +160,10 @@ class Diagram:
         if user in self.usuarios:
             self.usuarios[user].x = x
             self.usuarios[user].y = y
+
+    def cambiar_opacidad_nodo(self, nodoId: str, opacity: float):
+        if nodoId in self.nodos:
+            self.nodos[nodoId].opacidad = opacity
 
     def obtener_estado_inicial(self):
         return {
@@ -323,11 +326,15 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
             elif tipo == 'mover_cursor':
                 room.mover_cursor(websocket, data["x"], data["y"])
 
+            elif tipo == 'cambiar_opacidad_nodo':
+                room.cambiar_opacidad_nodo(data['id'], data['opacidad'])
+
             if is_reshippable:
                 await manager.broadcast_to_room(room_id, data, websocket)
+
+
 
     except WebSocketDisconnect:
         await manager.disconnect(websocket, room_id)
 
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
-

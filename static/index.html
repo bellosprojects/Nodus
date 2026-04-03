@@ -21,19 +21,65 @@
         </div>
     </header>
 
-    <div id="color-picker" class="floating-toolbar">
-        <div class="color-dot" style="background: #222222;" data-color="#222222"></div>
-        <div class="color-dot" style="background: #192416;" data-color="#192416"></div>
-        <div class="color-dot" style="background: #23202d;" data-color="#23202d"></div>
-        <div class="color-dot" style="background: #ffffff;" data-color="#ffffff"></div>
-        <div class="color-dot" style="background: #ecce6c;" data-color="#ecce6c"></div>
-        <div class="color-dot" style="background: #ffadbb;" data-color="#ffadbb"></div>
-    </div>
-
-
     <div class="app-container">
+
+        
         <aside class="sidebar">
-            <p>Herramientas</p>
+            
+            <nav class="nav">
+                <span>CREATE</span>
+                <span class="selected">EDIT</span>
+                <span>COLLAB</span>
+            </nav>
+
+            <section class="properties">
+                <p>PROPERTIES</p>
+
+                <span>
+                    <p>Selection</p>
+                    <p id="node-id">NONE</p>
+                </span>
+
+                <span class="size">
+                    <div>
+                        <p>WIDTH</p>
+                        <span class="input-number">
+                            <input type="number" id="node-width" disabled min="0" onkeydown="return event.key !== '-'">
+                            <p>dt</p>
+                        </span>
+                    </div>
+                    <div>
+                        <p>HEIGHT</p>
+                        <span class="input-number">
+                            <input type="number" id="node-height" disabled min="0" onkeydown="return event.key !== '-'">
+                            <p>dt</p>
+                        </span>
+                    </div>
+                </span>
+
+                <span class="position">
+                    <div>
+                        <p>X</p>
+                        <span class="input-number">
+                            <input type="number" id="node-x" disabled min="0" onkeydown="return event.key !== '-'">
+                            <p>dt</p>
+                        </span>
+                    </div>
+                    <div>
+                        <p>Y</p>
+                        <span class="input-number">
+                            <input type="number" id="node-y" disabled min="0" onkeydown="return event.key !== '-'">
+                            <p>dt</p>
+                        </span>
+                    </div>
+                </span>
+
+                <div class="fill">
+                    <p>FILL</p>
+                    <input type="color" disabled id="node-fill">
+                </div>
+            </section>
+
             <button class="tool-btn" id="add-rect-btn">
                 <div class="rect-icon"></div>
                 Cuadrado
@@ -44,7 +90,8 @@
             </div>
         </aside>
 
-        <main id="canvas-container"></main>
+        <div id="canvas-container"></div>
+
     </div>
     <script type="module" src="js/main.js"></script>
 </body>
