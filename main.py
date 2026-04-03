@@ -177,7 +177,7 @@ class ConnectionManager:
         self.rooms: Dict[str, Diagram] = {}
 
     def get_or_create_diagram(self, room_id : str):
-        if room_id in self.rooms:
+        if room_id in self.rooms: 
             return self.rooms[room_id]
         
         new_room = Diagram(room_id)
