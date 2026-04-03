@@ -24,7 +24,7 @@ class Conexion(BaseModel):
     id: str
     origenId: str
     destinoId: str
-    tipo: int
+    style: int
 
 class User(BaseModel):
     nombre: str
