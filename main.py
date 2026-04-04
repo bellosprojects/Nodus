@@ -19,6 +19,7 @@ class Nodo(BaseModel):
     texto: str
     color: str
     opacidad: float
+    radius: float
 
 class Conexion(BaseModel):
     id: str
