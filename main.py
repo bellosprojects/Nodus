@@ -187,6 +187,17 @@ class ConnectionManager:
         self.rooms[room_id] = new_room
         return new_room
     
+    def del_room(self, room_id: str) -> str:
+
+        response = f"Sala {room_id} no encontrada"
+
+        if room_id in self.rooms:
+            del self.rooms[room_id]
+            response = f"Sala {room_id} eliminada"
+    
+        log.info(response)
+        return response
+    
     async def broadcast_to_room(self, room_id : str, message: dict, exclude : WebSocket = None):
         if room_id in self.rooms:
 
@@ -251,6 +262,11 @@ async def state_of_room(room_id: str):
     }
 
     return response
+
+@app.get("/delete/{room_id}")
+def del_room(room_id: str):
+
+    return manager.del_room(room_id)
 
 @app.websocket("/ws/{room_id}/{nombre}")
 async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
