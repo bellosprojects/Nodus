@@ -166,6 +166,10 @@ class Diagram:
         if nodoId in self.nodos:
             self.nodos[nodoId].opacidad = opacity
 
+    def cambiar_radius_nodo(self, nodoId: str, radius: float):
+        if nodoId in self.nodos:
+            self.nodos[nodoId].radius = radius
+
     def obtener_estado_inicial(self):
         return {
             "tipo": "estado_inicial",
@@ -329,6 +333,9 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
 
             elif tipo == 'cambiar_opacidad_nodo':
                 room.cambiar_opacidad_nodo(data['id'], data['opacidad'])
+
+            elif tipo == 'cambiar_radius_nodo':
+                room.cambiar_radius_nodo(data['id'], data['radius'])
 
             if is_reshippable:
                 await manager.broadcast_to_room(room_id, data, websocket)
