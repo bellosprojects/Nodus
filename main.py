@@ -3,12 +3,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi import WebSocket, WebSocketDisconnect
 from pydantic import BaseModel
 from typing import Dict
-from database import get_conection, init_db
 from logger_config import setup_logger
 
 app = FastAPI()
 log = setup_logger("SERVER")
-#init_db()
 
 class Nodo(BaseModel):
     id: str
