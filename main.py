@@ -18,6 +18,7 @@ class Nodo(BaseModel):
     color: str
     opacidad: float
     radius: float
+    pin: bool
 
 class Conexion(BaseModel):
     id: str
@@ -174,6 +175,27 @@ class Diagram:
     def cambiar_radius_nodo(self, nodoId: str, radius: float):
         if nodoId in self.nodos:
             self.nodos[nodoId].radius = radius
+
+    def bloquear_nodo(self, nodoId: str):
+        if nodoId in self.nodos:
+            self.nodos[nodoId].pin = True
+
+    def desbloquear_nodo(self, nodoId: str):
+        if nodoId in self.nodos:
+            self.nodos[nodoId].pin = False
+
+    def mover_nodo_al_frente(self, nodoId: str):
+        if nodoId in self.nodos:
+            nodo = self.nodos.pop(nodoId)
+            self.nodos[nodoId] = nodo
+
+    def mover_nodo_atras(self, nodoId: str):
+        if nodoId in self.nodos:
+            nodo = self.nodos.pop(nodoId)
+            newNodos : Dict[str, Nodo] = {nodoId: nodo}
+            for nodo_ in self.nodos:
+                newNodos[nodo_] = self.nodos[nodo_]
+            self.nodos = newNodos
 
     def obtener_estado_inicial(self):
         return {
@@ -362,6 +384,18 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
 
             elif tipo == 'cambiar_nombre_proyecto':
                 room.cambiar_nombre(data['nombre'])
+
+            elif tipo == 'traer_al_frente':
+                room.mover_nodo_al_frente(data['id'])
+
+            elif tipo == 'enviar_al_fondo':
+                room.mover_nodo_atras(data['id'])
+
+            elif tipo == 'bloquear_nodo':
+                room.bloquear_nodo(data['id'])
+
+            elif tipo == 'desbloquear_nodo':
+                room.desbloquear_nodo(data['id'])
 
             if is_reshippable:
                 await manager.broadcast_to_room(room_id, data, websocket)
