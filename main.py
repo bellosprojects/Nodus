@@ -35,12 +35,15 @@ class User(BaseModel):
 class Diagram:
     """
     Representa un diagrama colaborativo que contiene nodos, conexiones y usuarios.
-    Atributos:
+    Atributos
+    ---
         id (str): identificador único del diagrama.
+        nombre (str): Nombre del Proyecto
         nodos (Dict[str, Nodo]): Diccionario de nodos en el diagrama, codificado por ID de nodo.
         conexiones (Dict[str, Conexion]): Diccionario de conexiones entre nodos, codificado por ID de conexión.
         usuarios (Dict[WebSocket, User]): Diccionario de usuarios conectados al diagrama, codificados por WebSocket.
-    Métodos:
+    Métodos
+    ---
         add_nodo(nodo: Nodo, id_: str):
             Agrega un nodo al diagrama.
         add_conexion(conexion: Conexion, id_: str):
@@ -76,9 +79,13 @@ class Diagram:
     """
     def __init__(self, id_):
         self.id = id_
+        self.nombre: str
         self.nodos: Dict[str, Nodo] = {}
         self.conexiones: Dict[str, Conexion] = {}
         self.usuarios: Dict[WebSocket, User] = {}
+
+    def cambiar_nombre(self, newNombre: str):
+        self.nombre = newNombre
 
     def add_nodo(self, nodo: Nodo, id_: str):
         self.nodos[id_] = nodo
@@ -173,6 +180,7 @@ class Diagram:
             "tipo": "estado_inicial",
             "nodos": [nodo.model_dump() for nodo in self.nodos.values()],
             "conexiones": [conexion.model_dump() for conexion in self.conexiones.values()],
+            "nombre": self.nombre
         }
 
 class ConnectionManager:
@@ -259,6 +267,7 @@ async def state_of_room(room_id: str):
         "usuarios": [user.model_dump() for user in room.usuarios.values()],
         "conexiones": [conx.model_dump() for conx in room.conexiones.values()],
         "nodos": [nodo.model_dump() for nodo in room.nodos.values()],
+        "nombre": room.nombre
     }
 
     return response
@@ -350,6 +359,9 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
 
             elif tipo == 'cambiar_radius_nodo':
                 room.cambiar_radius_nodo(data['id'], data['radius'])
+
+            elif tipo == 'cambiar_nombre_proyecto':
+                room.cambiar_nombre(data['nombre'])
 
             if is_reshippable:
                 await manager.broadcast_to_room(room_id, data, websocket)
