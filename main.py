@@ -79,13 +79,13 @@ class Diagram:
     """
     def __init__(self, id_):
         self.id = id_
-        self.nombre: str
+        self.nombre_proyecto: str = "New Project"
         self.nodos: Dict[str, Nodo] = {}
         self.conexiones: Dict[str, Conexion] = {}
         self.usuarios: Dict[WebSocket, User] = {}
 
     def cambiar_nombre(self, newNombre: str):
-        self.nombre = newNombre
+        self.nombre_proyecto = newNombre
 
     def add_nodo(self, nodo: Nodo, id_: str):
         self.nodos[id_] = nodo
@@ -180,7 +180,7 @@ class Diagram:
             "tipo": "estado_inicial",
             "nodos": [nodo.model_dump() for nodo in self.nodos.values()],
             "conexiones": [conexion.model_dump() for conexion in self.conexiones.values()],
-            "nombre": self.nombre
+            "nombre": self.nombre_proyecto
         }
 
 class ConnectionManager:
@@ -267,7 +267,7 @@ async def state_of_room(room_id: str):
         "usuarios": [user.model_dump() for user in room.usuarios.values()],
         "conexiones": [conx.model_dump() for conx in room.conexiones.values()],
         "nodos": [nodo.model_dump() for nodo in room.nodos.values()],
-        "nombre": room.nombre
+        "nombre": room.nombre_proyecto
     }
 
     return response
