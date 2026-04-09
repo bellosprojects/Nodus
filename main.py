@@ -138,10 +138,9 @@ class Diagram:
         if id_ in self.nodos:
             self.nodos[id_].color = color
 
-    def cambiar_texto_nodo(self, id_ : str, texto: str, h : int):
+    def cambiar_texto_nodo(self, id_ : str, texto: str):
         if id_ in self.nodos:
             self.nodos[id_].texto = texto
-            self.nodos[id_].h = h
 
     def seleccionar_nodo(self, nodoId : str, user : WebSocket):
 
@@ -340,8 +339,7 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
             elif tipo == "cambiar_texto_nodo":
                 room.cambiar_texto_nodo(
                     data["id"],
-                    data["texto"],
-                    data["h"]
+                    data["texto"]
                 )
 
             elif tipo == "asignar_color_user":
