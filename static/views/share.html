@@ -1,0 +1,20 @@
+<body style="background: black; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;">
+    <h1>Abriendo Nodus...</h1>
+
+    <script>
+        // Extraemos el ID de la URL (?d=123)
+        const urlParams = new URLSearchParams(window.location.search);
+        const diagramId = urlParams.get('d');
+
+        if (diagramId) {
+            // Intentamos abrir la app usando un protocolo personalizado
+            // Esto es lo que "despierta" a Tauri
+            window.location.href = `nodus://open?id=${diagramId}`;
+            
+            // Opcional: Si en 3 segundos no pasó nada, podrías mostrar un botón de "Descargar App"
+            setTimeout(() => {
+                console.log("Si no abrió, es que no tienen la app instalada.");
+            }, 3000);
+        }
+    </script>
+</body>
