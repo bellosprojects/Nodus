@@ -311,7 +311,7 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
 
             data = await websocket.receive_json()
             tipo = data.get("tipo")
-            if tipo not in ["mover_cursor", "mover_nodo"]:
+            if tipo not in ["mover_cursor", "mover_nodos"]:
                 log.debug(str(data))
 
             if not tipo:
@@ -321,8 +321,10 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
                 nodo = Nodo(**data["nodo"])
                 room.add_nodo(nodo, nodo.id)
 
-            elif tipo == "mover_nodo":
-                room.mover_nodo(data["id"], data["x"], data["y"])
+            elif tipo == "mover_nodos":
+                nodos = data["nodos"]
+                for nodo in nodos:
+                    room.mover_nodo(nodo["id"], nodo["x"], nodo["y"])
 
             elif tipo == "eliminar_nodo":
                 room.del_nodo(data["id"])

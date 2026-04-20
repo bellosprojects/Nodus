@@ -1,20 +1,387 @@
-<body style="background: black; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;">
-    <h1>Abriendo Nodus...</h1>
-
-    <script>
-        // Extraemos el ID de la URL (?d=123)
-        const urlParams = new URLSearchParams(window.location.search);
-        const diagramId = urlParams.get('d');
-
-        if (diagramId) {
-            // Intentamos abrir la app usando un protocolo personalizado
-            // Esto es lo que "despierta" a Tauri
-            window.location.href = `nodus://open?id=${diagramId}`;
-            
-            // Opcional: Si en 3 segundos no pasó nada, podrías mostrar un botón de "Descargar App"
-            setTimeout(() => {
-                console.log("Si no abrió, es que no tienen la app instalada.");
-            }, 3000);
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lanzando Nodus Flow...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* Evita que se seleccione texto al hacer doble clic */
         }
-    </script>
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #0a0f2a 0%, #040618 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Poppins', sans-serif;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animación del degradado de fondo (movimiento sutil) */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(56, 139, 253, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            animation: breathe 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        /* Contenedor principal */
+        .portal {
+            text-align: center;
+            z-index: 10;
+            animation: fadeInUp 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Círculo externo con efecto de pulso y rotación */
+        .pulse-ring {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ring {
+            position: absolute;
+            border-radius: 50%;
+            box-sizing: border-box;
+            border: 2px solid rgba(56, 139, 253, 0.3);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: spinRing 3s linear infinite;
+        }
+
+        .ring:nth-child(2) {
+            width: 160%;
+            height: 160%;
+            top: -30%;
+            left: -30%;
+            border-color: rgba(56, 139, 253, 0.15);
+            animation-duration: 4s;
+            animation-direction: reverse;
+        }
+
+        .ring:nth-child(3) {
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+            border-color: rgba(100, 181, 246, 0.4);
+            border-width: 1px;
+            animation-duration: 2s;
+        }
+
+        @keyframes spinRing {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Logo o icono central */
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            background: rgba(18, 25, 55, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(56, 139, 253, 0.2);
+            animation: pulseLogo 1.4s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        /* Si tienes una imagen de logo, reemplaza el contenido. Aquí va un SVG de ejemplo */
+        .logo-svg {
+            width: 60px;
+            height: 60px;
+            filter: drop-shadow(0 0 8px rgba(56, 139, 253, 0.6));
+        }
+
+        @keyframes pulseLogo {
+            0% { transform: scale(1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(56, 139, 253, 0.2); }
+            50% { transform: scale(1.05); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(56, 139, 253, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(56, 139, 253, 0.2); }
+        }
+
+        /* Texto principal */
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #FFFFFF, #94a3f8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        /* Texto secundario (efecto máquina de escribir) */
+        .action-text {
+            font-size: 1rem;
+            color: #a0b3d9;
+            letter-spacing: 0.5px;
+            font-weight: 400;
+            margin-top: 8px;
+            min-height: 28px;
+        }
+
+        .action-text::after {
+            content: '|';
+            opacity: 1;
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+            font-weight: 300;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Barra de progreso "indeterminada" estilizada */
+        .progress-bar {
+            width: 240px;
+            height: 2px;
+            background: rgba(56, 139, 253, 0.2);
+            border-radius: 10px;
+            margin: 32px auto 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            position: absolute;
+            height: 100%;
+            width: 40%;
+            background: linear-gradient(90deg, #388bfd, #a855f7);
+            border-radius: 10px;
+            animation: loadingMove 1.2s ease-in-out infinite;
+        }
+
+        @keyframes loadingMove {
+            0% { left: -40%; }
+            100% { left: 100%; }
+        }
+
+        /* Texto de versión o mensaje inferior */
+        .version {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #4b556b;
+            font-family: monospace;
+            letter-spacing: 0.5px;
+        }
+
+        /* Partículas decorativas */
+        .particle {
+            position: absolute;
+            background: rgba(56, 139, 253, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatParticle 8s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="portal">
+    <div class="pulse-ring">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="logo-container">
+            <!-- Reemplaza este SVG con el logo de tu app o imagen -->
+            <img src="../assets/NodusLogo.png" class="logo-svg" alt="">
+        </div>
+    </div>
+    <h1>Abriendo <span id="appName">Nodus Flow</span></h1>
+    <div class="action-text" id="statusMessage">Iniciando portal</div>
+    <div class="progress-bar">
+        <div class="progress-fill"></div>
+    </div>
+</div>
+<div class="version">deep link • lanzamiento instantáneo</div>
+
+<script>
+    // === CONFIGURACIÓN ===
+    const APP_NAME = "Nodus Flow";   // Cambia por el nombre de tu app
+    const REDIRECT_DELAY_MS = 2000;          // 2 segundos (ajústalo si tu app tarda más o menos)
+    
+    // Mensajes dinámicos para hacer la espera más entretenida
+    const messages = [
+        "Despertando motores gráficos",
+        "Estableciendo conexión segura",
+        "Cargando módulos principales",
+        "Preparando tu experiencia",
+        "Calibrando interfaces",
+        "Abriendo puertas digitales"
+    ];
+    
+    // Elementos del DOM
+    const appNameSpan = document.getElementById("appName");
+    const statusSpan = document.getElementById("statusMessage");
+    
+    // Asignar nombre de la app
+    if (appNameSpan) {
+        appNameSpan.textContent = APP_NAME;
+    }
+    
+    // Cambiar el texto de estado cada 400ms para dar sensación de actividad
+    let msgIndex = 0;
+    const interval = setInterval(() => {
+        if (statusSpan) {
+            // Animación de fade out/in suave se puede lograr cambiando el texto, pero para no complicar, solo cambiamos el texto
+            statusSpan.style.opacity = "0.7";
+            setTimeout(() => {
+                statusSpan.textContent = messages[msgIndex % messages.length];
+                statusSpan.style.opacity = "1";
+            }, 80);
+            msgIndex++;
+        }
+    }, 450);
+    
+    // Una vez pasado el tiempo, limpiamos el intervalo (buena práctica)
+    setTimeout(() => {
+        clearInterval(interval);
+    }, REDIRECT_DELAY_MS);
+    
+    // Pequeño efecto adicional: añadir partículas flotantes
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        const size = Math.random() * 6 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.animationDuration = `${Math.random() * 5 + 4}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        document.body.appendChild(particle);
+        
+        // Eliminar la partícula después de que termine su animación
+        setTimeout(() => {
+            if (particle && particle.remove) particle.remove();
+        }, 10000);
+    }
+    
+    // Generar partículas de fondo cada 300ms
+    const particleInterval = setInterval(() => {
+        createParticle();
+    }, 300);
+    
+    // Detener partículas después del tiempo de redirección
+    setTimeout(() => {
+        clearInterval(particleInterval);
+        // Limpiar partículas existentes (opcional, para dejar la página limpia si alguien la ve por más tiempo)
+        const particles = document.querySelectorAll('.particle');
+        particles.forEach(p => p.remove());
+    }, REDIRECT_DELAY_MS);
+    
+    // El deep link real se ejecuta inmediatamente o al cargar la página
+    // Asumiendo que ya tienes el mecanismo para abrir la app (ej. window.location.href = "tu-scheme://")
+    // Si no, aquí puedes llamar a tu función de redirección.
+    // Ejemplo:
+    // window.location.href = "miapp://abrir";
+    
+    // Si tu método actual es otro, solo asegúrate de que no interfiera con la animación.
+    // Por ahora, mantenemos el setTimeout para simular y que veas el diseño completo.
+    // EN TU CÓDIGO REAL, DEBES LLAMAR A LA APERTURA DE LA APP INMEDIATAMENTE,
+    // pero puedes dejar el setTimeout para ocultar/cerrar la ventana si la app no te da callback.
+    
+    // === IMPORTANTE: Reemplaza esta línea con tu llamada real de deep link ===
+    // Ejemplo real:
+    // window.location.href = "tu-esquema-deep-link://lanzar";
+    // O si usas un botón o evento, ejecútalo aquí.
+    
+    // Para la demo visual, mostramos la animación completa y luego un mensaje.
+    // En tu integración real, la página se cerrará sola cuando la app capture el deep link.
+    console.log(`Deep link a ${APP_NAME} activado. Redirigiendo en ${REDIRECT_DELAY_MS}ms...`);
+    
+    // === DESCOMENTA Y USA TU LLAMADA REAL AQUÍ ===
+    // window.location.href = "tuapp://abrir";
+    
+    // Si tu app se abre y cierra esta página automáticamente, genial.
+    // Si no, este timeout puede cerrar la ventana (si se abrió con window.open)
+    setTimeout(() => {
+        // Intento de cierre elegante (útil si la ventana fue abierta con _blank)
+        // Esto no funcionará si la página no fue abierta por script, pero es un plus.
+        try {
+            window.close();
+        } catch(e) {
+            console.log("La ventana no se pudo cerrar automáticamente, el usuario la cerrará manualmente.");
+            // Opcional: mostrar un botón "Cerrar"
+            const closeBtn = document.createElement('button');
+            closeBtn.textContent = 'Cerrar ventana';
+            closeBtn.style.position = 'absolute';
+            closeBtn.style.bottom = '60px';
+            closeBtn.style.left = '50%';
+            closeBtn.style.transform = 'translateX(-50%)';
+            closeBtn.style.background = '#1e2a5e';
+            closeBtn.style.border = 'none';
+            closeBtn.style.color = 'white';
+            closeBtn.style.padding = '8px 18px';
+            closeBtn.style.borderRadius = '40px';
+            closeBtn.style.fontSize = '0.8rem';
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.style.zIndex = '100';
+            closeBtn.style.backdropFilter = 'blur(4px)';
+            closeBtn.onclick = () => window.close();
+            document.body.appendChild(closeBtn);
+        }
+    }, REDIRECT_DELAY_MS + 500);
+</script>
 </body>
+</html>
