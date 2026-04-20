@@ -330,34 +330,19 @@
         particles.forEach(p => p.remove());
     }, REDIRECT_DELAY_MS);
     
-    // El deep link real se ejecuta inmediatamente o al cargar la página
-    // Asumiendo que ya tienes el mecanismo para abrir la app (ej. window.location.href = "tu-scheme://")
-    // Si no, aquí puedes llamar a tu función de redirección.
-    // Ejemplo:
-    // window.location.href = "miapp://abrir";
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const diagramId = urlParams.get('d');
+
+    if(diagramId){
+
+        window.location.href = `nodus://open?id=${diagramId}`;
+        console.log(`Deep link a ${APP_NAME} activado. Redirigiendo en ${REDIRECT_DELAY_MS}ms...`);
+    }
     
-    // Si tu método actual es otro, solo asegúrate de que no interfiera con la animación.
-    // Por ahora, mantenemos el setTimeout para simular y que veas el diseño completo.
-    // EN TU CÓDIGO REAL, DEBES LLAMAR A LA APERTURA DE LA APP INMEDIATAMENTE,
-    // pero puedes dejar el setTimeout para ocultar/cerrar la ventana si la app no te da callback.
     
-    // === IMPORTANTE: Reemplaza esta línea con tu llamada real de deep link ===
-    // Ejemplo real:
-    // window.location.href = "tu-esquema-deep-link://lanzar";
-    // O si usas un botón o evento, ejecútalo aquí.
     
-    // Para la demo visual, mostramos la animación completa y luego un mensaje.
-    // En tu integración real, la página se cerrará sola cuando la app capture el deep link.
-    console.log(`Deep link a ${APP_NAME} activado. Redirigiendo en ${REDIRECT_DELAY_MS}ms...`);
-    
-    // === DESCOMENTA Y USA TU LLAMADA REAL AQUÍ ===
-    // window.location.href = "tuapp://abrir";
-    
-    // Si tu app se abre y cierra esta página automáticamente, genial.
-    // Si no, este timeout puede cerrar la ventana (si se abrió con window.open)
     setTimeout(() => {
-        // Intento de cierre elegante (útil si la ventana fue abierta con _blank)
-        // Esto no funcionará si la página no fue abierta por script, pero es un plus.
         try {
             window.close();
         } catch(e) {
