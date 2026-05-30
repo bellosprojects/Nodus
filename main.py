@@ -20,12 +20,14 @@ class Nodo(BaseModel):
     radius: float
     pin: bool
     style: int
+    properties: dict
 
 class Conexion(BaseModel):
     id: str
     origenId: str
     destinoId: str
     style: int
+    properties: dict
 
 class User(BaseModel):
     nombre: str
@@ -204,6 +206,22 @@ class Diagram:
     def cambiar_estilo_nodo(self, nodoId: str, style: int):
         if nodoId in self.nodos:
             self.nodos[nodoId].style = style
+
+    def cambiar_nodo_property(self, nodoId: str, propertyName: str, propertyValue):
+        if nodoId in self.nodos:
+            self.nodos[nodoId].properties[propertyName] = propertyValue
+
+    def cambiar_conexion_property(self, conexionId: str, propertyName: str, propertyValue):
+        if conexionId in self.conexiones:
+            self.conexiones[conexionId].properties[propertyName] = propertyValue
+
+    def deletear_nodo_property(self, nodoId: str, propertyName: str):
+        if nodoId in self.nodos and propertyName in self.nodos[nodoId].properties:
+            del self.nodos[nodoId].properties[propertyName]
+
+    def deletear_conexion_property(self, conexionId: str, propertyName: str):
+        if conexionId in self.conexiones and propertyName in self.conexiones[conexionId].properties:
+            del self.conexiones[conexionId].properties[propertyName]
 
     def obtener_estado_inicial(self):
         return {
@@ -411,6 +429,18 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
 
             elif tipo == 'cambiar_estilo_nodo':
                 room.cambiar_estilo_nodo(data['id'], data['estilo'])
+
+            elif tipo == 'cambiar_nodo_property':
+                room.cambiar_nodo_property(data['id'], data['propertyName'], data['propertyValue'])
+
+            elif tipo == 'cambiar_conexion_property':
+                room.cambiar_conexion_property(data['id'], data['propertyName'], data['propertyValue'])
+
+            elif tipo == 'deletear_nodo_property':
+                room.deletear_nodo_property(data['id'], data['propertyName'])
+
+            elif tipo == 'deletear_conexion_property':
+                room.deletear_conexion_property(data['id'], data['propertyName'])
 
             if is_reshippable:
                 await manager.broadcast_to_room(room_id, data, websocket)
