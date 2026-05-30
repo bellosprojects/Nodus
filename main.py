@@ -19,6 +19,7 @@ class Nodo(BaseModel):
     opacidad: float
     radius: float
     pin: bool
+    style: int
 
 class Conexion(BaseModel):
     id: str
@@ -195,6 +196,14 @@ class Diagram:
             for nodo_ in self.nodos:
                 newNodos[nodo_] = self.nodos[nodo_]
             self.nodos = newNodos
+
+    def cambiar_estilo_conexion(self, conexionId: str, style: int):
+        if conexionId in self.conexiones:
+            self.conexiones[conexionId].style = style
+
+    def cambiar_estilo_nodo(self, nodoId: str, style: int):
+        if nodoId in self.nodos:
+            self.nodos[nodoId].style = style
 
     def obtener_estado_inicial(self):
         return {
@@ -396,6 +405,12 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
 
             elif tipo == 'desbloquear_nodo':
                 room.desbloquear_nodo(data['id'])
+
+            elif tipo == 'cambiar_estilo_conexion':
+                room.cambiar_estilo_conexion(data['id'], data['estilo'])
+
+            elif tipo == 'cambiar_estilo_nodo':
+                room.cambiar_estilo_nodo(data['id'], data['estilo'])
 
             if is_reshippable:
                 await manager.broadcast_to_room(room_id, data, websocket)
