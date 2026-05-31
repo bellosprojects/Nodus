@@ -743,5 +743,3 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
 
     except WebSocketDisconnect:
         await manager.disconnect(websocket, room_id)
-
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
