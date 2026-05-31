@@ -192,47 +192,48 @@ async def extend_access(request: ExtendRequest):
 @app.get("/admin/devices")
 async def list_devices(admin_token: str):
     """
-    Lista todos los dispositivos con su estado.
+    Lista todos los dispositivos con su estado (versión simplificada).
     """
     if admin_token != ADMIN_TOKEN:
         raise HTTPException(status_code=403, detail="Token de administrador inválido")
     
     try:
-        result = supabase.table("licenses")\
-            .select("device_id, expires_at, created_at, extension_count, notes, last_validated_at")\
-            .order("expires_at")\
-            .execute()
+        # Consulta simple sin ordenamiento
+        result = supabase.table("licenses").select("*").execute()
         
         now = datetime.now(timezone.utc)
         devices = []
         
         for d in result.data:
-            expires_at = datetime.fromisoformat(d["expires_at"].replace('Z', '+00:00'))
-            
-            # Truncar device_id para vista resumida
-            device_id_short = d["device_id"][:30] + "..." if len(d["device_id"]) > 30 else d["device_id"]
+            # Parsear expires_at
+            expires_at_str = d.get("expires_at")
+            if not expires_at_str:
+                continue
+                
+            try:
+                expires_at = datetime.fromisoformat(expires_at_str.replace('Z', '+00:00'))
+            except:
+                continue
             
             devices.append({
-                "device_id_short": device_id_short,
-                "device_id_full": d["device_id"],
-                "expires_at": expires_at.isoformat(),
+                "device_id_full": d.get("device_id"),
+                "device_id_short": d.get("device_id", "")[:30],
+                "expires_at": expires_at_str,
                 "is_active": expires_at > now,
                 "days_left": (expires_at - now).days if expires_at > now else 0,
-                "created_at": d["created_at"],
-                "extension_count": d["extension_count"],
-                "last_validated_at": d.get("last_validated_at")
+                "created_at": d.get("created_at", ""),
+                "extension_count": d.get("extension_count", 0)
             })
         
         return {
             "total": len(devices),
             "active": sum(1 for d in devices if d["is_active"]),
-            "expired": sum(1 for d in devices if not d["is_active"]),
             "devices": devices
         }
         
     except Exception as e:
-        print(f"Error en list_devices: {e}")
-        raise HTTPException(status_code=500, detail=f"Error interno: {str(e)}")
+        print(f"Error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/admin/device/{device_id}")
 async def get_device(device_id: str, admin_token: str):
