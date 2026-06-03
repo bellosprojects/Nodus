@@ -37,7 +37,8 @@ app.add_middleware(
     allow_origins=["tauri://localhost",
         "http://localhost:1420",
         "http://localhost:1421",
-        "https://tauri.localhost"],
+        "https://tauri.localhost"
+        "http://tauri.localhost"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
@@ -382,6 +383,7 @@ class Diagram:
         self.nodos: Dict[str, Nodo] = {}
         self.conexiones: Dict[str, Conexion] = {}
         self.usuarios: Dict[WebSocket, User] = {}
+        self.propiedades: dict = {}
 
     def cambiar_nombre(self, newNombre: str):
         self.nombre_proyecto = newNombre
@@ -518,12 +520,20 @@ class Diagram:
         if conexionId in self.conexiones and propertyName in self.conexiones[conexionId].properties:
             del self.conexiones[conexionId].properties[propertyName]
 
+    def cambiar_proyecto_property(self, propertyName: str, propertyValue):
+        self.propiedades[propertyName] = propertyValue
+
+    def deletear_proyecto_property(self, propertyName: str):
+        if propertyName in self.propiedades:
+            del self.propiedades[propertyName]
+
     def obtener_estado_inicial(self):
         return {
             "tipo": "estado_inicial",
             "nodos": [nodo.model_dump() for nodo in self.nodos.values()],
             "conexiones": [conexion.model_dump() for conexion in self.conexiones.values()],
-            "nombre": self.nombre_proyecto
+            "nombre": self.nombre_proyecto,
+            "propiedades": self.propiedades
         }
 
 class ConnectionManager:
@@ -736,6 +746,12 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
 
             elif tipo == 'deletear_conexion_property':
                 room.deletear_conexion_property(data['id'], data['propertyName'])
+
+            elif tipo == 'cambiar_proyecto_property':
+                room.cambiar_proyecto_property(data['propertyName'], data['propertyValue'])
+
+            elif tipo == 'deletear_proyecto_property':
+                room.deletear_proyecto_property(data['propertyName'])
 
             if is_reshippable:
                 await manager.broadcast_to_room(room_id, data, websocket)
