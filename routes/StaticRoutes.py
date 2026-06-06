@@ -4,9 +4,9 @@ from fastapi.responses import HTMLResponse
 
 router = APIRouter()
 
-templates = Jinja2Templates(directory="static/templates")
+templates = Jinja2Templates(directory="templates")
 
-@router.get("/share", response_class=HTMLResponse)
+@router.get("/share_diagram", response_class=HTMLResponse)
 async def share_view(request: Request, name: str = "Guest"):
     return templates.TemplateResponse(
         request=request,
