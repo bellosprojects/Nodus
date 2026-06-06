@@ -26,3 +26,5 @@ def setup_logger(name):
         logger.addHandler(file_handler)
 
     return logger
+
+logger = setup_logger("SERVER")

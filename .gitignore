@@ -7,3 +7,4 @@ diagramas.db
 server.log
 *.env
 admin.py
+*.log
