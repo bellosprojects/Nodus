@@ -1,11 +1,10 @@
-from fastapi import WebSocket, FastAPI, WebSocketDisconnect
-from models import Nodo, Conexion, ConnectionManager
+from fastapi import WebSocket, APIRouter, WebSocketDisconnect
+from models import Nodo, Conexion, manager
 from services import logger
 
-app = FastAPI()
-manager = ConnectionManager()
+router = APIRouter()
 
-@app.websocket("/ws/{room_id}/{nombre}")
+@router.websocket("/ws/{room_id}/{nombre}")
 async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
 
     await manager.connect(websocket, nombre, room_id)

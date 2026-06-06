@@ -1,2 +1,2 @@
 from .logger_service import logger
-from .database_service import supabase
+from .database_service import supabase, ADMIN_TOKEN

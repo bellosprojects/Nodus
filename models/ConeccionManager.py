@@ -77,3 +77,5 @@ class ConnectionManager:
             
             else:
                 await self.send_user_list(room_id)
+
+manager = ConnectionManager()

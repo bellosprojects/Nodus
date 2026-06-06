@@ -1,2 +1,0 @@
-from services import supabase
-
