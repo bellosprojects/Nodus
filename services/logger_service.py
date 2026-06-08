@@ -11,7 +11,30 @@ def setup_logger(name):
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
 
-    console_header = logging.StreamHandler(sys.stdout)
+    REDACT_PATTERNS = [__import__('re').compile(r"(SUPABASE_KEY=)(\S+)"), __import__('re').compile(r"(ADMIN_TOKEN=)(\S+)")]
+
+
+def _redact(msg: str) -> str:
+    if not isinstance(msg, str):
+        try:
+            msg = str(msg)
+        except Exception:
+            return msg
+    for p in REDACT_PATTERNS:
+        msg = p.sub(r"\1***REDACTED***", msg)
+    return msg
+
+
+class RedactingFormatter(logging.Formatter):
+    def format(self, record):
+        try:
+            record.msg = _redact(record.getMessage())
+        except Exception:
+            pass
+        return super().format(record)
+
+
+console_header = logging.StreamHandler(sys.stdout)
     console_header.setFormatter(logging.Formatter(FORMATO, FECHA_FORMATO))
 
     file_handler = RotatingFileHandler(

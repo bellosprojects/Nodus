@@ -3,8 +3,7 @@ __pycache__/
 *.pyc
 .vscode/
 instance/
-diagramas.db
 server.log
 *.env
 admin.py
-*.log
+*/__pycache__/

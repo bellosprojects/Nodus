@@ -4,8 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from routes import WebsocketRouter, BasicRouter, LicenseRouter, StaticRouter
 
 app = FastAPI(
-    title="Servidor de Diagramas Colaborativos",
-    description="Servidor backend para una aplicación de diagramas colaborativos en tiempo real.",
+    title="Servidor de Nodus Flow",
+    description="Servidor backend para una Nodus Flow.",
     version="1.0.0"
 )
 
