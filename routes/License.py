@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from models import DeviceAuth, ExtendRequest
-from services import supabase, logger, ADMIN_TOKEN
+from services import get_supabase, logger, ADMIN_TOKEN
+from services.auth_service import verify_admin
 from datetime import datetime, timezone, timedelta
 
 router = APIRouter()
@@ -14,6 +15,11 @@ async def validate_device(auth: DeviceAuth):
     """
 
     try:
+
+        supabase = get_supabase()
+        if supabase is None:
+            logger.error("Supabase client not available")
+            raise HTTPException(status_code=500, detail="Error de configuración de base de datos")
 
         result = supabase.table("licenses")\
             .select("expires_at")\
@@ -72,7 +78,7 @@ async def validate_device(auth: DeviceAuth):
 
 
 @router.post("/extend")
-async def extend_access(request: ExtendRequest):
+async def extend_access(request: ExtendRequest, _=Depends(verify_admin)):
     """
     Extiende la licencia de un dispositivo.
     Solo accesible con el token de administrador.
