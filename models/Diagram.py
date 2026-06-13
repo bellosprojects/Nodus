@@ -3,6 +3,7 @@ from .Node import Nodo
 from typing import Dict
 from .User import User
 from fastapi.websockets import WebSocket
+from services import save_room, save_connections, save_nodes, logger
 
 class Diagram:
     """
@@ -56,6 +57,16 @@ class Diagram:
         self.conexiones: Dict[str, Conexion] = {}
         self.usuarios: Dict[WebSocket, User] = {}
         self.propiedades: dict = {}
+
+    async def persist(self):
+        """Guarda el estado actual en Supabase."""
+        try:
+            await save_room(self.id, self.nombre_proyecto, self.propiedades)
+            await save_nodes(self.id, self.nodos)
+            await save_connections(self.id, self.conexiones)
+            logger.debug(f"Sala {self.id} persistida correctamente")
+        except Exception as e:
+            logger.error(f"Error al persistir sala {self.id}: {e}")
 
     def cambiar_nombre(self, newNombre: str):
         self.nombre_proyecto = newNombre

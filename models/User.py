@@ -6,3 +6,5 @@ class User(BaseModel):
     x: float
     y: float
     objeto: str = None
+    user_id:str
+    token:str

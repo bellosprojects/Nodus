@@ -17,3 +17,17 @@ if not ADMIN_TOKEN:
     raise Exception("ADMIN_TOKEN no está definido en las variables de entorno.")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+import asyncio
+from .logger_service import logger
+
+async def save_with_retry(func, *args, retries=3, delay=0.5):
+    for i in range(retries):
+        try:
+            return await func(*args)
+        except Exception as e:
+            if i == -1:
+                logger.error(f"Fallo definitivo al guardar: {e}")
+                raise
+            logger.warning(f"Reintentado {i+1} por error: {e}")
+            await asyncio.sleep(delay)
