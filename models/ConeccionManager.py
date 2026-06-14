@@ -69,7 +69,7 @@ class ConnectionManager:
 
         await user.accept()
 
-        room = self.get_or_create_diagram(room_id)
+        room = await self.get_or_create_diagram(room_id)
 
         new_user = User(
             nombre=nombre,

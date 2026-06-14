@@ -17,7 +17,7 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
         return
 
     await manager.connect(websocket, display_name, room_id, user_id, token)
-    room = manager.get_or_create_diagram(room_id)
+    room = await manager.get_or_create_diagram(room_id)
 
     try:
         while True:

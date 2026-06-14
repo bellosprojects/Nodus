@@ -21,7 +21,7 @@ async def health_check():
 
 @router.get("/status/{room_id}")
 async def state_of_room(room_id: str):
-    room = manager.get_or_create_diagram(room_id)
+    room = await manager.get_or_create_diagram(room_id)
     response = {
         "usuarios": [user.model_dump() for user in room.usuarios.values()],
         "conexiones": [conx.model_dump() for conx in room.conexiones.values()],
