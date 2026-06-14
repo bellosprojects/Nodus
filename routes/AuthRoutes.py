@@ -83,3 +83,16 @@ async def get_me(request: Request):
         }
     except Exception as e:
         raise HTTPException(status_code=401, detail="Invalid token")
+    
+@router.post("/refresh")
+async def refresh(request: Request):
+    body = await request.json()
+    refresh_token = body.get("refresh_token")
+    try:
+        session = supabase.auth.refresh_session(refresh_token)
+        return {
+            "access_token": session.session.access_token,
+            "refresh_token": session.session.refresh_token
+        }
+    except:
+        raise HTTPException(401, "Invalid refresh token")
