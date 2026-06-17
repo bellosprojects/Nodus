@@ -82,7 +82,7 @@ class ConnectionManager:
 
         room.add_user(new_user, user)
 
-        await user.send_json(room.obtener_estado_inicial())
+        await user.send_json(room.obtener_estado_inicial(user_id))
         await self.send_user_list(room_id)
 
 

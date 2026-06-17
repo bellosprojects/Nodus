@@ -226,11 +226,12 @@ class Diagram:
         if propertyName in self.propiedades:
             del self.propiedades[propertyName]
 
-    def obtener_estado_inicial(self):
+    def obtener_estado_inicial(self, user_id: str = None):
         return {
             "tipo": "estado_inicial",
             "nodos": [nodo.model_dump() for nodo in self.nodos.values()],
             "conexiones": [conexion.model_dump() for conexion in self.conexiones.values()],
             "nombre": self.nombre_proyecto,
-            "propiedades": self.propiedades
+            "propiedades": self.propiedades,
+            "user_id": user_id
         }
