@@ -35,17 +35,17 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
             if tipo == "nuevo_nodo":
                 nodo = Nodo(**data["nodo"])
                 room.add_nodo(nodo, nodo.id)
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == "mover_nodos":
                 nodos = data["nodos"]
                 for nodo in nodos:
                     room.mover_nodo(nodo["id"], nodo["x"], nodo["y"])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == "eliminar_nodo":
                 room.del_nodo(data["id"])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == "redimensionar_nodo":
                 room.redimensionar_nodo(
@@ -55,14 +55,14 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
                     data["w"],
                     data["h"],
                 )
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == "cambiar_texto_nodo":
                 room.cambiar_texto_nodo(
                     data["id"],
                     data["texto"]
                 )
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == "asignar_color_user":
                 room.asignar_color_user(websocket, data["color"])
@@ -85,79 +85,79 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
 
             elif tipo == "cambiar_color_nodo":
                 room.cambiar_color_nodo(data["id"], data["color"])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == 'crear_conexion':
                 conexion = Conexion(**data["conexion"])
                 room.add_conexion(conexion, conexion.id)
-                await room.persist()
+                await room.save_connections_self()
 
             elif tipo == 'eliminar_conexion':
                 room.del_conexion(data["id"])
-                await room.persist()
+                await room.save_connections_self()
 
             elif tipo == 'mover_cursor':
                 room.mover_cursor(websocket, data["x"], data["y"])
 
             elif tipo == 'cambiar_opacidad_nodo':
                 room.cambiar_opacidad_nodo(data['id'], data['opacidad'])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == 'cambiar_radius_nodo':
                 room.cambiar_radius_nodo(data['id'], data['radius'])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == 'cambiar_nombre_proyecto':
                 room.cambiar_nombre(data['nombre'])
-                await room.persist()
+                await room.persist(False)
 
             elif tipo == 'traer_al_frente':
                 room.mover_nodo_al_frente(data['id'])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == 'enviar_al_fondo':
                 room.mover_nodo_atras(data['id'])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == 'bloquear_nodo':
                 room.bloquear_nodo(data['id'])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == 'desbloquear_nodo':
                 room.desbloquear_nodo(data['id'])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == 'cambiar_estilo_conexion':
                 room.cambiar_estilo_conexion(data['id'], data['estilo'])
-                await room.persist()
+                await room.save_connections_self()
 
             elif tipo == 'cambiar_estilo_nodo':
                 room.cambiar_estilo_nodo(data['id'], data['estilo'])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == 'cambiar_nodo_property':
                 room.cambiar_nodo_property(data['id'], data['propertyName'], data['propertyValue'])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == 'cambiar_conexion_property':
                 room.cambiar_conexion_property(data['id'], data['propertyName'], data['propertyValue'])
-                await room.persist()
+                await room.save_connections_self()
 
             elif tipo == 'deletear_nodo_property':
                 room.deletear_nodo_property(data['id'], data['propertyName'])
-                await room.persist()
+                await room.save_nodes_self()
 
             elif tipo == 'deletear_conexion_property':
                 room.deletear_conexion_property(data['id'], data['propertyName'])
-                await room.persist()
+                await room.save_connections_self()
 
             elif tipo == 'cambiar_proyecto_property':
                 room.cambiar_proyecto_property(data['propertyName'], data['propertyValue'])
-                await room.persist()
+                await room.persist(False)
 
             elif tipo == 'deletear_proyecto_property':
                 room.deletear_proyecto_property(data['propertyName'])
-                await room.persist()
+                await room.persist(False)
 
             if is_reshippable:
                 await manager.broadcast_to_room(room_id, data, websocket)

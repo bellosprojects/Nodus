@@ -54,8 +54,8 @@ async def save_connections(room_id: str, connections: Dict[str, Conexion]):
                 data.append({
                     "id": conn_id,
                     "room_id": room_id,
-                    "origenId": conn.origenId,
-                    "destinoId": conn.destinoId,
+                    "origenid": conn.origenId,
+                    "destinoid": conn.destinoId,
                     "style": conn.style,
                     "properties": conn.properties
                 })

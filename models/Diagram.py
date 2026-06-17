@@ -58,15 +58,31 @@ class Diagram:
         self.usuarios: Dict[WebSocket, User] = {}
         self.propiedades: dict = {}
 
-    async def persist(self):
+    async def persist(self, all : bool = True):
         """Guarda el estado actual en Supabase."""
         try:
             await save_room(self.id, self.nombre_proyecto, self.propiedades)
-            await save_nodes(self.id, self.nodos)
-            await save_connections(self.id, self.conexiones)
+            if all:
+                await self.save_nodes_self()
+                await self.save_connections_self()
             logger.debug(f"Sala {self.id} persistida correctamente")
         except Exception as e:
             logger.error(f"Error al persistir sala {self.id}: {e}")
+
+    async def save_nodes_self(self):
+
+        try:
+            await save_nodes(self.id, self.nodos)
+        except Exception as e:
+            logger.error(f"Error al guardar los nodos de la sala {self.id}: {e}")
+
+    async def save_connections_self(self):
+
+        try:
+            await save_connections(self.id, self.conexiones)
+        except Exception as e:
+            logger.error(f"Error al guardar las conexiones de la sala {self.id}: {e}")
+
 
     def cambiar_nombre(self, newNombre: str):
         self.nombre_proyecto = newNombre
