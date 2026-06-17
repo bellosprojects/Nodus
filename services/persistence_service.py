@@ -95,8 +95,8 @@ async def load_connections(room_id: str) -> Dict[str, Conexion]:
     for row in result.data:
         conn = Conexion(
             id=row["id"],
-            origenId=row["origenId"],
-            destinoId=row["destinoId"],
+            origenId=row["origenid"],
+            destinoId=row["destinoid"],
             style=row["style"],
             properties=row["properties"] or {}
         )
