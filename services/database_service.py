@@ -24,7 +24,7 @@ from .logger_service import logger
 async def save_with_retry(func, *args, retries=3, delay=0.5):
     for i in range(retries):
         try:
-            return await func(*args)
+            return func(*args)
         except Exception as e:
             if i == -1:
                 logger.error(f"Fallo definitivo al guardar: {e}")
