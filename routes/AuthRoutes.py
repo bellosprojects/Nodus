@@ -31,7 +31,7 @@ async def signup(req: SignUpRequest):
         
         # Opcional: confirmar email automáticamente (en desarrollo)
         # En producción, el usuario debe confirmar su email.
-        return {"message": "User created successfully", "user_id": user.id}
+        return {"message": "User created successfully", "id": user.id}
     except Exception as e:
         logger.error(f"Signup error: {e}")
         raise HTTPException(status_code=400, detail=str(e))
@@ -46,7 +46,7 @@ async def login(req: LoginRequest):
         return {
             "access_token": session.session.access_token,
             "refresh_token": session.session.refresh_token,
-            "user_id": session.user.id,
+            "id": session.user.id,
             "display_name": session.user.user_metadata.get("display_name", req.email.split('@')[0])
         }
     except Exception as e:
@@ -77,7 +77,7 @@ async def get_me(request: Request):
     try:
         user = supabase.auth.get_user(token)
         return {
-            "user_id": user.user.id,
+            "id": user.user.id,
             "email": user.user.email,
             "display_name": user.user.user_metadata.get("display_name")
         }
