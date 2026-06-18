@@ -22,7 +22,7 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
     try:
         while True:
 
-            is_allowed, error_message = rate_limiter.check_rate_limit(websocket)
+            is_allowed, error_message = await rate_limiter.check_rate_limit(websocket)
 
             if not is_allowed:
                 logger.warning(f"Rate limit excedido para usuario {display_name}: {error_message}")
