@@ -17,7 +17,7 @@ class WebSocketRateLimiter:
         
         # Límites (más permisivos)
         self.MAX_MESSAGES_PER_SECOND = 30      # 30 mensajes/segundo
-        self.MAX_MESSAGES_PER_MINUTE = 300     # 300 mensajes/minuto
+        self.MAX_MESSAGES_PER_MINUTE = 1000     # 1000 mensajes/minuto
         self.WINDOW_SECONDS = 1
         self.WINDOW_MINUTES = 60
         self.BLOCK_DURATION = 15               # 15 segundos de bloqueo
