@@ -19,27 +19,30 @@ async def save_nodes(room_id: str, nodes: Dict[str, Nodo]):
     """Reemplaza todos los nodos de la sala por los actuales"""
 
     def _save():
-        supabase.table("nodes").delete().eq("room_id", room_id).execute()
 
-        if nodes:
-            data = []
-            for node_id, node in nodes.items():
-                data.append({
-                    "id": node_id,
-                    "room_id": room_id,
-                    "x": node.x,
-                    "y": node.y,
-                    "w": node.w,
-                    "h": node.h,
-                    "texto": node.texto,
-                    "color": node.color,
-                    "opacidad": node.opacidad,
-                    "radius": node.radius,
-                    "pin": node.pin,
-                    "style": node.style,
-                    "properties": node.properties
-                })
-            supabase.table("nodes").insert(data).execute()
+        if not nodes:
+            supabase.table("nodes").delete().eq("room_id", room_id).execute()
+            return
+
+        data = []
+        for node_id, node in nodes.items():
+            data.append({
+                "id": node_id,
+                "room_id": room_id,
+                "x": node.x,
+                "y": node.y,
+                "w": node.w,
+                "h": node.h,
+                "texto": node.texto,
+                "color": node.color,
+                "opacidad": node.opacidad,
+                "radius": node.radius,
+                "pin": node.pin,
+                "style": node.style,
+                "properties": node.properties
+            })
+
+        supabase.table("nodes").upsert(data, on_conflict="id").execute()
 
     await save_with_retry(_save)
 
@@ -47,19 +50,59 @@ async def save_connections(room_id: str, connections: Dict[str, Conexion]):
     """Reemplaza todas las conexiones de la sala."""
 
     def _save():
-        supabase.table("connections").delete().eq("room_id", room_id).execute()
-        if connections:
-            data = []
-            for conn_id, conn in connections.items():
-                data.append({
-                    "id": conn_id,
-                    "room_id": room_id,
-                    "origenid": conn.origenId,
-                    "destinoid": conn.destinoId,
-                    "style": conn.style,
-                    "properties": conn.properties
-                })
-            supabase.table("connections").insert(data).execute()
+
+        if not connections:
+            supabase.table("connections").delete().eq("room_id", room_id).execute()
+            return
+        
+        data = []
+        for conn_id, conn in connections.items():
+            data.append({
+                "id": conn_id,
+                "room_id": room_id,
+                "origenid": conn.origenId,
+                "destinoid": conn.destinoId,
+                "style": conn.style,
+                "properties": conn.properties
+            })
+
+        supabase.table("connections").upsert(data, on_conflict="id").execute()
+
+    await save_with_retry(_save)
+
+async def save_single_node(room_id:str, node: Nodo):
+
+    def _save():
+        supabase.table("nodes").upsert({
+            "id": node.id,
+            "room_id": room_id,
+            "x": node.x,
+            "y": node.y,
+            "w": node.w,
+            "h": node.h,
+            "texto": node.texto,
+            "color": node.color,
+            "opacidad": node.opacidad,
+            "radius": node.radius,
+            "pin": node.pin,
+            "style": node.style,
+            "properties": node.properties
+        }, on_conflict="id").execute()
+
+    await save_with_retry(_save)
+
+async def save_single_connection(room_id:str, conn: Conexion):
+
+    def _save():
+
+        supabase.table("connections").upsert({
+            "id": conn.id,
+            "room_id": room_id,
+            "origenid": conn.origenId,
+            "destinoid": conn.destinoId,
+            "style": conn.style,
+            "properties": conn.properties
+        }, on_conflict="id").execute()
 
     await save_with_retry(_save)
 

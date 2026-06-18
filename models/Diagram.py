@@ -3,7 +3,7 @@ from .Node import Nodo
 from typing import Dict
 from .User import User
 from fastapi.websockets import WebSocket
-from services import save_room, save_connections, save_nodes, logger
+from services import save_room, save_connections, save_nodes, logger, save_single_node, save_single_connection
 
 class Diagram:
     """
@@ -83,6 +83,23 @@ class Diagram:
         except Exception as e:
             logger.error(f"Error al guardar las conexiones de la sala {self.id}: {e}")
 
+    async def save_single_node_(self, node_id: str):
+
+        node = self.nodos[node_id]
+
+        if not node:
+            return
+        
+        await save_single_node(self.id, node=node)
+
+    async def save_single_connection_(self, conn_id:str):
+
+        conn = self.conexiones[conn_id]
+
+        if not conn:
+            return
+    
+        await save_single_connection(self.id, conn=conn)
 
     def cambiar_nombre(self, newNombre: str):
         self.nombre_proyecto = newNombre

@@ -71,14 +71,14 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
                     data["w"],
                     data["h"],
                 )
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == "cambiar_texto_nodo":
                 room.cambiar_texto_nodo(
                     data["id"],
                     data["texto"]
                 )
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == "asignar_color_user":
                 room.asignar_color_user(websocket, data["color"])
@@ -101,7 +101,7 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
 
             elif tipo == "cambiar_color_nodo":
                 room.cambiar_color_nodo(data["id"], data["color"])
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == 'crear_conexion':
                 conexion = Conexion(**data["conexion"])
@@ -117,11 +117,11 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
 
             elif tipo == 'cambiar_opacidad_nodo':
                 room.cambiar_opacidad_nodo(data['id'], data['opacidad'])
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == 'cambiar_radius_nodo':
                 room.cambiar_radius_nodo(data['id'], data['radius'])
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == 'cambiar_nombre_proyecto':
                 room.cambiar_nombre(data['nombre'])
@@ -129,43 +129,43 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
 
             elif tipo == 'traer_al_frente':
                 room.mover_nodo_al_frente(data['id'])
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == 'enviar_al_fondo':
                 room.mover_nodo_atras(data['id'])
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == 'bloquear_nodo':
                 room.bloquear_nodo(data['id'])
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == 'desbloquear_nodo':
                 room.desbloquear_nodo(data['id'])
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == 'cambiar_estilo_conexion':
                 room.cambiar_estilo_conexion(data['id'], data['estilo'])
-                await room.save_connections_self()
+                await room.save_single_connection_(data["id"])
 
             elif tipo == 'cambiar_estilo_nodo':
                 room.cambiar_estilo_nodo(data['id'], data['estilo'])
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == 'cambiar_nodo_property':
                 room.cambiar_nodo_property(data['id'], data['propertyName'], data['propertyValue'])
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == 'cambiar_conexion_property':
                 room.cambiar_conexion_property(data['id'], data['propertyName'], data['propertyValue'])
-                await room.save_connections_self()
+                await room.save_single_connection_(data["id"])
 
             elif tipo == 'deletear_nodo_property':
                 room.deletear_nodo_property(data['id'], data['propertyName'])
-                await room.save_nodes_self()
+                await room.save_single_node_(data["id"])
 
             elif tipo == 'deletear_conexion_property':
                 room.deletear_conexion_property(data['id'], data['propertyName'])
-                await room.save_connections_self()
+                await room.save_single_connection_(data["id"])
 
             elif tipo == 'cambiar_proyecto_property':
                 room.cambiar_proyecto_property(data['propertyName'], data['propertyValue'])
