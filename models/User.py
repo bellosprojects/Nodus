@@ -9,4 +9,3 @@ class User(BaseModel):
     objeto: str = None
     user_id:str
     token:str
-    userId: Optional[str] = None

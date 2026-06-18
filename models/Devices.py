@@ -6,5 +6,4 @@ class DeviceAuth(BaseModel):
 
 class ExtendRequest(BaseModel):
     device_id: str
-    admin_token: str
     extra_days: int

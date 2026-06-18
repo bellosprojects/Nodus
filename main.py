@@ -1,7 +1,15 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from routes import WebsocketRouter, BasicRouter, LicenseRouter, StaticRouter, AuthRouter
+from middleware import ValidationMiddleware
+
+from routes import WebsocketRouter,\
+    BasicRouter, \
+    LicenseRouter, \
+    StaticRouter, \
+    AuthRouter, \
+    AdminRouter
+
 
 app = FastAPI(
     title="Servidor de Diagramas Colaborativos",
@@ -22,10 +30,13 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+app.add_middleware(ValidationMiddleware)
+
 app.include_router(WebsocketRouter)
 app.include_router(BasicRouter)
 app.include_router(LicenseRouter)
 app.include_router(StaticRouter)
 app.include_router(AuthRouter)
+app.include_router(AdminRouter)
 
 app.mount("/", StaticFiles(directory="static"), name="static")

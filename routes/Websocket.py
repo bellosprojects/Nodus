@@ -1,6 +1,6 @@
-from fastapi import WebSocket, APIRouter, WebSocketDisconnect, Query
+from fastapi import WebSocket, APIRouter, WebSocketDisconnect, Query, HTTPException
 from models import Nodo, Conexion, manager
-from services import logger, supabase
+from services import logger, supabase, rate_limiter
 
 router = APIRouter()
 
@@ -22,6 +22,13 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
     try:
         while True:
 
+            is_allowed, error_message = rate_limiter.check_rate_limit(websocket)
+
+            if not is_allowed:
+                logger.warning(f"Rate limit excedido para usuario {display_name}: {error_message}")
+                await websocket.close(code=1008, reason=error_message)
+                return
+
             is_reshippable = True
 
             data = await websocket.receive_json()
@@ -30,6 +37,10 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
                 logger.debug(str(data))
 
             if not tipo:
+                continue
+
+            if tipo == "nuevo_nodo" and not validate_node_data(data=data["nodo"]):
+                await websocket.send_json({"tipo": "error", "mensaje": "Datos de nodo invalidos"})
                 continue
 
             if tipo == "nuevo_nodo":
@@ -162,7 +173,56 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
             if is_reshippable:
                 await manager.broadcast_to_room(room_id, data, websocket)
 
-
-
     except WebSocketDisconnect:
+        rate_limiter.cleanup_connection(id(websocket))
         await manager.disconnect(websocket, room_id)
+
+    except Exception as e:
+        logger.error(f"Error en WebSocket: {e}")
+        rate_limiter.cleanup_connection(id(websocket))
+        await manager.disconnect(websocket, room_id)
+
+import os
+
+@router.get("/ws-stats")
+async def get_ws_stats(admin_token: str = None):
+    """Endpoint para monitorear el rate limiting (solo admin)"""
+    # Validar que sea admin
+    if admin_token != os.getenv("ADMIN_TOKEN"):
+        raise HTTPException(403, "Unauthorized")
+    
+    # Retornar estadísticas de todas las conexiones activas
+    stats = {}
+    for conn in manager.rooms.values():
+        for user_id, user in conn.usuarios.items():
+            socket_id = id(user_id)
+            stats[user.nombre] = rate_limiter.get_stats(socket_id)
+    
+    return {
+        "total_connections": len(stats),
+        "connections": stats
+    }
+
+import math
+
+def validate_node_data(data: dict) -> bool:
+    """Valida que los datos del nodo sean razonables"""
+    try:
+        # Validar coordenadas
+        x = float(data.get("x", 0))
+        y = float(data.get("y", 0))
+        if not (-100000 <= x <= 100000) or not (-100000 <= y <= 100000):
+            return False
+        
+        # Validar tamaño
+        w = float(data.get("w", 60))
+        h = float(data.get("h", 20))
+        if not (60 <= w <= 5000) or not (20 <= h <= 5000):
+            return False
+        
+        if any(math.isnan(v) or math.isinf(v) for v in [x, y, w, h]):
+            return False
+        
+        return True
+    except:
+        return False

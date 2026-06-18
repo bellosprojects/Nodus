@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from models import DeviceAuth, ExtendRequest
-from services import supabase, logger, ADMIN_TOKEN
+from services import supabase, logger
 from datetime import datetime, timezone, timedelta
+from middleware import verify_admin_token
 
 router = APIRouter()
 
@@ -72,15 +73,11 @@ async def validate_device(auth: DeviceAuth):
 
 
 @router.post("/extend")
-async def extend_access(request: ExtendRequest):
+async def extend_access(request: ExtendRequest, admin_token: str = Depends(verify_admin_token)):
     """
     Extiende la licencia de un dispositivo.
     Solo accesible con el token de administrador.
-    """
-    # Validar token
-    if request.admin_token != ADMIN_TOKEN:
-        raise HTTPException(status_code=403, detail="Token de administrador inválido")
-    
+    """  
     # Validar días (1-30)
     if request.extra_days < 1 or request.extra_days > 30:
         raise HTTPException(status_code=400, detail="Solo se permiten entre 1 y 30 días")
@@ -128,12 +125,10 @@ async def extend_access(request: ExtendRequest):
         raise HTTPException(status_code=500, detail=f"Error interno: {str(e)}")
 
 @router.get("/admin/devices")
-async def list_devices(admin_token: str):
+async def list_devices(admin_token: str = Depends(verify_admin_token)):
     """
     Lista todos los dispositivos con su estado (versión simplificada).
     """
-    if admin_token != ADMIN_TOKEN:
-        raise HTTPException(status_code=403, detail="Token de administrador inválido")
     
     try:
         # Consulta simple sin ordenamiento
@@ -174,12 +169,10 @@ async def list_devices(admin_token: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/admin/device/{device_id}")
-async def get_device(device_id: str, admin_token: str):
+async def get_device(device_id: str, admin_token: str = Depends(verify_admin_token)):
     """
     Obtiene detalles completos de un dispositivo específico.
     """
-    if admin_token != ADMIN_TOKEN:
-        raise HTTPException(status_code=403, detail="Token de administrador inválido")
     
     try:
         result = supabase.table("licenses")\
@@ -212,12 +205,10 @@ async def get_device(device_id: str, admin_token: str):
         raise HTTPException(status_code=500, detail=f"Error interno: {str(e)}")
 
 @router.delete("/admin/device/{device_id}")
-async def delete_device(device_id: str, admin_token: str):
+async def delete_device(device_id: str, admin_token: str = Depends(verify_admin_token)):
     """
     Elimina un dispositivo (útil para pruebas o revocar acceso permanentemente).
     """
-    if admin_token != ADMIN_TOKEN:
-        raise HTTPException(status_code=403, detail="Token de administrador inválido")
     
     try:
         result = supabase.table("licenses")\
