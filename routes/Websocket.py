@@ -22,7 +22,14 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
     try:
         while True:
 
-            is_allowed, error_message = await rate_limiter.check_rate_limit(websocket)
+            data = await websocket.receive_json()
+            tipo = data.get("tipo")
+
+            is_allowed, error_message = await rate_limiter.check_rate_limit(
+                websocket=websocket,
+                message_type=tipo,
+                data=data
+            )
 
             if not is_allowed:
                 logger.warning(f"Rate limit excedido para usuario {display_name}: {error_message}")
@@ -31,8 +38,6 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
 
             is_reshippable = True
 
-            data = await websocket.receive_json()
-            tipo = data.get("tipo")
             if tipo not in ["mover_cursor", "mover_nodos"]:
                 logger.debug(str(data))
 

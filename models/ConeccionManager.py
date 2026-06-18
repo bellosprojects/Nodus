@@ -71,6 +71,22 @@ class ConnectionManager:
 
         room = await self.get_or_create_diagram(room_id)
 
+        old_ws = None
+
+        for ws, u in room.usuarios.items():
+            if u.user_id == user_id:
+                old_ws = ws
+                break
+
+        if old_ws:
+            logger.info(f"Usuario {nombre} ya estaba conectado, reemplazando conexion anterior")
+
+            try:
+                await old_ws.close(code=1000, reason="Reconecting")
+            except:
+                pass
+            room.del_user(old_ws)
+
         new_user = User(
             nombre=nombre,
             color='black',
@@ -87,16 +103,35 @@ class ConnectionManager:
 
 
     async def disconnect(self, user: WebSocket, room_id : str):
-        if room_id in self.rooms:
 
-            room = self.rooms[room_id]
-            room.del_user(user)
+        if room_id not in self.rooms:
+            return
 
-            if not room.usuarios:
-                await room.persist()
-                del self.rooms[room_id]
-                logger.info(f"Sala {room_id} descargada de RAM (guardada en DB)")
-            else:
-                await self.send_user_list(room_id)
+        room = self.rooms[room_id]
+
+        user_name = "Unknow"
+
+        if user in room.usuarios:
+            user_name = room.usuarios[user].nombre
+
+        for u in room.usuarios.values():
+            if u.objeto and room.usuarios.get(user) == u:
+                pass
+
+
+        room.del_user(user)
+
+        from services import rate_limiter
+
+        rate_limiter.cleanup_connection(id(user))
+
+        logger.info(f"Usuario {user_name} desconectado de sala {room_id}")
+
+        if not room.usuarios:
+            await room.persist(all=True)
+            del self.rooms[room_id]
+            logger.info(f"Sala {room_id} descargada de RAM (guardada en DB)")
+        else:
+            await self.send_user_list(room_id)
 
 manager = ConnectionManager()

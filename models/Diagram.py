@@ -115,7 +115,28 @@ class Diagram:
 
     def del_user(self, user: WebSocket):
         if user in self.usuarios:
+            
+            user_obj = self.usuarios[user]
             del self.usuarios[user]
+
+            for u in self.usuarios.values():
+                if u.objeto == user_obj.objeto:
+                    u.objeto = None
+
+    def del_user_by_id(self, user_id: str):
+
+        to_delete = None
+
+        for ws, user in self.usuarios.items():
+            if user.user_id == user_id:
+                to_delete = ws
+                break
+
+        if to_delete:
+            self.del_user(to_delete)
+            return True
+        
+        return False
 
     def asignar_color_user(self, user : WebSocket, color : str):
         if user in self.usuarios:
