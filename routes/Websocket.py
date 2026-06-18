@@ -1,4 +1,4 @@
-from fastapi import WebSocket, APIRouter, WebSocketDisconnect, Query, HTTPException
+from fastapi import WebSocket, APIRouter, WebSocketDisconnect, Query, Depends
 from models import Nodo, Conexion, manager
 from services import logger, supabase, rate_limiter
 
@@ -183,20 +183,24 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, token : str = Qu
         await manager.disconnect(websocket, room_id)
 
 import os
+from middleware import verify_admin_token
 
 @router.get("/ws-stats")
-async def get_ws_stats(admin_token: str = None):
+async def get_ws_stats(admin_token: str = Depends(verify_admin_token)):
     """Endpoint para monitorear el rate limiting (solo admin)"""
-    # Validar que sea admin
-    if admin_token != os.getenv("ADMIN_TOKEN"):
-        raise HTTPException(403, "Unauthorized")
     
     # Retornar estadísticas de todas las conexiones activas
     stats = {}
-    for conn in manager.rooms.values():
-        for user_id, user in conn.usuarios.items():
-            socket_id = id(user_id)
-            stats[user.nombre] = rate_limiter.get_stats(socket_id)
+    for room_id, room in manager.rooms.items():
+        for ws, user in room.usuarios.items():
+            socket_id = id(ws)
+            user_stats = rate_limiter.get_stats(socket_id)
+            stats[user.nombre] = {
+                "room": room_id,
+                "messages_in_last_minute": user_stats.get("messages_in_last_minute", 0),
+                "blocked": user_stats.get("blocked", False),
+                "blocked_until": user_stats.get("blocked_until")
+            }
     
     return {
         "total_connections": len(stats),

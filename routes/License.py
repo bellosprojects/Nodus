@@ -136,6 +136,8 @@ async def list_devices(admin_token: str = Depends(verify_admin_token)):
         
         now = datetime.now(timezone.utc)
         devices = []
+        active_count = 0
+        expired_count = 0
         
         for d in result.data:
             # Parsear expires_at
@@ -147,6 +149,12 @@ async def list_devices(admin_token: str = Depends(verify_admin_token)):
                 expires_at = datetime.fromisoformat(expires_at_str.replace('Z', '+00:00'))
             except:
                 continue
+
+            is_active = expires_at > now
+            if is_active:
+                active_count+=1
+            else:
+                expired_count+=1
             
             devices.append({
                 "device_id_full": d.get("device_id"),
@@ -160,7 +168,8 @@ async def list_devices(admin_token: str = Depends(verify_admin_token)):
         
         return {
             "total": len(devices),
-            "active": sum(1 for d in devices if d["is_active"]),
+            "active": active_count,
+            "expired": expired_count,
             "devices": devices
         }
         
