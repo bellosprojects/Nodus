@@ -42,6 +42,10 @@ async def save_nodes(room_id: str, nodes: Dict[str, Nodo]):
                 "properties": node.properties
             })
 
+        ids = f'({[','.join(f'"{node.id}"' for node in data)]})'
+
+        supabase.table("nodes").delete().not_.in_("id", ids).execute()
+
         supabase.table("nodes").upsert(data, on_conflict="id").execute()
 
     await save_with_retry(_save)
@@ -65,6 +69,10 @@ async def save_connections(room_id: str, connections: Dict[str, Conexion]):
                 "style": conn.style,
                 "properties": conn.properties
             })
+
+        ids = f'({[','.join(f'"{conn.id}"' for conn in data)]})'
+
+        supabase.table("connections").delete().not_.in_("id", ids).execute()
 
         supabase.table("connections").upsert(data, on_conflict="id").execute()
 
