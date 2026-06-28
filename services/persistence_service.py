@@ -42,7 +42,7 @@ async def save_nodes(room_id: str, nodes: Dict[str, Nodo]):
                 "properties": node.properties
             })
 
-        ids = f'({[','.join(f'"{node.id}"' for node in data)]})'
+        ids = f'({[','.join(f'"{node["id"]}"' for node in data)]})'
 
         supabase.table("nodes").delete().not_.in_("id", ids).execute()
 
@@ -70,7 +70,7 @@ async def save_connections(room_id: str, connections: Dict[str, Conexion]):
                 "properties": conn.properties
             })
 
-        ids = f'({[','.join(f'"{conn.id}"' for conn in data)]})'
+        ids = f'({[','.join(f'"{conn["id"]}"' for conn in data)]})'
 
         supabase.table("connections").delete().not_.in_("id", ids).execute()
 
