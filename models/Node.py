@@ -9,7 +9,7 @@ class Nodo(BaseModel):
     w: float = Field(..., ge=60, le=5000)
     h: float = Field(..., ge=20, le=5000)
     texto: str = Field(default="", max_length=500)
-    color: str = Field(..., pattern=r'^#[0-6a-fA-F]{6}$')
+    color: str = Field(..., pattern=r'^#[0-9a-fA-F]{6}$')
     opacidad: float = Field(default=1.0, ge=0, le=1)
     radius: float = Field(default=8, ge=0, le=2500)
     pin: bool = False
