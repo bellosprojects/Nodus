@@ -23,6 +23,11 @@ async def websocket_endpoint(websocket: WebSocket, room_id:str, nombre: str):
             if not tipo:
                 continue
 
+            incoming_room_id = data.get("room_id")
+            if incoming_room_id is not None and incoming_room_id != room_id:
+                logger.warning(f"Ignorando mensaje de sala {incoming_room_id} en sala {room_id}")
+                continue
+
             if tipo == "nuevo_nodo":
                 nodo = Nodo(**data["nodo"])
                 room.add_nodo(nodo, nodo.id)
