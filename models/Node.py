@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 
 class Nodo(BaseModel):
@@ -13,3 +14,4 @@ class Nodo(BaseModel):
     pin: bool
     style: int
     properties: dict
+    room_id: Optional[str] = None

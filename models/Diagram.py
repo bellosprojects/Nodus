@@ -60,16 +60,28 @@ class Diagram:
     def cambiar_nombre(self, newNombre: str):
         self.nombre_proyecto = newNombre
 
+    def _item_belongs_to_room(self, item):
+        return getattr(item, "room_id", None) in (None, self.id)
+
     def add_nodo(self, nodo: Nodo, id_: str):
+        if not self._item_belongs_to_room(nodo):
+            return
+        nodo.room_id = self.id
         self.nodos[id_] = nodo
 
     def add_conexion(self, conexion: Conexion, id_ : str):
+        if not self._item_belongs_to_room(conexion):
+            return
+        conexion.room_id = self.id
         self.conexiones[id_] = conexion
 
     def add_user(self, user: User, id_: WebSocket):
         self.usuarios[id_] = user
 
     def del_nodo(self, id_: str):
+        if id_ in self.nodos and not self._item_belongs_to_room(self.nodos[id_]):
+            return
+
         if id_ in self.nodos:
             del self.nodos[id_]
 
@@ -83,6 +95,9 @@ class Diagram:
             self.del_conexion(conx.id)
 
     def del_conexion(self, id_: str):
+        if id_ in self.conexiones and not self._item_belongs_to_room(self.conexiones[id_]):
+            return
+
         if id_ in self.conexiones:
             del self.conexiones[id_]
 
@@ -185,10 +200,16 @@ class Diagram:
             self.conexiones[conexionId].properties[propertyName] = propertyValue
 
     def deletear_nodo_property(self, nodoId: str, propertyName: str):
+        if nodoId in self.nodos and not self._item_belongs_to_room(self.nodos[nodoId]):
+            return
+
         if nodoId in self.nodos and propertyName in self.nodos[nodoId].properties:
             del self.nodos[nodoId].properties[propertyName]
 
     def deletear_conexion_property(self, conexionId: str, propertyName: str):
+        if conexionId in self.conexiones and not self._item_belongs_to_room(self.conexiones[conexionId]):
+            return
+
         if conexionId in self.conexiones and propertyName in self.conexiones[conexionId].properties:
             del self.conexiones[conexionId].properties[propertyName]
 
